@@ -6,12 +6,12 @@ package group1.mips_simulator.model;
  */
 public class Register {
 
-    public short read() {
+    public Value read() {
         // TODO
-        return 0;
+        return new Value(0);
     }
 
-    public void set(short newValue) {
+    public void set(Value newValue) {
         // TODO:
     }
 

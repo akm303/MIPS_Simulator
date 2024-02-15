@@ -33,6 +33,8 @@ public class MipsComputer {
     }
 
     public void incrementPC() {
-        this.programCounter.set((short) (this.programCounter.read() + 1));
+        Value pc = this.programCounter.read();
+        pc.set(pc.get() + 1);
+        this.programCounter.set(pc);
     }
 }

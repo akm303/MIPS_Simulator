@@ -5,12 +5,12 @@ package group1.mips_simulator.model;
  */
 public class Memory {
 
-    public short read(short address) {
+    public short read(Value address) {
         // todo
         return 0;
     }
 
-    public void write(short address, short valueToWrite) {
+    public void write(Value address, Value valueToWrite) {
         // todo;
     }
 }
