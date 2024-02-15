@@ -13,7 +13,7 @@ public class SimApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(SimApplication.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
         stage.setTitle("Hello!");
-        stage.setsScene(scene);
+        stage.setScene(scene);
         stage.show();
     }
 
