@@ -1,4 +1,4 @@
-package group1.mips_simulator.model;
+package group1.mips_simulator.components;
 
 public class Value {
 

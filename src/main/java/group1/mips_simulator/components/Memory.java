@@ -1,4 +1,4 @@
-package group1.mips_simulator.model;
+package group1.mips_simulator.components;
 
 /**
  * A Memory class represents the entire memory lookup for our computer simulator.

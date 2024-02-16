@@ -1,6 +1,6 @@
-package group1.mips_simulator.model;
+package group1.mips_simulator.components;
 
-import group1.mips_simulator.model.instruction.Instruction;
+import group1.mips_simulator.components.instruction.Instruction;
 
 import java.util.Vector;
 

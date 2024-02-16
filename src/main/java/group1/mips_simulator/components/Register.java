@@ -1,4 +1,4 @@
-package group1.mips_simulator.model;
+package group1.mips_simulator.components;
 
 /**
  * A Register is a space that holds a value, and makes it available for
