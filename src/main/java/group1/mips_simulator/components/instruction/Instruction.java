@@ -49,6 +49,19 @@ public class Instruction {
         return result.toString();
     }
 
+    /**
+     * Is this instruction a "Transfer Instruction"? True if so, false otherwise.
+     * This is useful to quickly check because transfer instructions change the Program Counter
+     * so during execution we don't want to double increment the PC accidentally.
+     */
+    public boolean isTransferInstruction() {
+        return switch (this.opCode.name.toLowerCase()) {
+            case "setcce", "jz", "jne", "jcc", "jma", "jsr", "rfs", "sob", "jge" -> true;
+            default -> false;
+        };
+    }
+
+
     @Override
     public String toString() {
         return "Instruction{" +
