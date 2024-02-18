@@ -14,6 +14,8 @@ public class MipsComputer {
     public Vector<Register> registers;
     public Register programCounter;
 
+    public ConditionCode conditionCode = new ConditionCode();
+
     public MipsComputer() {
     }
 
@@ -30,6 +32,12 @@ public class MipsComputer {
 
     public void executeInstruction(Instruction instruction) {
         // TODO:
+        switch (instruction.opCode.name.toLowerCase()) {
+            // case "setcce" ->
+            default ->
+                    throw new IllegalArgumentException("Unknown instruction op code name: " + instruction.opCode.name +
+                            "\nInstruction: " + instruction.toString());
+        }
     }
 
     public void incrementPC() {

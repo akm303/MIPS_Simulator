@@ -40,14 +40,14 @@ public class FieldProcessor {
 
     /**
      * [RR XX I AAAAA]
-     * 01 23 4 5   9
+     *  01 23 4 5   9
      */
     Vector<Field> binaryToFields_rxia(String binaryFields) {
         assertBinLength(binaryFields);
         String rr = binaryFields.substring(0, 1 + 1);
         String xx = binaryFields.substring(2, 3 + 1);
         String i = binaryFields.substring(4, 4 + 1);
-        String address = binaryFields.substring(4, 9 + 1);
+        String address = binaryFields.substring(5, 9 + 1);
 
         return new Vector<Field>(4) {{
             add(new Field(Utility.binaryToShort(rr), 2));
