@@ -1,6 +1,7 @@
 package group1.mips_simulator.components.instruction;
 
 import group1.mips_simulator.Utility;
+import group1.mips_simulator.components.instruction.FieldProcessors.FieldProcessor;
 
 import java.util.Vector;
 
@@ -18,6 +19,10 @@ public class Instruction {
 
         OpCode code = OpCode.fromNumber((short) Utility.binaryToInt(opCodeBinary));
         // Each OpCode has its own schema for processing the remaining 10 bits
+        FieldProcessor processor = new FieldProcessor();
+        Vector<Field> fields = processor.getFieldsForOpCode(code, fieldsBinary);
+
+        return new Instruction(code, fields);
     }
 
     public Instruction(OpCode opCode, Vector<Field> fields) {

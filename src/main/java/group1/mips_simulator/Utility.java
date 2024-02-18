@@ -51,7 +51,7 @@ public class Utility {
         }
         // else too large
         // Truncate the leading bits
-        int startIndex = binary.length() - targetSize + 1;
+        int startIndex = binary.length() - targetSize;
         return binary.substring(startIndex);
     }
 
@@ -67,5 +67,9 @@ public class Utility {
             // Else current bit == 0
         }
         return result;
+    }
+
+    public static short binaryToShort(String binary) {
+        return (short) binaryToInt(binary);
     }
 }

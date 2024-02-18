@@ -1,5 +1,7 @@
 package group1.mips_simulator;
 
+import group1.mips_simulator.components.instruction.Instruction;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
@@ -7,8 +9,9 @@ import java.util.Vector;
 
 public class FileReader {
 
-    public void blab(String fileToRead) {
+    public Vector<Instruction> readBinaryFile(String fileToRead) {
         BufferedReader reader;
+        Vector<Instruction> result = new Vector<>();
 
         try {
             reader = new BufferedReader(new java.io.FileReader(fileToRead));
@@ -20,12 +23,15 @@ public class FileReader {
                 }
                 StringTokenizer st = new StringTokenizer(line, " \t");
                 Vector<String> lineSplitIntoTokens = new Vector<>(st.countTokens());
-                while(st.hasMoreTokens()) {
+                while (st.hasMoreTokens()) {
                     lineSplitIntoTokens.add(st.nextToken());
                 }
 
                 String memoryLocationInOctal = lineSplitIntoTokens.get(0);
                 String instructionInOctal = lineSplitIntoTokens.get(1);
+
+                Instruction newInstruction = Instruction.buildInstruction_fromOctal(instructionInOctal);
+                result.add(newInstruction);
 
                 // grab next line from file
                 line = reader.readLine();
@@ -33,5 +39,7 @@ public class FileReader {
         } catch (IOException e) {
             System.out.println("Encountered an error when reading the file: " + e);
         }
+
+        return result;
     }
 }
