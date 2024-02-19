@@ -5,6 +5,13 @@ package group1.mips_simulator.components;
  * the CPU to read/ write quickly.
  */
 public class Register {
+    regType type;
+    public Value value;
+
+    private enum regType{
+        GP, //General Purpose Registers
+        IX; //IndeX Registers
+    }
 
     public Value read() {
         // TODO
