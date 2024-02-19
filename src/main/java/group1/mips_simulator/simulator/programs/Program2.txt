@@ -1,0 +1,5 @@
+/*
+A program that reads a set of a paragraph of 6 sentences from a file into memory. It prints the sentences on the console
+printer. It then asks the user for a word. It searches the paragraph to see if it contains the word. If so, it prints
+out the word, the sentence number, and the word number in the sentence.
+*/
