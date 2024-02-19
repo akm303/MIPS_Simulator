@@ -8,7 +8,7 @@ import java.util.Vector;
 public class Instruction {
 
     public static Instruction buildInstruction_fromOctal(String octal) {
-        String binary = Utility.octalToBinary(octal, 16);
+        String binary = Utility.octalStringToBinaryString(octal, 16);
         return buildInstruction_fromBinary(binary);
     }
 

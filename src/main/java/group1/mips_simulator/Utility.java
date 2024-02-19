@@ -13,7 +13,7 @@ public class Utility {
         }
     }
 
-    public static String octalToBinary(String octal) {
+    public static String octalStringToBinaryString(String octal) {
         StringBuilder result = new StringBuilder();
         for (char c : octal.toCharArray()) {
             switch (c) {
@@ -37,8 +37,8 @@ public class Utility {
      * least significant bits will be returned.
      * IE: The most significant bits will cut in that case.
      */
-    public static String octalToBinary(String octal, int targetSize) {
-        StringBuilder binary = new StringBuilder(octalToBinary(octal));
+    public static String octalStringToBinaryString(String octal, int targetSize) {
+        StringBuilder binary = new StringBuilder(octalStringToBinaryString(octal));
 
         if (binary.length() == targetSize) {
             // Just right
