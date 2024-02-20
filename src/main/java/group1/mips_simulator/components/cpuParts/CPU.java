@@ -31,14 +31,19 @@ handling the error in your system by generating a machine fault.
 //Readme ^
 
 package group1.mips_simulator.components.cpuParts;
+import group1.mips_simulator.components.instructionParts.InstructionSet;
 
 public class CPU {
-    public RegisterFile registers;
+    public RegisterFile regfile;
     private RomLoader romLoader;
-//    InstructionSet isTable;
+    InstructionSet isa;
 
     public CPU(){
-        registers = new RegisterFile();
+        regfile = new RegisterFile();
         romLoader = new RomLoader();
+    }
+
+    private void loadROM(String directory){
+        this.romLoader.loadFrom(directory);
     }
 }

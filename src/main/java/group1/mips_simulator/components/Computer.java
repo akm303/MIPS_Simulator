@@ -23,6 +23,8 @@ public class Computer {
     }
 
     public void executeProgram(Vector<Instruction> program) {
+        // IF -> ID -> Exe ->
+        //
         for (Instruction i : program) {
             try {
                 this.executeInstruction(i);
@@ -38,7 +40,7 @@ public class Computer {
     }
 
     public void incrementPC() {
-        Register pc = this.cpu.registers.getPC();
+        Register pc = this.cpu.regfile.getPC();
         pc.increment();
     }
 //    public void incrementPC() {

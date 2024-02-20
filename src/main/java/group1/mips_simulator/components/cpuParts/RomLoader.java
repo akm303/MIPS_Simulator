@@ -10,8 +10,11 @@ public class RomLoader {
     public RomLoader(){
         this.ROMLocation = null;
     }
+    public RomLoader(String directory){
+        this.ROMLocation = directory;
+    }
 
-    public void loadROM(String directoryOfROM){
-        this.ROMLocation = directoryOfROM;
+    public void loadFrom(String directory){
+        this.ROMLocation = directory;
     }
 }
