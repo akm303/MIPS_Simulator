@@ -6,6 +6,7 @@ It should then accept a value in the MBR to be stored in memory on the next cycl
 value in the MBR that is read from memory on the next cycle.
 Remember, your machine can have up to 2048 words maximum! What considerations must you make?
  */
+//readme ^
 
 package group1.mips_simulator.components.memParts;
 
