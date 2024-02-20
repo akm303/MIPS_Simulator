@@ -7,7 +7,9 @@ value in the MBR that is read from memory on the next cycle.
 Remember, your machine can have up to 2048 words maximum! What considerations must you make?
  */
 
-package group1.mips_simulator.components;
+package group1.mips_simulator.components.memParts;
+
+import group1.mips_simulator.components.Value;
 
 /**
  * A Memory class represents the entire memory lookup for our computer simulator.

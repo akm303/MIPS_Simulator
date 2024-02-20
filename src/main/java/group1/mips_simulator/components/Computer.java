@@ -1,6 +1,8 @@
 package group1.mips_simulator.components;
 
-import group1.mips_simulator.components.instruction.Instruction;
+import group1.mips_simulator.components.cpuParts.Register;
+import group1.mips_simulator.components.instructionParts.Instruction;
+import group1.mips_simulator.components.memParts.Memory;
 
 import java.util.Vector;
 
@@ -8,13 +10,13 @@ import java.util.Vector;
  * A Mips Computer is a class to represent the classical computer architecture
  * being discussed in class.
  */
-public class MipsComputer {
+public class Computer {
 
     public Memory memory;
     public Vector<Register> registers;
     public Register programCounter;
 
-    public MipsComputer() {
+    public Computer() {
     }
 
     public void executeProgram(Vector<Instruction> program) {

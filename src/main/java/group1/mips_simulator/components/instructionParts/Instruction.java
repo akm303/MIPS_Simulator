@@ -1,4 +1,4 @@
-package group1.mips_simulator.components.instruction;
+package group1.mips_simulator.components.instructionParts;
 
 import java.util.Vector;
 

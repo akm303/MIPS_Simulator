@@ -1,25 +1,26 @@
-package group1.mips_simulator.components;
+package group1.mips_simulator.components.cpuParts;
+
+import group1.mips_simulator.components.Value;
 
 /**
  * A Register is a space that holds a value, and makes it available for
  * the CPU to read/ write quickly.
  */
 public class Register {
-    regType type;
+    RegType type;
     public Value value;
 
-    private enum regType{
+    private enum RegType{
         GP, //General Purpose Registers
         IX; //IndeX Registers
     }
 
     public Value read() {
-        // TODO
         return new Value(0);
     }
 
     public void set(Value newValue) {
-        // TODO:
+        value = newValue;
     }
 
 }
