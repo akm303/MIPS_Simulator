@@ -1,6 +1,9 @@
 /*
-Your CPU simulator should implement the basic registers, the basic instruction set,
-a simple ROM Loader, and the elements necessary to execute the basic instruction set.
+Your CPU simulator should implement:
+    basic registers,
+    basic instruction set,
+    simple ROM Loader,
+    elements necessary to execute the basic instruction set.
 
 You will need a ROM that contains the simple loader. When you press the IPL button on the console,
 the ROM contents are read into memory and control is transferred to the first instruction of the ROM Loader program.
@@ -16,7 +19,7 @@ and run it.
 
 NOTE: Thus, the first address of your program should be greater than the length of your program.
 
-I suggest you load the boot program b= +eginning at location octal 10 and the first address of your program at
+I suggest you load the boot program beginning at location octal 10 and the first address of your program at
 octal address = octal 10 + length of boot program + octal 10.
 
 If the program encounters an error, your program should display an error message on the console printer and stop.
@@ -30,8 +33,12 @@ handling the error in your system by generating a machine fault.
 package group1.mips_simulator.components.cpuParts;
 
 public class CPU {
-    RegisterFile registers = new RegisterFile();
-    RomLoader romloader = new RomLoader();
+    public RegisterFile registers;
+    private RomLoader romLoader;
+//    InstructionSet isTable;
 
-
+    public CPU(){
+        registers = new RegisterFile();
+        romLoader = new RomLoader();
+    }
 }

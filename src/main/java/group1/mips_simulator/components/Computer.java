@@ -13,11 +13,13 @@ import java.util.Vector;
  */
 public class Computer {
 
-    public Memory memory;
+    public Memory mem;
     public CPU cpu;
-    public Register programCounter;
+//    public Register programCounter;
 
     public Computer() {
+        cpu = new CPU();
+        mem = new Memory();
     }
 
     public void executeProgram(Vector<Instruction> program) {
@@ -36,8 +38,12 @@ public class Computer {
     }
 
     public void incrementPC() {
-        Value pc = this.programCounter.read();
-        pc.set(pc.get() + 1);
-        this.programCounter.write(pc);
+        Register pc = this.cpu.registers.getPC();
+        pc.increment();
     }
+//    public void incrementPC() {
+//        Value pc = this.programCounter.read();
+//        pc.set(pc.get() + 1);
+//        this.programCounter.write(pc);
+//    }
 }

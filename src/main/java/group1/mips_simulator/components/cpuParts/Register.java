@@ -7,14 +7,27 @@ import group1.mips_simulator.components.Value;
  * the CPU to read/ write quickly.
  */
 public class Register {
-    public Value value;
+    public Value value = new Value(0);
 
     public Value read() {
-        return new Value(0);
+        return this.value;
     }
 
     public void write(Value newValue) {
-        value = newValue;
+        this.value = newValue;
+    }
+
+    public void increment(){
+        this.value.set(this.value.get() + 1);
+    }
+
+    public void incrementBy(int n){
+        //increment by multiple
+        // implemented using increment in case we want to add logic based on, for example,
+        // an instruction PC might need to access as it increments
+        for(int i = 0; i < n; i++){
+            this.increment();
+        }
     }
 
 }
