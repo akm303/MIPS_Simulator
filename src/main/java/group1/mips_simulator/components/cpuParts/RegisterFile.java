@@ -10,15 +10,18 @@ public class RegisterFile {
      */
     Register[] GPR = new Register[4];   //R0-R3
     Register[] IXR = new Register[3];   //X1-X3.
+    Register PC = new Register();
+    Register CC = new Register();
+    //Register[] FPR = new Register[2]; //float point register placeholder <<DO NOT IMPLEMENT TILL PART 4>>
 
     public RegisterFile(){
         //initialize all reg w/ null
         Value nullValue = new Value(0);
         for (Register reg : GPR){
-            reg.set(nullValue);
+            reg.write(nullValue);
         }
         for (Register reg : IXR){
-            reg.set(nullValue);
+            reg.write(nullValue);
         }
     }
 
@@ -36,5 +39,9 @@ public class RegisterFile {
          * */
         assert((i >= 1) && (i <=3));
         return IXR[i-1];
+    }
+
+    public Register getPC(){
+        return this.PC;
     }
 }

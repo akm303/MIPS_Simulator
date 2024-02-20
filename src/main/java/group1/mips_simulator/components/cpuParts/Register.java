@@ -7,19 +7,13 @@ import group1.mips_simulator.components.Value;
  * the CPU to read/ write quickly.
  */
 public class Register {
-    RegType type;
     public Value value;
-
-    private enum RegType{
-        GP, //General Purpose Registers
-        IX; //IndeX Registers
-    }
 
     public Value read() {
         return new Value(0);
     }
 
-    public void set(Value newValue) {
+    public void write(Value newValue) {
         value = newValue;
     }
 

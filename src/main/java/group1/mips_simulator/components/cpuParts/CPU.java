@@ -1,8 +1,8 @@
 package group1.mips_simulator.components.cpuParts;
 
 public class CPU {
-    RegisterFile Registers = new RegisterFile();
-    RomLoader romloader;
+    RegisterFile registers = new RegisterFile();
+    RomLoader romloader = new RomLoader();
 
 
 }
