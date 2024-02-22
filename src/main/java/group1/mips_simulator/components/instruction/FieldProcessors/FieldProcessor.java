@@ -6,9 +6,34 @@ import group1.mips_simulator.components.instruction.OpCode;
 
 import java.util.Vector;
 
+/**
+ * A Field Processor is a class that converts a binary number (String)
+ * into a Vector of Field objects, based on the provided OpCode.
+ * <p>
+ * Each OpCode has different expected fields. So Operations expect
+ * Registers, Indirection bit and Address. Other operations expect
+ * a 4 bit trap code. Etc.
+ * <p>
+ * Each Operation may be a little different.
+ */
 public class FieldProcessor {
 
+    /**
+     * The main public entrypoint function for this class.
+     * Convert the provided binaryFields parameter into a Vector of Fields,
+     * based on the provided OpCode object.
+     * <p>
+     * NOTE: The binary fields MUST be of length 10 exactly, and it must be
+     * a valid binary number ('0' and '1' characters only)
+     *
+     * @param code The OpCode that directs how to process fields
+     * @param binaryFields The 10 bits of the binary fields
+     * @return The Vector of Fields for the Op Code
+     */
     public Vector<Field> getFieldsForOpCode(OpCode code, String binaryFields) {
+        // Strip away all the non `1` or `0` characters
+        binaryFields = binaryFields.replaceAll("[^10]", "");
+        assertBinLength(binaryFields);
         return switch (code.name.toLowerCase()) {
             // Miscellaneous Instructions, pg 12
             case "hlt" -> binaryToFields_Halt(binaryFields);
@@ -40,7 +65,7 @@ public class FieldProcessor {
 
     /**
      * [RR XX I AAAAA]
-     *  01 23 4 5   9
+     * [01 23 4 5   9]
      */
     Vector<Field> binaryToFields_rxia(String binaryFields) {
         assertBinLength(binaryFields);
@@ -59,7 +84,7 @@ public class FieldProcessor {
 
     /**
      * [#### 000000]
-     * 0  3 4    9
+     * [0  3 4    9]
      */
     Vector<Field> binaryToFields_Halt(String binaryFields) {
         assertBinLength(binaryFields);
@@ -74,7 +99,7 @@ public class FieldProcessor {
 
     /**
      * [###### 0000]
-     * 0    5 6  9
+     * [0    5 6  9]
      */
     Vector<Field> binaryToFields_Trap(String binaryFields) {
         assertBinLength(binaryFields);
@@ -82,14 +107,14 @@ public class FieldProcessor {
         String trapCode = binaryFields.substring(6, 9 + 1);
 
         return new Vector<Field>() {{
-            add(new Field(Utility.binaryToShort(blank), 4));
-            add(new Field(Utility.binaryToShort(trapCode), 6));
+            add(new Field(Utility.binaryToShort(blank), 6));
+            add(new Field(Utility.binaryToShort(trapCode), 4));
         }};
     }
 
     /**
      * [RX RY ######]
-     * 01 23 4    9
+     * [01 23 4    9]
      */
     Vector<Field> binaryToFields_reg2reg(String binaryFields) {
         assertBinLength(binaryFields);
@@ -106,7 +131,7 @@ public class FieldProcessor {
 
     /**
      * [RR A R ## CCCC]
-     * 01 2 3 45 6  9
+     * [01 2 3 45 6  9]
      */
     Vector<Field> binaryToFields_shiftRotate(String binaryFields) {
         assertBinLength(binaryFields);
@@ -127,7 +152,7 @@ public class FieldProcessor {
 
     /**
      * [RR ### DDDDD]
-     * 01 2 4 5   9
+     * [01 2 4 5   9]
      */
     Vector<Field> binaryToFields_io(String binaryFields) {
         assertBinLength(binaryFields);

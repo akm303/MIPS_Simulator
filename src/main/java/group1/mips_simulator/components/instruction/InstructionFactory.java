@@ -22,7 +22,7 @@ public class InstructionFactory {
         String opCodeBinary = binary.substring(0, 6); // [0, 6)
         String fieldsBinary = binary.substring(6); //[6, end]
 
-        OpCode code = OpCode.fromNumber((short) Utility.binaryToInt(opCodeBinary));
+        OpCode code = OpCode.fromNumber_Decimal((short) Utility.binaryToInt(opCodeBinary));
         // Each OpCode has its own schema for processing the remaining 10 bits
         FieldProcessor processor = new FieldProcessor();
         Vector<Field> fields = processor.getFieldsForOpCode(code, fieldsBinary);

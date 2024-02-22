@@ -2,6 +2,15 @@ package group1.mips_simulator.components;
 
 import java.util.Vector;
 
+/**
+ * A ConditionCode is a register/ clas that holds various bits.
+ * This specific condition code holds (at the time of writing):
+ * - Overflow
+ * - Underflow
+ * - Divide by 0
+ * - Equal or Not
+ *
+ */
 public class ConditionCode {
 
     public static final int OBIT_INDEX = 0;
