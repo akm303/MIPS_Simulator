@@ -8,7 +8,7 @@ import java.util.Vector;
 public class InstructionFactory {
 
     public Instruction buildInstruction_fromOctal(String octal) {
-        String binary = Utility.octalToBinary(octal, 16);
+        String binary = Utility.octalStringToBinaryString(octal, 16);
         return buildInstruction_fromBinary(binary);
     }
 
@@ -34,8 +34,8 @@ public class InstructionFactory {
     protected Instruction packageInstruction(OpCode code, Vector<Field> fields) {
         return switch (code.name.toLowerCase()) {
             // Miscellaneous Instructions, pg 12
-            // case "hlt" ->
-            // case "trap" ->
+            case "hlt" -> new Instruction(code, fields);
+            case "trap" -> new Instruction(code, fields);
             // Load/Store instructions, pg 12
             case "ldr", "str", "lda", "ldx", "stx",
                     // Transfer Instructions pg 15
@@ -45,11 +45,11 @@ public class InstructionFactory {
                     // Floating Point Arithmetic, pg 21
                     "fadd", "fsub", "vadd", "vsub", "cnvrt", "ldfr", "stfr" -> new RXIA_Instruction(code, fields);
             // Register to Register instructions, pg 17
-            // case "mlt", "dvd", "trr", "and", "orr", "not" ->
+            case "mlt", "dvd", "trr", "and", "orr", "not" -> new Instruction(code, fields);
             // Shift/ Rotate operations, pg 18
-            // case "src", "rrc" ->
+            case "src", "rrc" -> new Instruction(code, fields);
             // I/O operations, pg 20
-            // case "in", "out", "chk" ->
+            case "in", "out", "chk" -> new Instruction(code, fields);
             default -> throw new IllegalArgumentException("Unknown OpCode: " + code.name);
         };
     }
