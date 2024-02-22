@@ -24,6 +24,7 @@ public class MipsComputer {
 
     /**
      * Take a collection of Instructions and execute them all in order.
+     *
      * @param program The instruction set to run
      */
     public void executeProgram(Vector<Instruction> program) {
@@ -42,9 +43,10 @@ public class MipsComputer {
      * Effectively, this will dispatch the instruction to a custom "execute"
      * function based on the op code. The instruction's fields will also be
      * passed, in addition to `this` MipsComputer object.
-     *
+     * <p>
      * The execute function will read/ write/ update the various registers,
      * memory, pointers etc. of `this` MipsComputer instance.
+     *
      * @param instruction The instructino to run.
      */
     public void executeInstruction(Instruction instruction) {
@@ -99,11 +101,12 @@ public class MipsComputer {
     /**
      * The Effective Address (EA) is a memory location that considers
      * a bunch of various modifications including:
-     *  - Base Address
-     *  - Indirection Bit
-     *  - Index Registers
-     *
+     * - Base Address
+     * - Indirection Bit
+     * - Index Registers
+     * <p>
      * The specific instructions for calculating the EA are from the project documentation pg13
+     *
      * @return The memory location that is the Effective Address for the provided
      * instruction.
      */
@@ -115,11 +118,12 @@ public class MipsComputer {
     /**
      * The Effective Address (EA) is a memory location that considers
      * a bunch of various modifications including:
-     *  - Base Address
-     *  - Indirection Bit
-     *  - Index Registers
-     *
+     * - Base Address
+     * - Indirection Bit
+     * - Index Registers
+     * <p>
      * The specific instructions for calculating the EA are from the project documentation pg13
+     *
      * @return The memory location that is the Effective Address for the provided
      * instruction.
      */
@@ -130,11 +134,12 @@ public class MipsComputer {
     /**
      * The Effective Address (EA) is a memory location that considers
      * a bunch of various modifications including:
-     *  - Base Address
-     *  - Indirection Bit
-     *  - Index Registers
-     *
+     * - Base Address
+     * - Indirection Bit
+     * - Index Registers
+     * <p>
      * The specific instructions for calculating the EA are from the project documentation pg13
+     *
      * @return The memory location that is the Effective Address for the provided
      * instruction.
      */
