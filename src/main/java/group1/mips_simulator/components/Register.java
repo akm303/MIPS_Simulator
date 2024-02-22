@@ -27,4 +27,8 @@ public class Register {
         // TODO:
     }
 
+    public void set(int newValue) {
+        this.set(new Value(newValue));
+    }
+
 }

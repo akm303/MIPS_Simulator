@@ -10,7 +10,7 @@ public class Memory {
     }
 
     public short read(int address) {
-        return read((short)address);
+        return read((short) address);
     }
 
     public short read(short address) {
@@ -28,6 +28,10 @@ public class Memory {
 
     public void write(Value address, short valueToWrite) {
         write(address.get(), valueToWrite);
+    }
+
+    public void write(int address, int valueToWrite) {
+        write((short) address, (short) valueToWrite);
     }
 
     public void write(short address, short valueToWrite) {
