@@ -8,7 +8,7 @@ import java.util.Vector;
 public class Instruction {
 
     public static final int BIT_COUNT = 16;
-
+/*
     public static Instruction buildInstruction_fromOctal(String octal) {
         String binary = Utility.octalToBinary(octal, 16);
         return buildInstruction_fromBinary(binary);
@@ -31,7 +31,7 @@ public class Instruction {
 
         return new Instruction(code, fields);
     }
-
+*/
     public Instruction(OpCode opCode, Vector<Field> fields) {
         this.opCode = opCode;
         this.fields = fields;
