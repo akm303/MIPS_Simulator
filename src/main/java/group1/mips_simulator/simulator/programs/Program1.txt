@@ -1,0 +1,7 @@
+/*
+A program that reads 20 numbers (integers) from the keyboard, prints the numbers to the console printer, requests a
+number from the user, and searches the 20 numbers read in for the number closest to the number entered by the user.
+Print the number entered by the user and the number closest to that number. Your numbers should not be 1…10, but
+distributed over the range of 0 … 65,535. Therefore, as you read a character in, you need to check it is a digit,
+convert it to a number, and assemble the integer.
+*/
