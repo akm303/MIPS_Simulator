@@ -3,6 +3,8 @@ package group1.mips_simulator.components.instruction;
 import group1.mips_simulator.Utility;
 import group1.mips_simulator.components.instruction.FieldProcessors.FieldProcessor;
 
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Vector;
 
 public class Instruction {
@@ -68,5 +70,19 @@ public class Instruction {
                 "opCode=" + opCode +
                 ", fields=" + fields +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Instruction that = (Instruction) o;
+        return Objects.equals(opCode, that.opCode) && Objects.equals(fields, that.fields);
+    }
+
+    @Override
+    public int hashCode() {
+        int fieldsHash = Arrays.deepHashCode(fields.toArray());
+        return Objects.hash(opCode.hashCode(), fieldsHash);
     }
 }

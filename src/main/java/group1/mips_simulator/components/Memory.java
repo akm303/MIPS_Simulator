@@ -19,6 +19,18 @@ public class Memory {
     }
 
     public void write(Value address, Value valueToWrite) {
+        write(address.get(), valueToWrite.get());
+    }
+
+    public void write(short address, Value valueToWrite) {
+        write(address, valueToWrite.get());
+    }
+
+    public void write(Value address, short valueToWrite) {
+        write(address.get(), valueToWrite);
+    }
+
+    public void write(short address, short valueToWrite) {
         // todo;
     }
 }

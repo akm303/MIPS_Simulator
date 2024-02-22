@@ -6,6 +6,18 @@ package group1.mips_simulator.components;
  */
 public class Register {
 
+    public Register() {
+
+    }
+
+    public Register(short initialValue) {
+
+    }
+
+    public Register(Value initialValue) {
+
+    }
+
     public Value read() {
         // TODO
         return new Value(0);

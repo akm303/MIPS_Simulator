@@ -68,7 +68,7 @@ public class FileReader {
      * @param line
      * @return
      */
-    protected Instruction processLine(String line) {
+    public Instruction processLine(String line) {
         InstructionFactory factory = new InstructionFactory();
 
         // Split the line into it's various columns

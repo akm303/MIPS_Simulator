@@ -22,6 +22,10 @@ public class MipsComputer {
     public MipsComputer() {
     }
 
+    /**
+     * Take a collection of Instructions and execute them all in order.
+     * @param program The instruction set to run
+     */
     public void executeProgram(Vector<Instruction> program) {
         for (Instruction i : program) {
             try {
@@ -33,6 +37,16 @@ public class MipsComputer {
         }
     }
 
+    /**
+     * Take a single instruction, and execute it on this machine.
+     * Effectively, this will dispatch the instruction to a custom "execute"
+     * function based on the op code. The instruction's fields will also be
+     * passed, in addition to `this` MipsComputer object.
+     *
+     * The execute function will read/ write/ update the various registers,
+     * memory, pointers etc. of `this` MipsComputer instance.
+     * @param instruction The instructino to run.
+     */
     public void executeInstruction(Instruction instruction) {
         ExecutionInstructions exe = new ExecutionInstructions();
         switch (instruction.opCode.name.toLowerCase()) {
@@ -72,22 +86,58 @@ public class MipsComputer {
         }
     }
 
+    /**
+     * Update the program counter register by incrementing it to the
+     * next position (+1)
+     */
     public void incrementPC() {
         Value pc = this.programCounter.read();
         pc.set(pc.get() + 1);
         this.programCounter.set(pc);
     }
 
-
+    /**
+     * The Effective Address (EA) is a memory location that considers
+     * a bunch of various modifications including:
+     *  - Base Address
+     *  - Indirection Bit
+     *  - Index Registers
+     *
+     * The specific instructions for calculating the EA are from the project documentation pg13
+     * @return The memory location that is the Effective Address for the provided
+     * instruction.
+     */
     public Value calculateEA(RXIA_Instruction instruction) {
         return this.calculateEA(instruction.getIX(), instruction.getAddress(), instruction.getI());
     }
 
 
+    /**
+     * The Effective Address (EA) is a memory location that considers
+     * a bunch of various modifications including:
+     *  - Base Address
+     *  - Indirection Bit
+     *  - Index Registers
+     *
+     * The specific instructions for calculating the EA are from the project documentation pg13
+     * @return The memory location that is the Effective Address for the provided
+     * instruction.
+     */
     public Value calculateEA(Field ix, Field address) {
         return this.calculateEA(ix, address, new Field(0, 1));
     }
 
+    /**
+     * The Effective Address (EA) is a memory location that considers
+     * a bunch of various modifications including:
+     *  - Base Address
+     *  - Indirection Bit
+     *  - Index Registers
+     *
+     * The specific instructions for calculating the EA are from the project documentation pg13
+     * @return The memory location that is the Effective Address for the provided
+     * instruction.
+     */
     public Value calculateEA(Field ix, Field address, Field i) {
         /*
         Effective Address (EA) =
@@ -129,6 +179,7 @@ public class MipsComputer {
                 return new Value(ixContents + addressContents);
             }
         } else {
+            // Indirection bit is set
             if (ix.value == 0) {
                 // EA = c(c(Address Field))
                 // It helps to think in terms of a

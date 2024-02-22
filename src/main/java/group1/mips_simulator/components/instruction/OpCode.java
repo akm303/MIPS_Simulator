@@ -1,5 +1,7 @@
 package group1.mips_simulator.components.instruction;
 
+import java.util.Objects;
+
 public class OpCode {
 
     public static final int BIT_LENGTH = 6;
@@ -224,5 +226,18 @@ public class OpCode {
             result.insert(0, '0');
         }
         return result.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OpCode opCode = (OpCode) o;
+        return Objects.equals(name, opCode.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }
