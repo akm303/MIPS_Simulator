@@ -3,50 +3,46 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="group1.mips_simulator.SimController">
-    <!--
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
-    -->
-    <HBox id="registers" alignment="CENTER" spacing="60.0">
+<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml">
+    <!-- fx:controller="group1.mips_simulator.SimController" -->
+
+    <HBox id="registers" alignment="CENTER" spacing="20.0">
         <VBox spacing="20.0" fx:id="VBoxLeft_GPRs">
             <HBox spacing="20">
                 <Label text="GPR 0:"/>
-                <TextField fx:id="GPR0" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                <TextField fx:id="GPR0" editable="false" minWidth="140">
                     <font>
                         <Font name="Consolas" size="11.0"/>
                     </font>
                 </TextField>
-                <Button fx:id="GPR0_button" onAction="#gpr0OnClick"/>
+                <Button fx:id="GPR0_button"/>
             </HBox>
             <HBox spacing="20">
                 <Label text="GPR 1:"/>
-                <TextField fx:id="GPR1" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                <TextField fx:id="GPR1" editable="false" minWidth="140">
                     <font>
                         <Font name="Consolas" size="11.0"/>
                     </font>
                 </TextField>
-                <Button fx:id="GPR1_button" onAction="#gpr1OnClick"/>
+                <Button fx:id="GPR1_button"/>
             </HBox>
             <HBox spacing="20">
                 <Label text="GPR 2:"/>
-                <TextField fx:id="GPR2" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                <TextField fx:id="GPR2" editable="false" minWidth="140">
                     <font>
                         <Font name="Consolas" size="11.0"/>
                     </font>
                 </TextField>
-                <Button fx:id="GPR2_button" onAction="#gpr2OnClick"/>
+                <Button fx:id="GPR2_button"/>
             </HBox>
             <HBox spacing="20">
                 <Label text="GPR 3:"/>
-                <TextField fx:id="GPR3" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                <TextField fx:id="GPR3" editable="false" minWidth="140">
                     <font>
                         <Font name="Consolas" size="11.0"/>
                     </font>
                 </TextField>
-                <Button fx:id="GPR3_button" onAction="#gpr3OnClick"/>
+                <Button fx:id="GPR3_button"/>
             </HBox>
         </VBox>
         <VBox spacing="20.0" fx:id="VBoxCenter_IXRs">
@@ -56,72 +52,72 @@
             </HBox>
             <HBox spacing="20">
                 <Label text="IXR 1:"/>
-                <TextField fx:id="IXR1" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                <TextField fx:id="IXR1" editable="false" minWidth="140">
                     <font>
                         <Font name="Consolas" size="11.0"/>
                     </font>
                 </TextField>
-                <Button fx:id="IXR1_button" onAction="#ixr1OnClick"/>
+                <Button fx:id="IXR1_button"/>
             </HBox>
             <HBox spacing="20">
                 <Label text="IXR 2:"/>
-                <TextField fx:id="IXR2" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                <TextField fx:id="IXR2" editable="false" minWidth="140">
                     <font>
                         <Font name="Consolas" size="11.0"/>
                     </font>
                 </TextField>
-                <Button fx:id="IXR2_button" onAction="#ixr2OnClick"/>
+                <Button fx:id="IXR2_button"/>
             </HBox>
             <HBox spacing="20">
                 <Label text="IXR 3:"/>
-                <TextField fx:id="IXR3" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                <TextField fx:id="IXR3" editable="false" minWidth="140"> <!-- 204 is good for 16 bits-->
                     <font>
                         <Font name="Consolas" size="11.0"/>
                     </font>
                 </TextField>
-                <Button fx:id="IXR3_button" onAction="#ixr3OnClick"/>
+                <Button fx:id="IXR3_button"/>
             </HBox>
         </VBox>
         <VBox spacing="20.0" fx:id="VBoxRight_OtherRegs">
             <HBox spacing="20">
                 <Label text="PC:"/>
-                <TextField fx:id="PC" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                <TextField fx:id="PC" editable="false" minWidth="140">
                     <font>
                         <Font name="Consolas" size="11.0"/>
                     </font>
                 </TextField>
-                <Button fx:id="PC_button" onAction="#pcOnClick"/>
+                <Button fx:id="PC_button"/>
             </HBox>
             <HBox spacing="20">
                 <Label text="MAR:"/>
-                <TextField fx:id="MAR" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                <TextField fx:id="MAR" editable="false" minWidth="140">
                     <font>
                         <Font name="Consolas" size="11.0"/>
                     </font>
                 </TextField>
-                <Button fx:id="MAR_button" onAction="#marOnClick"/>
+                <Button fx:id="MAR_button"/>
             </HBox>
             <HBox spacing="20">
                 <Label text="MBR:"/>
-                <TextField fx:id="MBR" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                <TextField fx:id="MBR" editable="false" minWidth="140">
                     <font>
                         <Font name="Consolas" size="11.0"/>
                     </font>
                 </TextField>
-                <Button fx:id="MBR_button" onAction="#mbrOnClick"/>
+                <Button fx:id="MBR_button"/>
             </HBox>
             <HBox spacing="20">
                 <Label text="RI:"/>
-                <TextField fx:id="RI" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                <TextField fx:id="RI" editable="false" minWidth="140">
                     <font>
                         <Font name="Consolas" size="11.0"/>
                     </font>
                 </TextField>
-                <Button fx:id="RI_button" onAction="#riOnClick"/>
+                <Button fx:id="RI_button"/>
             </HBox>
             <HBox spacing="20">
                 <Label text="MFR:"/>
-                <TextField fx:id="MFR" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                <TextField fx:id="MFR" editable="false" maxWidth="40">
                     <font>
                         <Font name="Consolas" size="11.0"/>
                     </font>
@@ -129,7 +125,7 @@
             </HBox>
             <HBox spacing="20">
                 <Label text="Privileged:"/>
-                <TextField fx:id="Privileged" maxWidth="28">
+                <TextField fx:id="Privileged" editable="false" maxWidth="28">
                     <font>
                         <Font name="Consolas" size="11.0"/>
                     </font>
@@ -137,7 +133,7 @@
             </HBox>
             <HBox spacing="20">
                 <Label text="CC (OUED):"/>
-                <TextField fx:id="CC" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                <TextField fx:id="CC" editable="false" maxWidth="40">
                     <font>
                         <Font name="Consolas" size="11.0"/>
                     </font>
@@ -150,7 +146,7 @@
         <VBox alignment="CENTER_LEFT" spacing="20">
             <HBox spacing="20">
                 <Label text="Octal Input:"/>
-                <TextField fx:id="OctalInput" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                <TextField fx:id="OctalInput" minWidth="140">
                     <font>
                         <Font name="Consolas" size="11.0"/>
                     </font>
@@ -158,7 +154,7 @@
             </HBox>
             <HBox spacing="20">
                 <Label text="Binary Input:"/>
-                <TextField fx:id="BinInput" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                <TextField fx:id="BinInput" minWidth="140">
                     <font>
                         <Font name="Consolas" size="11.0"/>
                     </font>
@@ -167,16 +163,16 @@
         </VBox>
         <HBox spacing="50">
             <VBox spacing="10">
-                <Button text="Load" onAction="#loadOnClick"/>
-                <Button text="Load+" onAction="#loadPlusOnClick"/>
+                <Button text="Load"/>
+                <Button text="Load+"/>
 
-                <Button text="Store" onAction="#storeOnClick"/>
-                <Button text="Store+" onAction="#storePlusOnClick"/>
+                <Button text="Store"/>
+                <Button text="Store+"/>
             </VBox>
             <VBox spacing="10">
-                <Button text="Run" onAction="#runOnClick"/>
-                <Button text="Step" onAction="#stepOnClick"/>
-                <Button text="Halt" onAction="#haltOnClick"/>
+                <Button text="Run"/>
+                <Button text="Step"/>
+                <Button text="Halt"/>
             </VBox>
         </HBox>
     </HBox>
@@ -188,6 +184,6 @@
                 <Font name="Consolas" size="11.0"/>
             </font>
         </TextField>
-        <Button text="IPL" onAction="#iplOnClick"/>
+        <Button text="IPL"/>
     </HBox>
 </VBox>
