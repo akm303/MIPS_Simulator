@@ -16,12 +16,11 @@ public class Value {
     //endregion
 
     //region getters and setters
-    public short get() {
-        return this.getShort();
-    }
+    public short get() { return this.getShort(); }
 
     public short getShort() {return value_;}
-    //public int getInt() { return (int) value_;} //unimportant
+
+    public int getInt() { return (int) value_;}
 
     public void set(short value_) {
         this.value_ = value_;
