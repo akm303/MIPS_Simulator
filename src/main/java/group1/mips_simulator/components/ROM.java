@@ -4,4 +4,7 @@ public class ROM {
     /* gets loaded into ROM Loader in CPU
     * Contains program to be run(?)
     * */
+    public ROM(String directoryOfROM){
+
+    }
 }
