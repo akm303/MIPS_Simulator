@@ -1,15 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="group1.mips_simulator.SimController">
+    <!--
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
+    -->
+    <HBox alignment="CENTER" spacing="60.0">
+        <VBox spacing="20.0" fx:id="VBoxLeft_GPRs">
+            <HBox spacing="20">
+                <Label text="GPR 0:"/>
+                <TextField fx:id="GPR0"/>
+            </HBox>
+            <HBox spacing="20">
+                <Label text="GPR 1:"/>
+                <TextField fx:id="GPR1"/>
+            </HBox>
+            <HBox spacing="20">
+                <Label text="GPR 2:"/>
+                <TextField fx:id="GPR2"/>
+            </HBox>
+            <HBox spacing="20">
+                <Label text="GPR 3:"/>
+                <TextField fx:id="GPR3"/>
+            </HBox>
+        </VBox>
+        <VBox spacing="20.0" fx:id="VBoxCenter_IXRs">
+            <HBox spacing="40">
+                <!-- Intentionally empty -->
+                <Label/>
+            </HBox>
+            <HBox spacing="20">
+                <Label text="IXR 1:"/>
+                <TextField fx:id="IXR1"/>
+            </HBox>
+            <HBox spacing="20">
+                <Label text="IXR 2:"/>
+                <TextField fx:id="IXR2"/>
+            </HBox>
+            <HBox spacing="20">
+                <Label text="IXR 3:"/>
+                <TextField fx:id="IXR3"/>
+            </HBox>
+        </VBox>
+        <VBox spacing="20.0" fx:id="VBoxRight_OtherRegs">
+            <HBox spacing="20">
+                <Label text="PC:"/>
+                <TextField fx:id="PC" maxWidth="204"/> <!-- 17 * 12 -->
+            </HBox>
+            <HBox spacing="20">
+                <Label text="MAR:"/>
+                <TextField fx:id="MAR"/>
+            </HBox>
+            <HBox spacing="20">
+                <Label text="MBR:"/>
+                <TextField fx:id="MBR"/>
+            </HBox>
+            <HBox spacing="20">
+                <Label text="RI:"/>
+                <TextField fx:id="RI"/>
+            </HBox>
+            <HBox spacing="20">
+                <Label text="MFR:"/>
+                <TextField fx:id="MFR"/>
+            </HBox>
+            <HBox spacing="20">
+                <Label text="Privileged:"/>
+                <TextField fx:id="Privileged"  maxWidth="28"/>
+            </HBox>
+            <HBox spacing="20">
+                <Label text="CC (OUED):"/>
+                <TextField fx:id="CC"/>
+            </HBox>
+        </VBox>
+    </HBox>
 
     <Label fx:id="welcomeText"/>
     <Button text="Hello!" onAction="#onHelloButtonClick"/>
