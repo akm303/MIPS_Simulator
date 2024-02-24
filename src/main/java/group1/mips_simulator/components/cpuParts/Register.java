@@ -9,12 +9,30 @@ import group1.mips_simulator.components.Value;
 public class Register {
     public Value value = new Value(0);
 
-    public Value read() {
+    //getter methods
+    public Value get() {
+        // get the Value in the register
         return this.value;
     }
+    public short read() {
+        // read the number in the register
+        return this.value.get();
+    }
 
-    public void set(Value newValue) {this.value = newValue; }
-    public void write(short value_) {this.value = new Value(value_);}
+
+    // setter methods
+    public void set(Value newValue) {
+        // set the Value of the register
+        this.value = newValue;
+    }
+    public void write(short value_) {
+        // write a short to the register
+        this.value = new Value(value_);
+    }
+    public void write(int value_) {
+        // write an int to the register
+        this.write((short) value_);
+    }
 
     public void increment(){
         this.value.set(this.value.get() + 1);
