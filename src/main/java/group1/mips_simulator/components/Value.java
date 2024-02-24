@@ -17,12 +17,17 @@ public class Value {
 
     //region getters and setters
     public short get() {
-        return value_;
+        return this.getShort();
     }
+
+    public short getShort() {return value_;}
+    //public int getInt() { return (int) value_;} //unimportant
 
     public void set(short value_) {
         this.value_ = value_;
     }
+
+    public void set(Value value_) {this.set(value_.get()); }
 
     public void set(int value) {
         this.set((short) value);
