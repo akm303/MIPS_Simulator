@@ -13,9 +13,8 @@ public class Register {
         return this.value;
     }
 
-    public void write(Value newValue) {
-        this.value = newValue;
-    }
+    public void set(Value newValue) {this.value = newValue; }
+    public void write(short value_) {this.value = new Value(value_);}
 
     public void increment(){
         this.value.set(this.value.get() + 1);

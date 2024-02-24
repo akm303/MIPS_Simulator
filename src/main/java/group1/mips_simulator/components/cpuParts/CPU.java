@@ -43,6 +43,10 @@ public class CPU {
         romLoader = new RomLoader();
     }
 
+//    public void run() {
+//        this.romLoader.loadROM();
+//    }
+
     private void loadROM(String directory){
         this.romLoader.loadFrom(directory);
     }
