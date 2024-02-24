@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="group1.mips_simulator.SimController">
     <!--
@@ -9,23 +10,43 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
     -->
-    <HBox alignment="CENTER" spacing="60.0">
+    <HBox id="registers" alignment="CENTER" spacing="60.0">
         <VBox spacing="20.0" fx:id="VBoxLeft_GPRs">
             <HBox spacing="20">
                 <Label text="GPR 0:"/>
-                <TextField fx:id="GPR0"/>
+                <TextField fx:id="GPR0" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+                <Button fx:id="GPR0_button" onAction="#gpr0OnClick"/>
             </HBox>
             <HBox spacing="20">
                 <Label text="GPR 1:"/>
-                <TextField fx:id="GPR1"/>
+                <TextField fx:id="GPR1" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+                <Button fx:id="GPR1_button" onAction="#gpr1OnClick"/>
             </HBox>
             <HBox spacing="20">
                 <Label text="GPR 2:"/>
-                <TextField fx:id="GPR2"/>
+                <TextField fx:id="GPR2" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+                <Button fx:id="GPR2_button" onAction="#gpr2OnClick"/>
             </HBox>
             <HBox spacing="20">
                 <Label text="GPR 3:"/>
-                <TextField fx:id="GPR3"/>
+                <TextField fx:id="GPR3" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+                <Button fx:id="GPR3_button" onAction="#gpr3OnClick"/>
             </HBox>
         </VBox>
         <VBox spacing="20.0" fx:id="VBoxCenter_IXRs">
@@ -35,49 +56,138 @@
             </HBox>
             <HBox spacing="20">
                 <Label text="IXR 1:"/>
-                <TextField fx:id="IXR1"/>
+                <TextField fx:id="IXR1" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+                <Button fx:id="IXR1_button" onAction="#ixr1OnClick"/>
             </HBox>
             <HBox spacing="20">
                 <Label text="IXR 2:"/>
-                <TextField fx:id="IXR2"/>
+                <TextField fx:id="IXR2" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+                <Button fx:id="IXR2_button" onAction="#ixr2OnClick"/>
             </HBox>
             <HBox spacing="20">
                 <Label text="IXR 3:"/>
-                <TextField fx:id="IXR3"/>
+                <TextField fx:id="IXR3" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+                <Button fx:id="IXR3_button" onAction="#ixr3OnClick"/>
             </HBox>
         </VBox>
         <VBox spacing="20.0" fx:id="VBoxRight_OtherRegs">
             <HBox spacing="20">
                 <Label text="PC:"/>
-                <TextField fx:id="PC" maxWidth="204"/> <!-- 17 * 12 -->
+                <TextField fx:id="PC" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+                <Button fx:id="PC_button" onAction="#pcOnClick"/>
             </HBox>
             <HBox spacing="20">
                 <Label text="MAR:"/>
-                <TextField fx:id="MAR"/>
+                <TextField fx:id="MAR" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+                <Button fx:id="MAR_button" onAction="#marOnClick"/>
             </HBox>
             <HBox spacing="20">
                 <Label text="MBR:"/>
-                <TextField fx:id="MBR"/>
+                <TextField fx:id="MBR" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+                <Button fx:id="MBR_button" onAction="#mbrOnClick"/>
             </HBox>
             <HBox spacing="20">
                 <Label text="RI:"/>
-                <TextField fx:id="RI"/>
+                <TextField fx:id="RI" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+                <Button fx:id="RI_button" onAction="#riOnClick"/>
             </HBox>
             <HBox spacing="20">
                 <Label text="MFR:"/>
-                <TextField fx:id="MFR"/>
+                <TextField fx:id="MFR" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
             </HBox>
             <HBox spacing="20">
                 <Label text="Privileged:"/>
-                <TextField fx:id="Privileged"  maxWidth="28"/>
+                <TextField fx:id="Privileged" maxWidth="28">
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
             </HBox>
             <HBox spacing="20">
                 <Label text="CC (OUED):"/>
-                <TextField fx:id="CC"/>
+                <TextField fx:id="CC" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
             </HBox>
         </VBox>
     </HBox>
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
+    <HBox fx:id="hbox_UserInput" alignment="CENTER" spacing="60">
+        <VBox alignment="CENTER_LEFT" spacing="20">
+            <HBox spacing="20">
+                <Label text="Octal Input:"/>
+                <TextField fx:id="OctalInput" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+            </HBox>
+            <HBox spacing="20">
+                <Label text="Binary Input:"/>
+                <TextField fx:id="BinInput" maxWidth="204"> <!-- 204 is good for 16 bits-->
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+            </HBox>
+        </VBox>
+        <HBox spacing="50">
+            <VBox spacing="10">
+                <Button text="Load" onAction="#loadOnClick"/>
+                <Button text="Load+" onAction="#loadPlusOnClick"/>
+
+                <Button text="Store" onAction="#storeOnClick"/>
+                <Button text="Store+" onAction="#storePlusOnClick"/>
+            </VBox>
+            <VBox spacing="10">
+                <Button text="Run" onAction="#runOnClick"/>
+                <Button text="Step" onAction="#stepOnClick"/>
+                <Button text="Halt" onAction="#haltOnClick"/>
+            </VBox>
+        </HBox>
+    </HBox>
+
+    <HBox spacing="10">
+        <Label text=".bi File:"/>
+        <TextField fx:id="FileToLoad" minWidth="800">
+            <font>
+                <Font name="Consolas" size="11.0"/>
+            </font>
+        </TextField>
+        <Button text="IPL" onAction="#iplOnClick"/>
+    </HBox>
 </VBox>

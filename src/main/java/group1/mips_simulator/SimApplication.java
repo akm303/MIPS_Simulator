@@ -14,7 +14,7 @@ import java.io.IOException;
 public class SimApplication extends Application {
 
     static final int WIDTH = 900;
-    static final int HEIGHT = 750;
+    static final int HEIGHT = 550;
 
     @Override
     public void start(Stage stage) throws IOException {
