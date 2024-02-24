@@ -1,9 +1,6 @@
 package group1.mips_simulator;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -19,6 +16,19 @@ public class SimController {
     public TextField GPR2;
     public TextField GPR3;
 
+
+    public void gpr0OnClick(ActionEvent actionEvent) {
+    }
+
+    public void gpr1OnClick(ActionEvent actionEvent) {
+    }
+
+    public void gpr2OnClick(ActionEvent actionEvent) {
+    }
+
+    public void gpr3OnClick(ActionEvent actionEvent) {
+    }
+
     //endregion
 
     //region Middle Column (Index Registers)
@@ -26,6 +36,16 @@ public class SimController {
     public TextField IXR3;
     public TextField IXR2;
     public TextField IXR1;
+
+    public void ixr1OnClick(ActionEvent actionEvent) {
+    }
+
+    public void ixr2OnClick(ActionEvent actionEvent) {
+    }
+
+    public void ixr3OnClick(ActionEvent actionEvent) {
+    }
+
 
     // endregion
 
@@ -39,28 +59,22 @@ public class SimController {
     public TextField Privileged;
     public TextField CC;
 
-    //endregion
 
-
-    public HBox hbox_UserInput;
-    public TextField BinInput;
-    public TextField OctalInput;
-    public TextField FileToLoad;
-
-    //endregion
-
-
-
-    @FXML
-    private Label welcomeText;
-
-    @FXML
-    private Label pcLabel;
-
-    @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+    public void riOnClick(ActionEvent actionEvent) {
     }
+
+    public void mbrOnClick(ActionEvent actionEvent) {
+    }
+
+    public void marOnClick(ActionEvent actionEvent) {
+    }
+
+    public void pcOnClick(ActionEvent actionEvent) {
+    }
+
+    //endregion
+
+    //region Command Buttons
 
     public void loadOnClick() {
     }
@@ -83,39 +97,21 @@ public class SimController {
     public void haltOnClick(ActionEvent actionEvent) {
     }
 
+    //endregion
+
+
+    public HBox hbox_UserInput;
+    public TextField BinInput;
+    public TextField OctalInput;
+
+    //region Load File
+    public TextField FileToLoad;
+
     public void iplOnClick(ActionEvent actionEvent) {
     }
 
-    public void gpr3OnClick(ActionEvent actionEvent) {
-    }
+    //endregion
 
-    public void gpr2OnClick(ActionEvent actionEvent) {
-    }
+    //endregion
 
-    public void gpr1OnClick(ActionEvent actionEvent) {
-    }
-
-    public void gpr0OnClick(ActionEvent actionEvent) {
-    }
-
-    public void ixr1OnClick(ActionEvent actionEvent) {
-    }
-
-    public void ixr2OnClick(ActionEvent actionEvent) {
-    }
-
-    public void ixr3OnClick(ActionEvent actionEvent) {
-    }
-
-    public void riOnClick(ActionEvent actionEvent) {
-    }
-
-    public void mbrOnClick(ActionEvent actionEvent) {
-    }
-
-    public void marOnClick(ActionEvent actionEvent) {
-    }
-
-    public void pcOnClick(ActionEvent actionEvent) {
-    }
 }
