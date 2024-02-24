@@ -25,9 +25,10 @@ public class Register {
         // set the Value of the register
         this.value = newValue;
     }
+
     public void write(short value_) {
         // write a short to the register
-        this.value = new Value(value_);
+        this.set(new Value(value_));
     }
     public void write(int value_) {
         // write an int to the register
@@ -35,10 +36,13 @@ public class Register {
     }
 
     public void increment(){
+        // may outsource this functionality to an ALU class, which would essentially
+        // do all arithmetic (EX of the pipeline diagram)
+        // for now, for simplicity of program counter, leaving this built-in to register functionality
         this.value.set(this.value.get() + 1);
     }
 
-    public void incrementBy(int n){
+    public void incrementBy(int n){     // may remove this at a future date if unused and/or we implement
         //increment by multiple
         // implemented using increment in case we want to add logic based on, for example,
         // an instruction PC might need to access as it increments
