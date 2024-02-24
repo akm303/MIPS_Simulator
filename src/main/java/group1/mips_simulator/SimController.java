@@ -117,6 +117,7 @@ public class SimController {
         BinInput.textProperty().addListener((obs, oldText, newText) -> {
             if (!Utility.isValidBinary(newText)) {
                 BinInput.setStyle("-fx-text-fill: red"); // Color of text
+                OctalInput.setText("");
                 return;
             }
             // Else it's a valid number
@@ -126,6 +127,7 @@ public class SimController {
         OctalInput.textProperty().addListener((obs, oldText, newText) -> {
             if (!Utility.isValidOctal(newText)) {
                 OctalInput.setStyle("-fx-text-fill: red"); // Color of text
+                BinInput.setText("");
                 return;
             }
             // Else it's a valid number

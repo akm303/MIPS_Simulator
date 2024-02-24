@@ -81,7 +81,7 @@
         <VBox spacing="20.0" fx:id="VBoxRight_OtherRegs">
             <HBox spacing="20">
                 <Label text="PC:"/>
-                <TextField fx:id="PC" editable="false" minWidth="140">
+                <TextField fx:id="PC" editable="false" maxWidth="110">
                     <font>
                         <Font name="Consolas" size="11.0"/>
                     </font>
@@ -90,7 +90,7 @@
             </HBox>
             <HBox spacing="20">
                 <Label text="MAR:"/>
-                <TextField fx:id="MAR" editable="false" minWidth="140">
+                <TextField fx:id="MAR" editable="false" maxWidth="110">
                     <font>
                         <Font name="Consolas" size="11.0"/>
                     </font>
