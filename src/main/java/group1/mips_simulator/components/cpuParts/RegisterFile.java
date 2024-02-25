@@ -12,9 +12,9 @@ public class RegisterFile {
     Register[] ixr = new Register[3];   //Index Reg: X1-X3.
     Register pc = new Register();       //Prog Counter Reg : address of next instruction to be executed
     Register cc = new Register();       //Condition Code Reg : set when arith/logical operations executed
-                                        // ONZE (Overflow, uNderflow, divZero, Equalornot)
-                                // (only one i dont understand is "equal or not", is that saying, set flat to 1 if equal
-                                // and set to 0 if not?)
+    // ONZE (Overflow, uNderflow, divZero, Equalornot)
+    // (only one i dont understand is "equal or not", is that saying, set flat to 1 if equal
+    // and set to 0 if not?)
     Register ir = new Register();       //Instruction Reg : holds instruction to be exe
     Register mar = new Register();      //Mem Addr Reg : holds address of word to be fetched from memory
     Register mbr = new Register();      //Mem Buffer Reg : holds word just-fetched-from/to-be-writen-to memory

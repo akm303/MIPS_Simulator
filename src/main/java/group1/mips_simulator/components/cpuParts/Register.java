@@ -5,9 +5,15 @@ import group1.mips_simulator.components.Value;
 /**
  * A Register is a space that holds a value, and makes it available for
  * the CPU to read/ write quickly.
+ *
+ * All Registers are initialized with a Value of 0, and can be modified from there
  */
 public class Register {
     public Value value = new Value(0);
+    //todo
+    //i just realized i never wrote a constructor...but Register seems to work without one
+    //since the only instance attribute gets initialized at declaration...so it doesnt need one(?)
+    // should i write one, just to be explicit?
 
     //getter methods
     public Value get() {
