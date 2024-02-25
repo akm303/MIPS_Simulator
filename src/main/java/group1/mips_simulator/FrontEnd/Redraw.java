@@ -21,7 +21,7 @@ public class Redraw {
         frontEnd.PC.setText(model.cpu.regfile.getPC().value.toString_Binary());
         frontEnd.MAR.setText(model.cpu.regfile.getMAR().value.toString_Binary());
         frontEnd.MBR.setText(model.cpu.regfile.getMBR().value.toString_Binary());
-        frontEnd.RI.setText(model.cpu.regfile.getIR().value.toString_Binary());
+        frontEnd.IR.setText(model.cpu.regfile.getIR().value.toString_Binary());
         frontEnd.MFR.setText(model.cpu.regfile.getMFR().value.toString_Binary());
         frontEnd.CC.setText(model.cpu.regfile.getCC().value.toString_Binary());
     }

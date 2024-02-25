@@ -69,7 +69,7 @@ public class SimController {
     public TextField PC;
     public TextField MAR;
     public TextField MBR;
-    public TextField RI;
+    public TextField IR;
     public TextField MFR;
     public TextField Privileged;
     public TextField CC;
