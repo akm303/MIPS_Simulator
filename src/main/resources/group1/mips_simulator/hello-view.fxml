@@ -179,11 +179,11 @@
 
     <HBox spacing="10">
         <Label text=".bi File:"/>
-        <TextField fx:id="FileToLoad" minWidth="800">
+        <TextField fx:id="FileToLoad" editable="false" minWidth="800">
             <font>
                 <Font name="Consolas" size="11.0"/>
             </font>
         </TextField>
-        <Button text="IPL"/>
+        <Button text="IPL" fx:id="IPL_button"/>
     </HBox>
 </VBox>

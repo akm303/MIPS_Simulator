@@ -17,10 +17,10 @@ public class SimApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(SimApplication.class.getResource("hello-view.fxml"));
 
-        SimController controller = new SimController(new Computer());
+        SimController controller = new SimController(new Computer(), stage);
         fxmlLoader.setController(controller);
         Scene scene = new Scene(fxmlLoader.load(), WIDTH, HEIGHT);
-
+        
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();

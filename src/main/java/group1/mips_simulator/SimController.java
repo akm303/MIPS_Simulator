@@ -11,15 +11,27 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.IOException;
 
 public class SimController {
 
     public Computer computer;
+    private final Stage mainStage;
     Redraw redraw = new Redraw();
 
 
-    public SimController(Computer c) {
+    public SimController(Computer c, Stage stage) {
         this.computer = c;
+        mainStage = stage;
+        // do NOT call restartComputer here.
+    }
+
+    protected void restartComputer() {
+        this.computer = new Computer();
+        this.initialize();
     }
 
     //region Binary Displays
@@ -105,14 +117,18 @@ public class SimController {
     //endregion
 
     //region Load File
+    @FXML
     public TextField FileToLoad;
-
-    public void iplOnClick(ActionEvent actionEvent) {
-    }
+    public Button IPL_button;
 
     //endregion
+
+    // Hook up all the front end elements to their back end models
+    // Hook up user interface buttons with the back end controller functions
     @FXML
     public void initialize() {
+        // do NOT call restartComputer here.
+
         System.out.println("Hello from SimController.initialize");
         BinInput.textProperty().addListener((obs, oldText, newText) -> {
             if (!Utility.isValidBinary(newText)) {
@@ -135,20 +151,21 @@ public class SimController {
             BinInput.setText(Utility.octalStringToBinaryString(newText));
         });
 
-        setupButton(GPR0_button, computer.cpu.regfile.getGPR(0));
-        setupButton(GPR1_button, computer.cpu.regfile.getGPR(1));
-        setupButton(GPR2_button, computer.cpu.regfile.getGPR(2));
-        setupButton(GPR3_button, computer.cpu.regfile.getGPR(3));
+        setupRegisterButton(GPR0_button, computer.cpu.regfile.getGPR(0));
+        setupRegisterButton(GPR1_button, computer.cpu.regfile.getGPR(1));
+        setupRegisterButton(GPR2_button, computer.cpu.regfile.getGPR(2));
+        setupRegisterButton(GPR3_button, computer.cpu.regfile.getGPR(3));
 
-        setupButton(IXR1_button, computer.cpu.regfile.getIXR(1));
-        setupButton(IXR2_button, computer.cpu.regfile.getIXR(2));
-        setupButton(IXR3_button, computer.cpu.regfile.getIXR(3));
+        setupRegisterButton(IXR1_button, computer.cpu.regfile.getIXR(1));
+        setupRegisterButton(IXR2_button, computer.cpu.regfile.getIXR(2));
+        setupRegisterButton(IXR3_button, computer.cpu.regfile.getIXR(3));
 
-        setupButton(PC_button, computer.cpu.regfile.getPC());
-        setupButton(MAR_button, computer.cpu.regfile.getMAR());
-        setupButton(MBR_button, computer.cpu.regfile.getMBR());
-        setupButton(RI_button, computer.cpu.regfile.getIR());
+        setupRegisterButton(PC_button, computer.cpu.regfile.getPC());
+        setupRegisterButton(MAR_button, computer.cpu.regfile.getMAR());
+        setupRegisterButton(MBR_button, computer.cpu.regfile.getMBR());
+        setupRegisterButton(RI_button, computer.cpu.regfile.getIR());
 
+        setupIPL_Button(mainStage, new FileReader());
         // Draw the initial state
         redraw();
     }
@@ -158,7 +175,7 @@ public class SimController {
         this.redraw.updateFrontEnd(this, computer);
     }
 
-    public void setupButton(Button button, Register r) {
+    public void setupRegisterButton(Button button, Register r) {
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -173,4 +190,34 @@ public class SimController {
             }
         });
     }
+
+    public void setupIPL_Button(Stage mainStage, FileReader fr) {
+        // Restart/ wipe the computer
+        // Ask the user for a .bi file
+        // Then had that to the ROM loader
+        // If there is any issue, then paint the file name red.
+
+        IPL_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                System.out.println("IPL button clicked");
+                // restart the computer
+                restartComputer();
+
+                // Prompt user for a .bi file
+                File selectedFile = fr.getFile(mainStage);
+                FileToLoad.setText(selectedFile.getAbsolutePath());
+
+                // Hand the file to the ROM loader
+                try {
+                    computer.readOnlyMemory.readFromFile(selectedFile);
+                    FileToLoad.setStyle("-fx-text-fill: black"); // Color of text
+                } catch (IOException e) {
+                    System.out.println("Encountered an error when reading file: " + e);
+                    FileToLoad.setStyle("-fx-text-fill: red"); // Color of text
+                }
+            }
+        });
+    }
+
 }
