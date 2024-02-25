@@ -1,7 +1,9 @@
 package group1.mips_simulator.components;
 
-import group1.mips_simulator.components.instruction.Field;
-import group1.mips_simulator.components.instruction.RXIA_Instruction;
+import group1.mips_simulator.components.cpuParts.ConditionCode;
+import group1.mips_simulator.components.cpuParts.Register;
+import group1.mips_simulator.components.instructionParts.Field;
+import group1.mips_simulator.components.instructionParts.RXIA_Instruction;
 
 /**
  * A class that holds all the functions for actually executing an Instruction object
@@ -14,10 +16,11 @@ public class ExecutionInstructions {
      * If c(r) = 0, the E bit of the condition code is set to 1,
      * else the E bit of the condition code is set to 0
      */
-    public void execute_setcce(MipsComputer computer, RXIA_Instruction i) {
-        Register targetR = computer.registers.get(i.getR().value);
+    public void execute_setcce(Computer computer, RXIA_Instruction i) {
+        Register targetR = computer.cpu.regfile.getGPR(i.getR().value);
         Value regContents = targetR.read();
-        computer.conditionCode.setBit(ConditionCode.EBIT_INDEX, regContents.get() == 0);
+        boolean newEBit = (regContents.get() == 0); // if c(r) == 0, then newEBit is true (1).
+        computer.cpu.regfile.getCC().setBit(ConditionCode.EBIT_INDEX, newEBit);
     }
 
     /**
@@ -27,12 +30,13 @@ public class ExecutionInstructions {
      * If the E bit of  condition code is 1, then PC <− EA
      * Else PC <- PC+1
      */
-    public void execute_jz(MipsComputer computer, RXIA_Instruction i) {
-        if (computer.conditionCode.getEBit()) {
+    public void execute_jz(Computer computer, RXIA_Instruction i) {
+        boolean eBit = computer.cpu.regfile.getCC().getEBit();
+        if (eBit) {
             // if eBit is 1
             // PC <-- EA
             Value ea = computer.calculateEA(i);
-            computer.programCounter.set(ea);
+            computer.cpu.regfile.getPC().write(ea);
             return;
         }
         // else PC <-- PC+1
@@ -46,12 +50,13 @@ public class ExecutionInstructions {
      * If E bit of condition code is 0, then PC <−- EA
      * Else PC <- PC + 1
      */
-    public void execute_jne(MipsComputer computer, RXIA_Instruction i) {
-        if (!computer.conditionCode.getEBit()) {
+    public void execute_jne(Computer computer, RXIA_Instruction i) {
+        boolean eBit = computer.cpu.regfile.getCC().getEBit();
+        if (!eBit) {
             // if eBit is 0
             // PC <-- EA
             Value ea = computer.calculateEA(i);
-            computer.programCounter.set(ea);
+            computer.cpu.regfile.getPC().write(ea);
             return;
         }
         // else PC <-- PC+1
@@ -67,13 +72,13 @@ public class ExecutionInstructions {
      * If cc bit  = 1, PC <− EA
      * Else PC <- PC + 1
      */
-    public void execute_jcc(MipsComputer computer, RXIA_Instruction i) {
-        boolean targetCcBit = computer.conditionCode.getBit(i.getR().value);
+    public void execute_jcc(Computer computer, RXIA_Instruction i) {
+        boolean targetCcBit = computer.cpu.regfile.getCC().getBit(i.getR().value);
         if (targetCcBit) {
             // if cc bit = 1
             // PC <-- EA
             Value ea = computer.calculateEA(i);
-            computer.programCounter.set(ea);
+            computer.cpu.regfile.getPC().write(ea);
             return;
         }
         // else PC <-- PC+1
@@ -87,9 +92,9 @@ public class ExecutionInstructions {
      * PC <- EA,
      * Note: r is ignored in this instruction
      */
-    public void execute_jma(MipsComputer computer, RXIA_Instruction i) {
+    public void execute_jma(Computer computer, RXIA_Instruction i) {
         Value ea = computer.calculateEA(i);
-        computer.programCounter.set(ea);
+        computer.cpu.regfile.getPC().write(ea);
     }
 
     /**
@@ -101,15 +106,15 @@ public class ExecutionInstructions {
      * R0 should contain pointer to arguments
      * Argument list should end with –1 (all 1s) value
      */
-    public void execute_jsr(MipsComputer computer, RXIA_Instruction i) {
+    public void execute_jsr(Computer computer, RXIA_Instruction i) {
         // R3 <− PC+1;
-        Register r = computer.registers.get(3);
-        r.set(new Value(computer.programCounter.read().get() + 1));
-        computer.registers.set(3, r);
+        Register r = computer.cpu.regfile.getGPR(3);
+        short pcPlus1 = (short) (computer.cpu.regfile.getPC().read().get() + 1);
+        r.write(new Value(pcPlus1));
 
         // PC <− EA
         Value ea = computer.calculateEA(i);
-        computer.programCounter.set(ea);
+        computer.cpu.regfile.getPC().write(ea);
 
         // TODO:
         // R0 should contain pointer to arguments
@@ -126,17 +131,17 @@ public class ExecutionInstructions {
      * R0 <− Immed; PC <− c(R3)
      * IX, I fields are ignored.
      */
-    public void execute_rfs(MipsComputer computer, RXIA_Instruction i) {
+    public void execute_rfs(Computer computer, RXIA_Instruction i) {
         Field immed = i.getAddress();
 
         // R0 <− Immed
-        Register r0 = computer.registers.get(0);
-        r0.set(new Value(immed.value));
-        computer.registers.set(0, r0);
+        Register r0 = computer.cpu.regfile.getGPR(0);
+        r0.write(new Value(immed.value));
+        computer.cpu.regfile.getGPR(0).write(r0.value);
 
         // PC <- c(R3)
-        Register r3 = computer.registers.get(3);
-        computer.programCounter.set(r3.read());
+        Register r3 = computer.cpu.regfile.getGPR(3);
+        computer.cpu.regfile.getPC().write(r3.read());
     }
 
     /**
@@ -147,14 +152,16 @@ public class ExecutionInstructions {
      * If c(r) > 0,  PC <- EA;
      * Else PC <- PC + 1
      */
-    public void execute_sob(MipsComputer computer, RXIA_Instruction i) {
+    public void execute_sob(Computer computer, RXIA_Instruction i) {
         // r <− c(r) – 1
-        int r = computer.registers.get(i.getR().value).read().get() - 1;
+        // Contents of register r, minus 1
+        int r = computer.cpu.regfile.getGPR(i.getR().value).read().get() - 1;
 
         // If c(r) > 0,  PC <- EA;
-        if (computer.registers.get(r).read().get() > 0) {
+        Register targetReg = computer.cpu.regfile.getGPR(r);
+        if (targetReg.read().get() > 0) {
             Value ea = computer.calculateEA(i);
-            computer.programCounter.set(ea);
+            computer.cpu.regfile.getPC().write(ea);
             return;
         }
         // Else PC <- PC + 1
@@ -168,13 +175,13 @@ public class ExecutionInstructions {
      * If c(r) >= 0, then PC <- EA
      * Else PC <- PC + 1
      */
-    public void execute_jge(MipsComputer computer, RXIA_Instruction i) {
+    public void execute_jge(Computer computer, RXIA_Instruction i) {
         // If c(r) >= 0
-        Register targetReg = computer.registers.get(i.getR().value);
+        Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
         if (targetReg.read().get() >= 0) {
             // then PC <- EA
             Value ea = computer.calculateEA(i);
-            computer.programCounter.set(ea);
+            computer.cpu.regfile.getPC().write(ea);
             return;
         }
         // Else PC <- PC + 1

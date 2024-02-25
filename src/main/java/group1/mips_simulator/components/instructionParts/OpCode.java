@@ -1,4 +1,4 @@
-package group1.mips_simulator.components.instruction;
+package group1.mips_simulator.components.instructionParts;
 
 import java.util.Objects;
 
@@ -87,12 +87,13 @@ public class OpCode {
     }
 
     public static OpCode fromNumber_Decimal(int opCodeValue) {
-        return OpCode.fromNumber_Decimal((short)opCodeValue);
+        return OpCode.fromNumber_Decimal((short) opCodeValue);
     }
 
     /**
      * Reruns the value of this OpCode (in decimal) as an int type.
      * The returned in will be (naturally) base 10 representation
+     *
      * @return
      */
     public int toInt_Decimal() {
@@ -159,12 +160,13 @@ public class OpCode {
     }
 
     public short toShort_Decimal() {
-        return (short)this.toInt_Decimal();
+        return (short) this.toInt_Decimal();
     }
 
     /**
      * Convert this OpCode into a binary string of exactly 6 bits long.
      * If 0s need to be added, they will be added to the front of the string (left side)
+     *
      * @return This OpCode as a binary string "001011"
      */
     public String toString_Binary() {

@@ -1,5 +1,6 @@
 package group1.mips_simulator.components.instruction;
 
+import group1.mips_simulator.components.instructionParts.OpCode;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

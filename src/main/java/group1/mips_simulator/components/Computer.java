@@ -1,8 +1,12 @@
 package group1.mips_simulator.components;
 
-import group1.mips_simulator.components.instruction.Field;
-import group1.mips_simulator.components.instruction.Instruction;
-import group1.mips_simulator.components.instruction.RXIA_Instruction;
+
+import group1.mips_simulator.components.cpuParts.CPU;
+import group1.mips_simulator.components.cpuParts.Register;
+import group1.mips_simulator.components.instructionParts.Field;
+import group1.mips_simulator.components.instructionParts.Instruction;
+import group1.mips_simulator.components.instructionParts.RXIA_Instruction;
+import group1.mips_simulator.components.memParts.Memory;
 
 import java.util.Vector;
 
@@ -10,16 +14,23 @@ import java.util.Vector;
  * A Mips Computer is a class to represent the classical computer architecture
  * being discussed in class.
  */
-public class MipsComputer {
-
+public class Computer {
+/*
     public Memory memory;
     public Vector<Register> registers;
     public Vector<Register> indexRegisters;
     public Register programCounter;
 
     public ConditionCode conditionCode = new ConditionCode();
+//    public Register programCounter;
+*/
 
-    public MipsComputer() {
+    public Memory memory;
+    public CPU cpu;
+
+    public Computer() {
+        cpu = new CPU();
+        memory = new Memory();
     }
 
     /**
@@ -28,6 +39,8 @@ public class MipsComputer {
      * @param program The instruction set to run
      */
     public void executeProgram(Vector<Instruction> program) {
+        // IF -> ID -> Exe ->
+        //
         for (Instruction i : program) {
             try {
                 this.executeInstruction(i);
@@ -93,9 +106,8 @@ public class MipsComputer {
      * next position (+1)
      */
     public void incrementPC() {
-        Value pc = this.programCounter.read();
-        pc.set(pc.get() + 1);
-        this.programCounter.set(pc);
+        Register pc = this.cpu.regfile.getPC();
+        pc.increment();
     }
 
     /**
@@ -173,15 +185,15 @@ public class MipsComputer {
             // NO indirect addressing
             if (ix.value == 0) {
                 // EA = contents of the Address field       c(Address Field)
-                return new Value(memory.read(address.value));
+                return new Value(address.value);
             } else {
                 // EA = c(IX) + c(Address Field)
                 // that is, the IX field has an
                 // index register number, the contents of that register are
                 // added to the contents of the address field
-                short ixContents = this.indexRegisters.get(ix.value).read().get();
-                short addressContents = memory.read(address.value);
-                return new Value(ixContents + addressContents);
+                short ixContents = this.cpu.regfile.getIXR(ix.value).read().get();
+                short addressField = address.value;
+                return new Value(ixContents + addressField);
             }
         } else {
             // Indirection bit is set
@@ -191,13 +203,13 @@ public class MipsComputer {
                 //pointer where the address field has the location of the EA
                 //in memory
                 // both indirect addressing and indexing
-                short addressContents = memory.read(memory.read(address.value));
+                short addressContents = memory.read(address.value);
                 return new Value(addressContents);
             } else {
                 // c(c(IX) + c(Address Field))
-                short ixContents = this.indexRegisters.get(ix.value).read().get();
-                short addressContents = memory.read(address.value);
-                return new Value(memory.read(ixContents + addressContents));
+                short ixContents = this.cpu.regfile.getIXR(ix.value).read().get();
+                short addressField = address.value;
+                return new Value(memory.read((short) (ixContents + addressField)));
             }
         }
     }

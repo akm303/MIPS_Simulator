@@ -1,7 +1,9 @@
 package group1.mips_simulator;
 
-import group1.mips_simulator.components.instruction.Instruction;
-import group1.mips_simulator.components.instruction.InstructionFactory;
+
+import group1.mips_simulator.components.instructionParts.InstructionFactory;
+import group1.mips_simulator.components.instructionParts.Instruction;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;

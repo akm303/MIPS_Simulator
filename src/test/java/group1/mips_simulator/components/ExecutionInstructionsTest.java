@@ -1,8 +1,11 @@
 package group1.mips_simulator.components;
 
-import group1.mips_simulator.components.instruction.Field;
-import group1.mips_simulator.components.instruction.OpCode;
-import group1.mips_simulator.components.instruction.RXIA_Instruction;
+import group1.mips_simulator.components.cpuParts.ConditionCode;
+import group1.mips_simulator.components.cpuParts.RegisterFile;
+import group1.mips_simulator.components.instructionParts.Field;
+import group1.mips_simulator.components.instructionParts.OpCode;
+import group1.mips_simulator.components.instructionParts.RXIA_Instruction;
+import group1.mips_simulator.components.memParts.Memory;
 import org.junit.jupiter.api.Test;
 
 import java.util.Vector;
@@ -11,24 +14,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ExecutionInstructionsTest {
 
-    MipsComputer buildMipsComputer() {
-        MipsComputer result = new MipsComputer();
+    Computer buildComputer() {
+        Computer result = new Computer();
         result.memory = new Memory();
-        result.registers = new Vector<>() {{
-            add(new Register());
-            add(new Register());
-            add(new Register());
-            add(new Register());
-        }};
-        result.indexRegisters = new Vector<>() {{
-            add(new Register());
-            add(new Register());
-            add(new Register());
-            add(new Register());
-        }};
-        result.programCounter = new Register();
-        result.conditionCode = new ConditionCode();
-
+        result.cpu.regfile = new RegisterFile();
         return result;
     }
 
@@ -36,7 +25,7 @@ class ExecutionInstructionsTest {
     @Test
     void execute_setcce_test_FalseToTrue() {
         ExecutionInstructions underTest = new ExecutionInstructions();
-        MipsComputer computer = buildMipsComputer();
+        Computer computer = buildComputer();
 
         RXIA_Instruction instruction = new RXIA_Instruction(
                 new OpCode("setcce"),
@@ -48,19 +37,20 @@ class ExecutionInstructionsTest {
                 }}
         );
 
-        computer.registers.get(1).set(0);// c(r) = 0
+        computer.cpu.regfile.getGPR(1).write((short) 0); // c(r) = 0
 
-        computer.conditionCode.setBit(ConditionCode.EBIT_INDEX, false); // e bit = 0
-        assertFalse(computer.conditionCode.getEBit());
+        // e bit = 0
+        computer.cpu.regfile.getCC().setBit(ConditionCode.EBIT_INDEX, false);
+        assertFalse(computer.cpu.regfile.getCC().getEBit());
 
         computer.executeInstruction(instruction);
-        assertTrue(computer.conditionCode.getEBit());
+        assertTrue(computer.cpu.regfile.getCC().getEBit());
     }
 
     @Test
     void execute_setcce_test_TrueToFalse() {
         ExecutionInstructions underTest = new ExecutionInstructions();
-        MipsComputer computer = buildMipsComputer();
+        Computer computer = buildComputer();
 
         RXIA_Instruction instruction = new RXIA_Instruction(
                 new OpCode("setcce"),
@@ -72,35 +62,35 @@ class ExecutionInstructionsTest {
                 }}
         );
 
-        computer.registers.get(1).set(1);// c(r) != 0
+        computer.cpu.regfile.getGPR(1).write((short) 1); // c(r) = 1
 
-        computer.conditionCode.setBit(ConditionCode.EBIT_INDEX, true); // e bit = 1
-        assertTrue(computer.conditionCode.getEBit());
+        // e bit = 0
+        computer.cpu.regfile.getCC().setBit(ConditionCode.EBIT_INDEX, true);
+        assertTrue(computer.cpu.regfile.getCC().getEBit());
 
         computer.executeInstruction(instruction);
-        assertFalse(computer.conditionCode.getEBit());
+        assertFalse(computer.cpu.regfile.getCC().getEBit());
     }
-
 
 
     @Test
     void execute_jz() {
         ExecutionInstructions underTest = new ExecutionInstructions();
-        MipsComputer computer = buildMipsComputer();
+        Computer computer = buildComputer();
 
         RXIA_Instruction instruction = new RXIA_Instruction(
                 new OpCode("jz"),
                 new Vector<>() {{
-                    add(new Field(0, 2));  // R
-                    add(new Field(0, 2));  // X
-                    add(new Field(0, 1));  // I
+                    add(new Field(0, 2));   // R
+                    add(new Field(0, 2));   // X
+                    add(new Field(0, 1));   // I
                     add(new Field(20, 5));  // A
                 }}
         );
 
-        computer.conditionCode.setBit(ConditionCode.EBIT_INDEX, true);
-        assertEquals(computer.programCounter.read().get(), 0);
+        computer.cpu.regfile.getCC().setBit(ConditionCode.EBIT_INDEX, true);
+        assertEquals(computer.cpu.regfile.getPC().read().get(), 0);
         computer.executeInstruction(instruction);
-        assertEquals(20, computer.programCounter.read().get());
+        assertEquals(20, computer.cpu.regfile.getPC().read().get());
     }
 }

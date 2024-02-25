@@ -1,9 +1,9 @@
 package group1.mips_simulator;
 
-import group1.mips_simulator.components.instruction.Field;
-import group1.mips_simulator.components.instruction.Instruction;
-import group1.mips_simulator.components.instruction.OpCode;
-import group1.mips_simulator.components.instruction.RXIA_Instruction;
+import group1.mips_simulator.components.instructionParts.Field;
+import group1.mips_simulator.components.instructionParts.Instruction;
+import group1.mips_simulator.components.instructionParts.OpCode;
+import group1.mips_simulator.components.instructionParts.RXIA_Instruction;
 import org.junit.jupiter.api.Test;
 
 import java.util.Vector;

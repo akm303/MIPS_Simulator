@@ -13,6 +13,10 @@ public class Value {
         this((short) value);
     }
 
+    public Value clone() {
+        return new Value(this.value_);
+    }
+
     //endregion
 
     //region getters and setters

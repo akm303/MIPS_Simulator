@@ -1,12 +1,12 @@
 package group1.mips_simulator.components;
 
-import group1.mips_simulator.components.instruction.Field;
+import group1.mips_simulator.components.cpuParts.Register;
+import group1.mips_simulator.components.instructionParts.Field;
+import group1.mips_simulator.components.memParts.Memory;
 import org.junit.jupiter.api.Test;
 
-import java.util.Vector;
 
-
-class MipsComputerTest {
+class ComputerTest {
 
     @Test
     void calculateEA() {
@@ -14,7 +14,7 @@ class MipsComputerTest {
         Field inputAddress = new Field(100, 5);
         Field inputI = new Field(0, 1);
 
-        MipsComputer underTest = new MipsComputer();
+        Computer underTest = new Computer();
         underTest.memory = new Memory();
         underTest.memory.write((short) 100, (short) 50);
 
@@ -30,7 +30,7 @@ class MipsComputerTest {
         Field inputAddress = new Field(100, 5);
         Field inputI = new Field(1, 1);
 
-        MipsComputer underTest = new MipsComputer();
+        Computer underTest = new Computer();
         underTest.memory = new Memory();
         underTest.memory.write((short) 100, (short) 50);
         underTest.memory.write((short) 50, (short) 25);
@@ -48,16 +48,15 @@ class MipsComputerTest {
         Field inputAddress = new Field(100, 5);
         Field inputI = new Field(0, 1);
 
-        MipsComputer underTest = new MipsComputer();
+        Computer underTest = new Computer();
 
-        // Set up registers
-        underTest.indexRegisters = new Vector<>() {{
-            add(new Register((short) 5));  // 00
-            add(new Register((short) 10)); // 01
-            add(new Register((short) 15)); // 10 **
-            add(new Register((short) 20)); // 11
-        }};
-
+        // Set up index registers
+        underTest.cpu.regfile.IXR = new Register[]{
+                new Register((short) 5),  // 00
+                new Register((short) 10), // 01
+                new Register((short) 15), // 10 **
+                new Register((short) 20) // 11
+        };
 
         underTest.memory = new Memory();
         underTest.memory.write((short) 100, (short) 50);
@@ -74,15 +73,15 @@ class MipsComputerTest {
         Field inputAddress = new Field(100, 5);
         Field inputI = new Field(1, 1);
 
-        MipsComputer underTest = new MipsComputer();
+        Computer underTest = new Computer();
 
         // Set up registers
-        underTest.indexRegisters = new Vector<>() {{
-            add(new Register((short) 5));  // 00
-            add(new Register((short) 10)); // 01 **
-            add(new Register((short) 15)); // 10
-            add(new Register((short) 20)); // 11
-        }};
+        underTest.cpu.regfile.IXR = new Register[]{
+                new Register((short) 5),  // 00
+                new Register((short) 10), // 01 **
+                new Register((short) 15), // 10
+                new Register((short) 20)  // 11
+        };
 
         underTest.memory = new Memory();
         underTest.memory.write((short) 100, (short) 50);

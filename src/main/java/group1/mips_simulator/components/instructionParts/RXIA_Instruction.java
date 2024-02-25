@@ -1,4 +1,4 @@
-package group1.mips_simulator.components.instruction;
+package group1.mips_simulator.components.instructionParts;
 
 import java.util.Vector;
 
@@ -22,7 +22,7 @@ public class RXIA_Instruction extends Instruction {
     }
 
     public Field getR() {
-        return this.getIndexRegister();
+        return this.getGeneralPurposeRegister();
     }
 
     public Field getGeneralPurposeRegister() {

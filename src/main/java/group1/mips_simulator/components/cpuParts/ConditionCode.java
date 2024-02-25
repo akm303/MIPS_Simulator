@@ -1,4 +1,6 @@
-package group1.mips_simulator.components;
+package group1.mips_simulator.components.cpuParts;
+
+import group1.mips_simulator.components.cpuParts.Register;
 
 import java.util.Vector;
 
@@ -11,7 +13,7 @@ import java.util.Vector;
  * - Equal or Not
  *
  */
-public class ConditionCode {
+public class ConditionCode extends Register {
 
     public static final int OBIT_INDEX = 0;
     public static final int UBIT_INDEX = 1;

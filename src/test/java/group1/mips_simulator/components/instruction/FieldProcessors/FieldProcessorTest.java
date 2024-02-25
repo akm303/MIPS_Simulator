@@ -1,7 +1,8 @@
 package group1.mips_simulator.components.instruction.FieldProcessors;
 
-import group1.mips_simulator.components.instruction.Field;
-import group1.mips_simulator.components.instruction.OpCode;
+import group1.mips_simulator.components.instructionParts.Field;
+import group1.mips_simulator.components.instructionParts.FieldProcessors.FieldProcessor;
+import group1.mips_simulator.components.instructionParts.OpCode;
 import org.junit.jupiter.api.Test;
 
 import java.util.Vector;
