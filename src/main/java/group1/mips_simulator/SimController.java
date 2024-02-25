@@ -157,7 +157,9 @@ public class SimController {
         this.haltOnClick(actionEvent);
         this.userHalt = false;
 
-        // Run the task in a background thread
+        // Run the task in a background thread so the main thread
+        // may listen for interrupt activities (or for other button clicks
+        // the user may make)
         this.programRunnerThread = new Thread(this::runOnClickTask);
         // Bind the thread to the main one (to stop both in case of user closing the window)
         programRunnerThread.setDaemon(true);
@@ -179,10 +181,8 @@ public class SimController {
         while (!userHalt && computerMayContinue) {
             System.out.println("Running Instruction");
             computerMayContinue = this.computer.runCurrentPC();
-
-            // Redraw the frame (once the program halts)
-            Platform.runLater(this::redraw);
         }
+        Platform.runLater(this::redraw);
     }
 
     /**
@@ -202,8 +202,13 @@ public class SimController {
         userHalt = true;
         if (programRunnerThread != null) {
             programRunnerThread.interrupt();
-            programRunnerThread = null;
         }
+
+        System.out.println("Halt Redrawing");
+        // redraw the frame after forcing the program to stop early to render the
+        // changes in the Model to the View.
+        redraw();
+        System.out.println("Finished HALTING!!!!!!!!!!!!!!!!!!!!!!!");
     }
 
     //endregion
@@ -279,7 +284,6 @@ public class SimController {
         // Draw the initial state
         redraw();
     }
-
 
     public void redraw() {
         this.redraw.updateFrontEnd(this, computer);
