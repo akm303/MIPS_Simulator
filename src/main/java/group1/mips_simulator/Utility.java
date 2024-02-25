@@ -97,8 +97,23 @@ public class Utility {
         return Integer.toOctalString(binaryInt);
     }
 
-    public static String shortToBinaryString_Pretty(short value, int minSize) {
+    public static String shortToBinaryString(short value, int minSize) {
         StringBuilder sb = new StringBuilder(Integer.toBinaryString(0xFFFF & value));
+        while (sb.length() < minSize) {
+            sb.insert(0, '0');
+        }
+        return sb.toString();
+    }
+
+    public static String shortToBinaryString_Pretty(short value, int minSize) {
+        int bitMask = 0b1111_1111_1111_1111;
+        if (minSize == 4) {
+            bitMask = 0b1111;
+        }
+        if (minSize == 12) {
+            bitMask = 0b1111_1111_1111;
+        }
+        StringBuilder sb = new StringBuilder(Integer.toBinaryString(bitMask & value));
         while (sb.length() < minSize) {
             sb.insert(0, '0');
         }
