@@ -24,5 +24,8 @@ public class Redraw {
         frontEnd.IR.setText(model.cpu.regfile.getIR().toString_Binary());
         frontEnd.MFR.setText(model.cpu.regfile.getMFR().toString_Binary());
         frontEnd.CC.setText(model.cpu.regfile.getCC().toString_Binary());
+
+        // Update other labels
+        frontEnd.maxIPSLabel.setText(frontEnd.maxIPS + " i/s");
     }
 }

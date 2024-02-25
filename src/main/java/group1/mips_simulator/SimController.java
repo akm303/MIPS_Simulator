@@ -5,9 +5,11 @@ import group1.mips_simulator.components.Computer;
 import group1.mips_simulator.components.Value;
 import group1.mips_simulator.components.cpuParts.Register;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -15,14 +17,20 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
 public class SimController {
+
+    public static final int SLEEP_BETWEEN_INSTRUCTIONS_MS = 0;
 
     public Computer computer;
     Thread programRunnerThread = null;
     private final Stage mainStage;
     private boolean userHalt = false;
     Redraw redraw = new Redraw();
+
+    public double maxIPS = 0.0;
 
 
     public SimController(Computer c, Stage stage) {
@@ -102,6 +110,9 @@ public class SimController {
     public Button step_Button;
     @FXML
     public Button halt_Button;
+    public Label currentIPSLabel;
+    public Label maxIPSLabel;
+    private double maxIpsDouble;
 
     /**
      * Use the value in the Memory Address Register, go to that location in Memory
@@ -160,7 +171,15 @@ public class SimController {
         // Run the task in a background thread so the main thread
         // may listen for interrupt activities (or for other button clicks
         // the user may make)
-        this.programRunnerThread = new Thread(this::runOnClickTask);
+        //this.programRunnerThread = new Thread(this::runOnClickTask);
+
+        this.programRunnerThread = new Thread(new Task<Void>() {
+            @Override
+            public Void call() {
+                runOnClickTask();
+                return null;
+            }
+        });
         // Bind the thread to the main one (to stop both in case of user closing the window)
         programRunnerThread.setDaemon(true);
         // Start the program
@@ -174,13 +193,38 @@ public class SimController {
      * will stop the while(true) loop.
      */
     private void runOnClickTask() {
+        final long redrawInterval = (long) 1e9;// redraw every 1 million instructions
         boolean computerMayContinue = true; // Track if the program is requesting a halt
+
+        Instant lastInstructionFinish = Instant.now();
+        long instructionsRun = 0;
 
         // Run the instruction at the current Program Counter forever until the user
         // or the computer itself requests a halt.
         while (!userHalt && computerMayContinue) {
             System.out.println("Running Instruction");
             computerMayContinue = this.computer.runCurrentPC();
+
+            // Timing for the instruction
+            Instant currentInstructionFinish = Instant.now();
+            long microBetween = ChronoUnit.MICROS.between(lastInstructionFinish, currentInstructionFinish);
+            double ips = microBetween * (1e6); // Convert to s
+            maxIPS = Math.max(ips, maxIPS);
+
+            try {
+                Thread.sleep(SLEEP_BETWEEN_INSTRUCTIONS_MS);
+            } catch (InterruptedException e) {
+                computerMayContinue = false;
+            }
+
+            // redraw if it's time
+            if (instructionsRun >= redrawInterval) {
+                instructionsRun = 0;
+                Platform.runLater(this::redraw);
+            }
+
+            instructionsRun++;
+            lastInstructionFinish = currentInstructionFinish;
         }
         Platform.runLater(this::redraw);
     }
@@ -190,6 +234,10 @@ public class SimController {
      * Redraw the frame afterward.
      */
     public void stepOnClick(ActionEvent actionEvent) {
+        if (programRunnerThread.isAlive()) {
+            System.out.println("Ignoring Step button click because program is active!");
+            return;
+        }
         this.computer.runCurrentPC();
         this.redraw();
     }

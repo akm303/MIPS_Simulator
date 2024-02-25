@@ -173,6 +173,8 @@
                 <Button text="Run" fx:id="run_Button"/>
                 <Button text="Step" fx:id="step_Button"/>
                 <Button text="Halt" fx:id="halt_Button"/>
+                <Label text="0 I/S" fx:id="currentIPSLabel"/>
+                <Label text="0 I/S" fx:id="maxIPSLabel"/>
             </VBox>
         </HBox>
     </HBox>
