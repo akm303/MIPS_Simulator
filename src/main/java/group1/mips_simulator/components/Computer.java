@@ -1,9 +1,9 @@
 package group1.mips_simulator.components;
 
+import group1.mips_simulator.components.cpuParts.CPU;
 import group1.mips_simulator.components.cpuParts.Register;
 import group1.mips_simulator.components.instructionParts.Instruction;
 import group1.mips_simulator.components.memParts.Memory;
-import group1.mips_simulator.components.cpuParts.CPU;
 
 import java.util.Vector;
 
@@ -15,7 +15,8 @@ public class Computer {
 
     public Memory mem;
     public CPU cpu;
-//    public Register programCounter;
+
+    public ROM readOnlyMemory = new ROM();
 
     public Computer() {
         cpu = new CPU();

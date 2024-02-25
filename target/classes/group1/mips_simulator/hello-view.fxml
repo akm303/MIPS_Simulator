@@ -1,16 +1,189 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml">
+    <!-- fx:controller="group1.mips_simulator.SimController" -->
 
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="group1.mips_simulator.SimController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+    <HBox id="registers" alignment="CENTER" spacing="20.0">
+        <VBox spacing="20.0" fx:id="VBoxLeft_GPRs">
+            <HBox spacing="20">
+                <Label text="GPR 0:"/>
+                <TextField fx:id="GPR0" editable="false" minWidth="140">
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+                <Button fx:id="GPR0_button"/>
+            </HBox>
+            <HBox spacing="20">
+                <Label text="GPR 1:"/>
+                <TextField fx:id="GPR1" editable="false" minWidth="140">
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+                <Button fx:id="GPR1_button"/>
+            </HBox>
+            <HBox spacing="20">
+                <Label text="GPR 2:"/>
+                <TextField fx:id="GPR2" editable="false" minWidth="140">
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+                <Button fx:id="GPR2_button"/>
+            </HBox>
+            <HBox spacing="20">
+                <Label text="GPR 3:"/>
+                <TextField fx:id="GPR3" editable="false" minWidth="140">
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+                <Button fx:id="GPR3_button"/>
+            </HBox>
+        </VBox>
+        <VBox spacing="20.0" fx:id="VBoxCenter_IXRs">
+            <HBox spacing="40">
+                <!-- Intentionally empty -->
+                <Label/>
+            </HBox>
+            <HBox spacing="20">
+                <Label text="IXR 1:"/>
+                <TextField fx:id="IXR1" editable="false" minWidth="140">
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+                <Button fx:id="IXR1_button"/>
+            </HBox>
+            <HBox spacing="20">
+                <Label text="IXR 2:"/>
+                <TextField fx:id="IXR2" editable="false" minWidth="140">
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+                <Button fx:id="IXR2_button"/>
+            </HBox>
+            <HBox spacing="20">
+                <Label text="IXR 3:"/>
+                <TextField fx:id="IXR3" editable="false" minWidth="140"> <!-- 204 is good for 16 bits-->
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+                <Button fx:id="IXR3_button"/>
+            </HBox>
+        </VBox>
+        <VBox spacing="20.0" fx:id="VBoxRight_OtherRegs">
+            <HBox spacing="20">
+                <Label text="PC:"/>
+                <TextField fx:id="PC" editable="false" maxWidth="110">
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+                <Button fx:id="PC_button"/>
+            </HBox>
+            <HBox spacing="20">
+                <Label text="MAR:"/>
+                <TextField fx:id="MAR" editable="false" maxWidth="110">
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+                <Button fx:id="MAR_button"/>
+            </HBox>
+            <HBox spacing="20">
+                <Label text="MBR:"/>
+                <TextField fx:id="MBR" editable="false" minWidth="140">
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+                <Button fx:id="MBR_button"/>
+            </HBox>
+            <HBox spacing="20">
+                <Label text="RI:"/>
+                <TextField fx:id="RI" editable="false" minWidth="140">
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+                <Button fx:id="RI_button"/>
+            </HBox>
+            <HBox spacing="20">
+                <Label text="MFR:"/>
+                <TextField fx:id="MFR" editable="false" maxWidth="40">
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+            </HBox>
+            <HBox spacing="20">
+                <Label text="Privileged:"/>
+                <TextField fx:id="Privileged" editable="false" maxWidth="28">
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+            </HBox>
+            <HBox spacing="20">
+                <Label text="CC (OUED):"/>
+                <TextField fx:id="CC" editable="false" maxWidth="40">
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+            </HBox>
+        </VBox>
+    </HBox>
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
+    <HBox fx:id="hbox_UserInput" alignment="CENTER" spacing="60">
+        <VBox alignment="CENTER_LEFT" spacing="20">
+            <HBox spacing="20">
+                <Label text="Octal Input:"/>
+                <TextField fx:id="OctalInput" minWidth="140">
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+            </HBox>
+            <HBox spacing="20">
+                <Label text="Binary Input:"/>
+                <TextField fx:id="BinInput" minWidth="140">
+                    <font>
+                        <Font name="Consolas" size="11.0"/>
+                    </font>
+                </TextField>
+            </HBox>
+        </VBox>
+        <HBox spacing="50">
+            <VBox spacing="10">
+                <Button text="Load"/>
+                <Button text="Load+"/>
+
+                <Button text="Store"/>
+                <Button text="Store+"/>
+            </VBox>
+            <VBox spacing="10">
+                <Button text="Run"/>
+                <Button text="Step"/>
+                <Button text="Halt"/>
+            </VBox>
+        </HBox>
+    </HBox>
+
+    <HBox spacing="10">
+        <Label text=".bi File:"/>
+        <TextField fx:id="FileToLoad" editable="false" minWidth="800">
+            <font>
+                <Font name="Consolas" size="11.0"/>
+            </font>
+        </TextField>
+        <Button text="IPL" fx:id="IPL_button"/>
+    </HBox>
 </VBox>
