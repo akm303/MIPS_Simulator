@@ -41,18 +41,20 @@ public class Register {
         this.write((short) value_);
     }
 
-    public void increment(){
-        // may outsource this functionality to an ALU class, which would essentially
-        // do all arithmetic (EX of the pipeline diagram)
-        // for now, for simplicity of program counter, leaving this built-in to register functionality
+
+    public void increment() {
         this.value.set(this.value.get() + 1);
     }
 
-    public void incrementBy(int n){     // may remove this at a future date if unused and/or we implement
+    public void setBitWidth(short width) {
+        this.value.size = width;
+    }
+
+    public void incrementBy(int n) {. // may remove this at a future date if unused and/or we implement
         //increment by multiple
         // implemented using increment in case we want to add logic based on, for example,
         // an instruction PC might need to access as it increments
-        for(int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++) {
             this.increment();
         }
     }

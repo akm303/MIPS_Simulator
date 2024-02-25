@@ -1,15 +1,35 @@
 package group1.mips_simulator;
 
 import group1.mips_simulator.components.instructionParts.Instruction;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
 public class FileReader {
 
-    public Vector<Instruction> readBinaryFile(String fileToRead) {
+    public File getFile(Stage stage) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select .bi file");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Text Files", "*.txt"),
+                new FileChooser.ExtensionFilter("Binary files", "*.bi"),
+                new FileChooser.ExtensionFilter("All Files", "*.*"));
+        File selectedFile = fileChooser.showOpenDialog(stage);
+        if (selectedFile == null) {
+            System.out.println("File is null");
+            return null;
+        }
+        System.out.println(selectedFile.getName());
+        return selectedFile;
+
+    }
+
+    public Vector<Instruction> readBinaryFile(String fileToRead) throws IOException {
         BufferedReader reader;
         Vector<Instruction> result = new Vector<>();
 
@@ -38,6 +58,7 @@ public class FileReader {
             }
         } catch (IOException e) {
             System.out.println("Encountered an error when reading the file: " + e);
+            throw e;
         }
 
         return result;
