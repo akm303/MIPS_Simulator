@@ -77,7 +77,7 @@ public class SimController {
     public Button PC_button;
     public Button MAR_button;
     public Button MBR_button;
-    public Button RI_button;
+    public Button IR_button;
 
     //endregion
 
@@ -163,7 +163,7 @@ public class SimController {
         setupRegisterButton(PC_button, computer.cpu.regfile.getPC());
         setupRegisterButton(MAR_button, computer.cpu.regfile.getMAR());
         setupRegisterButton(MBR_button, computer.cpu.regfile.getMBR());
-        setupRegisterButton(RI_button, computer.cpu.regfile.getIR());
+        setupRegisterButton(IR_button, computer.cpu.regfile.getIR());
 
         setupIPL_Button(mainStage, new FileReader());
         // Draw the initial state

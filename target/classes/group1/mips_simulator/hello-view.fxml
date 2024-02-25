@@ -107,13 +107,13 @@
                 <Button fx:id="MBR_button"/>
             </HBox>
             <HBox spacing="20">
-                <Label text="RI:"/>
-                <TextField fx:id="RI" editable="false" minWidth="140">
+                <Label text="IR:"/>
+                <TextField fx:id="IR" editable="false" minWidth="140">
                     <font>
                         <Font name="Consolas" size="11.0"/>
                     </font>
                 </TextField>
-                <Button fx:id="RI_button"/>
+                <Button fx:id="IR_button"/>
             </HBox>
             <HBox spacing="20">
                 <Label text="MFR:"/>
