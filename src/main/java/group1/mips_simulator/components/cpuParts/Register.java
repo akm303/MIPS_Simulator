@@ -17,15 +17,19 @@ public class Register {
         this.value = newValue;
     }
 
-    public void increment(){
+    public void increment() {
         this.value.set(this.value.get() + 1);
     }
 
-    public void incrementBy(int n){
+    public void setBitWidth(short width) {
+        this.value.size = width;
+    }
+
+    public void incrementBy(int n) {
         //increment by multiple
         // implemented using increment in case we want to add logic based on, for example,
         // an instruction PC might need to access as it increments
-        for(int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++) {
             this.increment();
         }
     }

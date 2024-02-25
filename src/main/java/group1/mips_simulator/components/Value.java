@@ -1,8 +1,11 @@
 package group1.mips_simulator.components;
 
+import group1.mips_simulator.Utility;
+
 public class Value {
 
     private short value_;
+    public short size = Utility.WORD_SIZE; // 16 by default
 
     //region Constructors
     public Value(short value) {
@@ -39,7 +42,7 @@ public class Value {
     }
 
     public String toString_Binary() {
-        return Integer.toBinaryString(this.value_);
+        return Utility.shortToBinaryString_Pretty(this.value_, this.size);
     }
 
     public String toString_Oct() {
