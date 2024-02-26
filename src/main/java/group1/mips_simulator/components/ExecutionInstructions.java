@@ -137,7 +137,7 @@ public class ExecutionInstructions {
         // R0 <− Immed
         Register r0 = computer.cpu.regfile.getGPR(0);
         r0.write(new Value(immed.value));
-        computer.cpu.regfile.getGPR(0).write(r0.value);
+        computer.cpu.regfile.getGPR(0).write(r0.read());
 
         // PC <- c(R3)
         Register r3 = computer.cpu.regfile.getGPR(3);

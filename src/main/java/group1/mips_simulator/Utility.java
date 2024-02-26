@@ -13,6 +13,24 @@ public class Utility {
         }
     }
 
+    public static boolean isValidBinary(String str) {
+        for (char c : str.toCharArray()) {
+            if ((c != ' ') && (c != '1') && (c != '0')) {
+                // if it's not a space
+                // AND it's not a 1
+                // AND it's not a 0
+                return false;
+            }
+            // else continue
+        }
+        return true; // All characters are 0, 1 or ' ' whitespace
+    }
+
+
+    public static boolean isValidOctal(String str) {
+        return str.replace(" ", "").matches("[0-7]*");
+    }
+
     public static String octalStringToBinaryString(String octal) {
         StringBuilder result = new StringBuilder();
         for (char c : octal.toCharArray()) {
@@ -74,5 +92,37 @@ public class Utility {
 
     public static short binaryToShort(String binary) {
         return (short) binaryToInt(binary);
+    }
+
+    public static String binaryStrToOctalStr(String binaryStr) {
+        binaryStr = binaryStr.replace(" ", "");
+        int binaryInt = binaryToInt(binaryStr);
+        return Integer.toOctalString(binaryInt);
+    }
+
+    public static String shortToBinaryString(short value, int minSize) {
+        StringBuilder sb = new StringBuilder(Integer.toBinaryString(0xFFFF & value));
+        while (sb.length() < minSize) {
+            sb.insert(0, '0');
+        }
+        return sb.toString();
+    }
+
+    public static String shortToBinaryString_Pretty(short value, int minSize) {
+        int bitMask = 0b1111_1111_1111_1111;
+        if (minSize == 4) {
+            bitMask = 0b1111;
+        }
+        if (minSize == 12) {
+            bitMask = 0b1111_1111_1111;
+        }
+        StringBuilder sb = new StringBuilder(Integer.toBinaryString(bitMask & value));
+        while (sb.length() < minSize) {
+            sb.insert(0, '0');
+        }
+        for (int i = sb.length() - 4; i >= 0; i = i - 4) {
+            sb.insert(i, ' ');
+        }
+        return sb.toString().trim().replace(' ', '_');
     }
 }

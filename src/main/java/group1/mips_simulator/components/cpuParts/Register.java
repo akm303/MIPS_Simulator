@@ -1,5 +1,6 @@
 package group1.mips_simulator.components.cpuParts;
 
+import group1.mips_simulator.Utility;
 import group1.mips_simulator.components.Value;
 
 /**
@@ -7,6 +8,8 @@ import group1.mips_simulator.components.Value;
  * the CPU to read/ write quickly.
  */
 public class Register {
+    protected Value value = new Value(0);
+    protected short bitWidth = Utility.WORD_SIZE;
 
     public Register() {
         this((short) 0);
@@ -20,8 +23,6 @@ public class Register {
         this.value = v.clone();
     }
 
-    public Value value = new Value(0);
-
     public Value read() {
         return this.value;
     }
@@ -31,11 +32,17 @@ public class Register {
     }
 
     public void write(Value newValue) {
-        this.value = newValue;
+        this.value = newValue.clone();
+        this.value.setSize(this.bitWidth);
     }
 
     public void increment() {
         this.value.set(this.value.get() + 1);
+    }
+
+    public void setBitWidth(short width) {
+        this.bitWidth = width;
+        this.value.setSize(width);
     }
 
     public void incrementBy(int n) {
@@ -45,6 +52,10 @@ public class Register {
         for (int i = 0; i < n; i++) {
             this.increment();
         }
+    }
+
+    public String toString_Binary() {
+        return this.value.toString_Binary();
     }
 
 }

@@ -29,6 +29,10 @@ public class Instruction {
         return new Instruction(code, fields);
     }
 
+    public static Instruction buildInstruction_fromShort(short number) {
+        return buildInstruction_fromBinary(Utility.shortToBinaryString(number, Utility.WORD_SIZE));
+    }
+
     public Instruction(OpCode opCode, Vector<Field> fields) {
         this.opCode = opCode;
         this.fields = fields;
@@ -58,6 +62,9 @@ public class Instruction {
         };
     }
 
+    public boolean isHaltInstruction() {
+        return this.opCode.name.equalsIgnoreCase("hlt");
+    }
 
     @Override
     public String toString() {

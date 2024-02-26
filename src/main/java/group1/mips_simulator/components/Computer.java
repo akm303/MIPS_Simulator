@@ -8,25 +8,15 @@ import group1.mips_simulator.components.instructionParts.Instruction;
 import group1.mips_simulator.components.instructionParts.RXIA_Instruction;
 import group1.mips_simulator.components.memParts.Memory;
 
-import java.util.Vector;
-
 /**
  * A Mips Computer is a class to represent the classical computer architecture
  * being discussed in class.
  */
 public class Computer {
-/*
-    public Memory memory;
-    public Vector<Register> registers;
-    public Vector<Register> indexRegisters;
-    public Register programCounter;
-
-    public ConditionCode conditionCode = new ConditionCode();
-//    public Register programCounter;
-*/
-
     public Memory memory;
     public CPU cpu;
+
+    public ROM readOnlyMemory = new ROM();
 
     public Computer() {
         cpu = new CPU();
@@ -34,20 +24,27 @@ public class Computer {
     }
 
     /**
-     * Take a collection of Instructions and execute them all in order.
+     * Uses the current Program Counter to read an instruction from Memory
+     * Executes that Instruction (which will probably change the PC and other
+     * registers/ memory)
+     * Returns TRUE meaning that the program may safely continue.
+     * Returning FALSE means a HALT or some other error has occurred and the
+     * program must stop.
      *
-     * @param program The instruction set to run
+     * @return True if the instruction executed successfully and is not a HALT.
+     * False  =>  program should stop.
      */
-    public void executeProgram(Vector<Instruction> program) {
-        // IF -> ID -> Exe ->
-        //
-        for (Instruction i : program) {
-            try {
-                this.executeInstruction(i);
-            } catch (Exception e) {
-                System.out.println("Encountered an error when running the instruction " + i.toString() +
-                        "\nError:\n" + e);
-            }
+    public boolean runCurrentPC() {
+        // Get instruction from memory (specified by the Program Counter)
+        Value pcAddress = this.cpu.regfile.getPC().read();
+        Instruction nextInstruction = Instruction.buildInstruction_fromShort(this.memory.read(pcAddress));
+        try {
+            return this.executeInstruction(nextInstruction);
+        } catch (IllegalArgumentException e) {
+            // If we run into some issue while running the program
+            // For example if we see an unknown instruction
+            // TODO: Consider printing the error to the front pannel?
+            return false; // Signal the computer can NOT continue running instructions
         }
     }
 
@@ -60,9 +57,9 @@ public class Computer {
      * The execute function will read/ write/ update the various registers,
      * memory, pointers etc. of `this` MipsComputer instance.
      *
-     * @param instruction The instructino to run.
+     * @param instruction The instruction to run.
      */
-    public void executeInstruction(Instruction instruction) {
+    public boolean executeInstruction(Instruction instruction) {
         ExecutionInstructions exe = new ExecutionInstructions();
         switch (instruction.opCode.name.toLowerCase()) {
             // Miscellaneous Instructions
@@ -99,6 +96,10 @@ public class Computer {
         if (!instruction.isTransferInstruction()) {
             this.incrementPC();
         }
+
+        // Return if the instruction is HLT then return false to signal that
+        // the program should shut down.
+        return !instruction.isHaltInstruction();
     }
 
     /**

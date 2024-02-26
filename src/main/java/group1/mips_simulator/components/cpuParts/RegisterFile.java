@@ -1,5 +1,6 @@
 package group1.mips_simulator.components.cpuParts;
 
+import group1.mips_simulator.Utility;
 import group1.mips_simulator.components.Value;
 
 /**
@@ -38,13 +39,17 @@ public class RegisterFile {
 
     public RegisterFile() {
         //initialize all reg w/ null
-        Value nullValue = new Value(0);
-
         for (int i = 0; i < GPR_COUNT; i++) {
-            GPR[i] = new Register(new Value(0));
+            Register newReg = new Register();
+            newReg.write(new Value(0));
+            newReg.setBitWidth((short) Utility.WORD_SIZE);
+            GPR[i] = newReg;
         }
         for (int i = 0; i < IXR_COUNT; i++) {
-            IXR[i] = new Register(new Value(0));
+            Register newReg = new Register();
+            newReg.write(new Value(0));
+            newReg.setBitWidth((short) Utility.WORD_SIZE);
+            IXR[i] = newReg;
         }
         //for (Register reg : FPR){ // <<DO NOT IMPLEMENT TILL PART 4>>
         //    reg.write(nullValue);
@@ -53,8 +58,15 @@ public class RegisterFile {
         Register[] allOtherReg = new Register[]{PC, CC, IR, MAR, MBR, MFR};
         //Note* add FPR and other registers as you update Reg File implementation
         for (Register reg : allOtherReg) {
-            reg.write(nullValue);
+            reg.write(new Value(0));
         }
+
+        PC.setBitWidth((short) 12);
+        MAR.setBitWidth((short) 12);
+        CC.setBitWidth((short) 4);
+        MBR.setBitWidth((short)Utility.WORD_SIZE);
+        IR.setBitWidth((short)Utility.WORD_SIZE);
+        MFR.setBitWidth((short) 4);
 
     }
 
@@ -76,6 +88,22 @@ public class RegisterFile {
 
     public Register getPC() {
         return this.PC;
+    }
+
+    public Register getMAR() {
+        return this.MAR;
+    }
+
+    public Register getMBR() {
+        return this.MBR;
+    }
+
+    public Register getIR() {
+        return this.IR;
+    }
+
+    public Register getMFR() {
+        return this.MFR;
     }
 
     public ConditionCode getCC() {
