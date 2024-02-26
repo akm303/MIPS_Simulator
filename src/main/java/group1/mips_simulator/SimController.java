@@ -121,7 +121,7 @@ public class SimController {
      */
     public void loadPlusOnClick(ActionEvent actionEvent) {
         loadOnClick(actionEvent);
-        Register memAddrReg = this.computer.cpu.regfile.getMAR();
+        Register memAddReg = this.computer.cpu.regfile.getMAR();
         memAddrReg.write((short) (memAddrReg.read().get() + 1));
         redraw();
     }
