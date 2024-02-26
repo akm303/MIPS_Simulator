@@ -18,6 +18,10 @@ import group1.mips_simulator.components.Value;
 public class Memory {
 
     public short read(Value address) {
+        return read(address.get());
+    }
+
+    public short read(short address) {
         // todo
         return 0;
     }

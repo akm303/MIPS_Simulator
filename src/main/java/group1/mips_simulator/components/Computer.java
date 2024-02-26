@@ -23,6 +23,23 @@ public class Computer {
         mem = new Memory();
     }
 
+    /**
+     * Uses the current Program Counter to read an instruction from Memory
+     * Executes that Instruction (which will probably change the PC and other
+     * registers/ memory)
+     * Returns TRUE meaning that the program may safely continue.
+     * Returning FALSE means a HALT or some other error has occurred and the
+     * program must stop.
+     * @return True if the instruction executed successfully and is not a HALT.
+     * False  =>  program should stop.
+     */
+    public boolean runCurrentPC() {
+        // Get instruction from memory (specified by the Program Counter)
+        Value pcAddress = this.cpu.regfile.getPC().read();
+        Instruction nextInstruction = Instruction.buildInstruction_fromShort(this.mem.read(pcAddress));
+        return this.executeInstruction(nextInstruction);
+    }
+
     public void executeProgram(Vector<Instruction> program) {
         // IF -> ID -> Exe ->
         //
@@ -36,8 +53,15 @@ public class Computer {
         }
     }
 
-    public void executeInstruction(Instruction instruction) {
+    /**
+     * Runs the provided instruction against this Computer.
+     * If the instruction results in a HALT then a false will be returned.
+     * @param instruction
+     * @return
+     */
+    public boolean executeInstruction(Instruction instruction) {
         // TODO:
+        return true;
     }
 
     public void incrementPC() {

@@ -4,8 +4,8 @@ import group1.mips_simulator.Utility;
 
 public class Value {
 
-    private short value_;
-    public short size = Utility.WORD_SIZE; // 16 by default
+    protected short value_;
+    protected short size = Utility.WORD_SIZE; // 16 by default
 
     //region Constructors
     public Value(short value) {
@@ -14,6 +14,10 @@ public class Value {
 
     public Value(int value) {
         this((short) value);
+    }
+
+    public Value clone() {
+        return new Value(this.value_);
     }
 
     //endregion
@@ -29,6 +33,10 @@ public class Value {
 
     public void set(int value) {
         this.set((short) value);
+    }
+
+    public void setSize(short newSize) {
+        this.size = newSize;
     }
     //endregion
 
