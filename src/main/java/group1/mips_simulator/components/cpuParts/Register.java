@@ -1,5 +1,6 @@
 package group1.mips_simulator.components.cpuParts;
 
+import group1.mips_simulator.Utility;
 import group1.mips_simulator.components.Value;
 
 /**
@@ -9,14 +10,12 @@ import group1.mips_simulator.components.Value;
  * All Registers are initialized with a Value of 0, and can be modified from there
  */
 public class Register {
-    public Value value = new Value(0);
-    //todo
-    //i just realized i never wrote a constructor...but Register seems to work without one
-    //since the only instance attribute gets initialized at declaration...so it doesnt need one(?)
-    // should i write one, just to be explicit?
-
+  
     //getter methods
-    public Value get() {
+    protected Value value = new Value(0);
+    public short bitWidth = Utility.WORD_SIZE;
+
+    public Value read() { // previously get()
         // get the Value in the register
         return this.value;
     }
@@ -27,9 +26,14 @@ public class Register {
 
 
     // setter methods
-    public void set(Value newValue) {
+    public void write(Value newValue) {
+        this.value = newValue.clone();
+        this.value.setSize(this.bitWidth);
+    }
+
+    public void write(short newValue) { //previously set()
         // set the Value of the register
-        this.value = newValue;
+        this.write(new Value(newValue));
     }
 
     public void write(short value_) {
@@ -47,7 +51,8 @@ public class Register {
     }
 
     public void setBitWidth(short width) {
-        this.value.size = width;
+        this.bitWidth = width;
+        this.value.setSize(width);
     }
 
     public void incrementBy(int n) {. // may remove this at a future date if unused and/or we implement
@@ -57,6 +62,10 @@ public class Register {
         for (int i = 0; i < n; i++) {
             this.increment();
         }
+    }
+
+    public String toString_Binary() {
+        return this.value.toString_Binary();
     }
 
 }

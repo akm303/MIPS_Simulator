@@ -30,9 +30,16 @@ public class Memory extends Storage{
         return this.data[address];
     }
 
-    public Value read(Value address) {
-        return this.read(address.get());
+//     public Value read(Value address) {
+      // potentially redundant from merge conflict
+//         return this.read(address.get());
+//     }
+
+    public short read(Value address) {
+        return read(address.get());
     }
+
+
 
 
     public void write(Value address, Value valueToWrite) {

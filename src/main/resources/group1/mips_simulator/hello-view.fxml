@@ -107,13 +107,13 @@
                 <Button fx:id="MBR_button"/>
             </HBox>
             <HBox spacing="20">
-                <Label text="RI:"/>
-                <TextField fx:id="RI" editable="false" minWidth="140">
+                <Label text="IR:"/>
+                <TextField fx:id="IR" editable="false" minWidth="140">
                     <font>
                         <Font name="Consolas" size="11.0"/>
                     </font>
                 </TextField>
-                <Button fx:id="RI_button"/>
+                <Button fx:id="IR_button"/>
             </HBox>
             <HBox spacing="20">
                 <Label text="MFR:"/>
@@ -163,16 +163,16 @@
         </VBox>
         <HBox spacing="50">
             <VBox spacing="10">
-                <Button text="Load"/>
-                <Button text="Load+"/>
+                <Button text="Load" fx:id="loadButton"/>
+                <Button text="Load+" fx:id="loadPlusButton"/>
 
-                <Button text="Store"/>
-                <Button text="Store+"/>
+                <Button text="Store" fx:id="storeButton"/>
+                <Button text="Store+" fx:id="storePlusButton"/>
             </VBox>
             <VBox spacing="10">
-                <Button text="Run"/>
-                <Button text="Step"/>
-                <Button text="Halt"/>
+                <Button text="Run" fx:id="run_Button"/>
+                <Button text="Step" fx:id="step_Button"/>
+                <Button text="Halt" fx:id="halt_Button"/>
             </VBox>
         </HBox>
     </HBox>
