@@ -109,8 +109,8 @@ public class SimController {
      */
     public void loadOnClick(ActionEvent actionEvent) {
         Register memAddReg = this.computer.cpu.regfile.getMAR();
-        short valueInMemory = this.computer.mem.read(memAddReg.read());
-        this.computer.cpu.regfile.getMBR().write(valueInMemory);
+        Value valueInMemory = this.computer.mem.get(memAddReg.read());
+        this.computer.cpu.regfile.getMBR().set(valueInMemory);
         redraw();
     }
 
