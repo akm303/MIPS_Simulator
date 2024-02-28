@@ -22,13 +22,20 @@ public class Value {
 
     //endregion
 
-    //region getters and setters
-    public short get() {
-        return value_;
-    }
+    //region getters
+    public short get() { return this.getShort(); }
 
+    public short getShort() {return value_;}
+
+    public int getInt() {return (int) value_;}
+
+    //region setters
     public void set(short value_) {
         this.value_ = value_;
+    }
+
+    public void set(Value value_) {
+        this.set(value_.get());
     }
 
     public void set(int value) {
