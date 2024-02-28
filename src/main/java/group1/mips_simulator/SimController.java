@@ -297,7 +297,7 @@ public class SimController {
                 return;
             }
             // Else it is a valid binary
-            r.write(new Value(Utility.binaryToShort(userInputBinStr)));
+            r.write(Utility.binaryToShort(userInputBinStr));
             redraw();
         });
     }
@@ -319,7 +319,7 @@ public class SimController {
 
             // Hand the file to the ROM loader
             try {
-                computer.readOnlyMemory.readFromFile(selectedFile);
+                computer.rom.readFromFile(selectedFile);
                 FileToLoad.setStyle("-fx-text-fill: black"); // Color of text
             } catch (IOException e) {
                 System.out.println("Encountered an error when reading file: " + e);

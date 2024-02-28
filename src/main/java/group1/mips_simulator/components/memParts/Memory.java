@@ -28,36 +28,41 @@ public class Memory extends Storage{
 
 
     // GETTERS
-    // get() will get the Value from memory
+    /* get() will get the Value from memory */
+
     public Value get(short address){
-        // get the Value from memory address
+        // get the Value from memory address as a short
         return this.data[address];
     }
+
     public Value get(int address) {
-        // get the Value from memory address
-        return this.get((short) address);
+        // get the Value from memory address as an int
+        return get((short) address);
     }
 
-    // read() will read the short data from memory
+
+    /* read() will read the short data from memory */
+
     public short read(Value address) {
-        // read the item from address Value
-        return this.get(address.get()).get();
+        // read the data from address in a Value
+        return get(address.get()).get();
     }
 
     public short read(short address){
-        // read the item from address short
-        return this.get(address).get();
+        // read the data from address as a short
+        return get(address).get();
     }
 
     public short read(int address){
-        // read the item from address int
-        return this.get(address).get();
+        // read the item from address as an int
+        return get(address).get();
     }
 
 
 
     // SETTERS
     public void write(Value address, Value valueToWrite) {
+        // write value to address at value
         this.data[address.get()].set(valueToWrite);
     }
 }

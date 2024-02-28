@@ -4,7 +4,6 @@ import group1.mips_simulator.components.cpuParts.CPU;
 import group1.mips_simulator.components.cpuParts.Register;
 import group1.mips_simulator.components.instructionParts.Instruction;
 import group1.mips_simulator.components.memParts.Memory;
-import group1.mips_simulator.components.ComputerConfig;
 
 
 import java.util.Vector;
@@ -17,12 +16,11 @@ public class Computer {
 
     public Memory mem;
     public CPU cpu;
-
-    public ROM readOnlyMemory = new ROM();
+    public ROM rom = new ROM();
 
     public Computer() {
         cpu = new CPU();
-        mem = new Memory(ComputerConfig.memorySize);
+        mem = new Memory(Config.memorySize);
     }
 
     /**

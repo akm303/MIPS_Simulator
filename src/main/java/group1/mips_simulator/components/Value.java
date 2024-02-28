@@ -1,11 +1,12 @@
 package group1.mips_simulator.components;
 
 import group1.mips_simulator.Utility;
+import group1.mips_simulator.components.Config;
 
 public class Value {
 
     protected short value_;
-    protected short size = Utility.WORD_SIZE; // 16 by default
+    protected short size = Config.WORD_SIZE; // 16 by default
 
     //region Constructors
     public Value(short value) {
@@ -34,9 +35,7 @@ public class Value {
         this.value_ = value_;
     }
 
-    public void set(Value value_) {
-        this.set(value_.get());
-    }
+    public void set(Value value_) { this.set(value_.get()); }
 
     public void set(int value) {
         this.set((short) value);
