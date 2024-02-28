@@ -31,13 +31,13 @@ public class RegisterFile {
         for (int i = 0; i < gpr.length; i++) {
             Register newReg = new Register();
             newReg.write(0);
-            newReg.setBitWidth((short) Utility.WORD_SIZE);
+            newReg.setBitWidth((short) Config.WORD_SIZE);
             gpr[i] = newReg;
         }
         for (int i = 0; i < ixr.length; i++) {
             Register newReg = new Register();
             newReg.write(0);
-            newReg.setBitWidth((short) Utility.WORD_SIZE);
+            newReg.setBitWidth((short) Config.WORD_SIZE);
             ixr[i] = newReg;
         }
         //for (Register reg : FPR){ 
@@ -54,8 +54,8 @@ public class RegisterFile {
         pc.setBitWidth((short) 12);
         mar.setBitWidth((short) 12);
         cc.setBitWidth((short) 4);
-        mbr.setBitWidth((short)Utility.WORD_SIZE);
-        ir.setBitWidth((short)Utility.WORD_SIZE);
+        mbr.setBitWidth((short)Config.WORD_SIZE);
+        ir.setBitWidth((short)Config.WORD_SIZE);
         mfr.setBitWidth((short) 4);
 
     }
