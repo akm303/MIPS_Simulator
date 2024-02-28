@@ -14,13 +14,13 @@ import java.util.Vector;
  */
 public class Computer {
 
+    public ROM rom = new ROM();
     public Memory mem;
     public CPU cpu;
-    public ROM rom = new ROM();
 
     public Computer() {
         cpu = new CPU();
-        mem = new Memory(Config.memorySize);
+        mem = new Memory(Config.MEM_SIZE);
     }
 
     /**
@@ -67,9 +67,5 @@ public class Computer {
         Register pc = this.cpu.regfile.getPC();
         pc.increment();
     }
-//    public void incrementPC() {
-//        Value pc = this.programCounter.read();
-//        pc.set(pc.get() + 1);
-//        this.programCounter.write(pc);
-//    }
+
 }
