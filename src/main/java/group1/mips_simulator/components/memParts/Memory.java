@@ -14,15 +14,50 @@ import group1.mips_simulator.components.Value;
 
 /**
  * A Memory class represents the entire memory lookup for our computer simulator.
+ *
+ * Memory has a static size, defined during init
+ * Other classes can read/write Values from/to Memory
+ * Memory addresses are either Values or integers
  */
-public class Memory {
-
-    public short read(Value address) {
-        // todo
-        return 0;
+public class Memory extends Storage{
+    private int size_;
+    
+    public Memory(int size){
+        super(size);
     }
 
+
+    // GETTERS
+    // get() will get the Value from memory
+    public Value get(short address){
+        // get the Value from memory address
+        return this.data[address];
+    }
+    public Value get(int address) {
+        // get the Value from memory address
+        return this.get((short) address);
+    }
+
+    // read() will read the short data from memory
+    public short read(Value address) {
+        // read the item from address Value
+        return this.get(address.get()).get();
+    }
+
+    public short read(short address){
+        // read the item from address short
+        return this.get(address).get();
+    }
+
+    public short read(int address){
+        // read the item from address int
+        return this.get(address).get();
+    }
+
+
+
+    // SETTERS
     public void write(Value address, Value valueToWrite) {
-        // todo;
+        this.data[address.get()].set(valueToWrite);
     }
 }
