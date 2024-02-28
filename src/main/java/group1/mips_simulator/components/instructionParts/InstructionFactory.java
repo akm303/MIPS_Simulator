@@ -1,7 +1,6 @@
 package group1.mips_simulator.components.instructionParts;
 
 import group1.mips_simulator.Utility;
-import group1.mips_simulator.components.instructionParts.RXIA_Instruction;
 import group1.mips_simulator.components.instructionParts.FieldProcessors.FieldProcessor;
 
 import java.util.Vector;
@@ -9,7 +8,7 @@ import java.util.Vector;
 public class InstructionFactory {
 
     public Instruction buildInstruction_fromOctal(String octal) {
-        String binary = Utility.octalStringToBinaryString(octal, 16);
+        String binary = Utility.octalStringToBinaryString(octal, Utility.WORD_SIZE);
         return buildInstruction_fromBinary(binary);
     }
 
@@ -31,6 +30,10 @@ public class InstructionFactory {
         return packageInstruction(code, fields);
     }
 
+    public Instruction buildInstruction_fromShort(short number) {
+        String binary = Utility.shortToBinaryString(number, Utility.WORD_SIZE);
+        return buildInstruction_fromBinary(binary);
+    }
 
     protected Instruction packageInstruction(OpCode code, Vector<Field> fields) {
         return switch (code.name.toLowerCase()) {

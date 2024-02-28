@@ -5,6 +5,7 @@ import group1.mips_simulator.components.cpuParts.CPU;
 import group1.mips_simulator.components.cpuParts.Register;
 import group1.mips_simulator.components.instructionParts.Field;
 import group1.mips_simulator.components.instructionParts.Instruction;
+import group1.mips_simulator.components.instructionParts.InstructionFactory;
 import group1.mips_simulator.components.instructionParts.RXIA_Instruction;
 import group1.mips_simulator.components.memParts.Memory;
 
@@ -40,7 +41,8 @@ public class Computer {
         // Get instruction from memory (specified by the Program Counter)
         Value pcAddress = this.cpu.regfile.getPC().read();
 
-        Instruction nextInstruction = Instruction.buildInstruction_fromShort(this.memory.read(pcAddress).get());
+        InstructionFactory factory = new InstructionFactory();
+        Instruction nextInstruction = factory.buildInstruction_fromShort(this.memory.read(pcAddress).get());
         try {
             return this.executeInstruction(nextInstruction);
         } catch (IllegalArgumentException e) {
@@ -68,7 +70,11 @@ public class Computer {
             // Miscellaneous Instructions
             // TODO
             // Load/Store Instructions
-            // TODO
+            case "ldr" -> exe.execute_ldr(this, (RXIA_Instruction) instruction);
+            case "str" -> exe.execute_str(this, (RXIA_Instruction) instruction);
+            case "lda" -> exe.execute_lda(this, (RXIA_Instruction) instruction);
+            case "ldx" -> exe.execute_ldx(this, (RXIA_Instruction) instruction);
+            case "stx" -> exe.execute_stx(this, (RXIA_Instruction) instruction);
             // Transfer Instructions
             case "setcce" -> exe.execute_setcce(this, (RXIA_Instruction) instruction);
             case "jz" -> exe.execute_jz(this, (RXIA_Instruction) instruction);

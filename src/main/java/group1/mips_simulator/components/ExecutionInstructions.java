@@ -11,6 +11,83 @@ import group1.mips_simulator.components.instructionParts.RXIA_Instruction;
 public class ExecutionInstructions {
 
     /**
+     * L0DR r, x, address[,I]
+     * opcode 01(octal)
+     * Load Register From Memory, r = 0..3
+     * r <− c(EA)
+     * note that EA is computed as given above
+     */
+    public void execute_ldr(Computer computer, RXIA_Instruction i) {
+        // r <- c(EA)
+        Value ea = computer.calculateEA(i);
+        Value contentsEA = computer.memory.read(ea);
+
+        Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
+        targetReg.write(contentsEA);
+    }
+
+    /**
+     * STR r, x, address[,I]
+     * opcode 02(octal)
+     * Store Register To Memory, r = 0..3
+     * Memory(EA) <− c(r)
+     */
+    public void execute_str(Computer computer, RXIA_Instruction i) {
+        // Memory(EA) <− c(r)
+        Value ea = computer.calculateEA(i);
+
+        Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
+        Value contentsReg = targetReg.read();
+
+        computer.memory.write(ea, contentsReg);
+    }
+
+    /**
+     * LDA r, x, address[,I]
+     * opcode 03(octal)
+     * Load Register with Address, r = 0..3
+     * r <− EA
+     */
+    public void execute_lda(Computer computer, RXIA_Instruction i) {
+        // r <− EA
+        Value ea = computer.calculateEA(i);
+        Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
+
+        targetReg.write(ea);
+    }
+
+    /**
+     * LDX x, address[,I]
+     * opcode 04(octal)
+     * Load Index Register from Memory, x = 1..3
+     * Xx <- c(EA)
+     */
+    public void execute_ldx(Computer computer, RXIA_Instruction i) {
+        // Xx <- c(EA)
+        Value ea = computer.calculateEA(i);
+        Value contentsEA = computer.memory.read(ea);
+        Register targetReg = computer.cpu.regfile.getIXR(i.getR().value);
+
+        targetReg.write(contentsEA);
+    }
+
+    /**
+     * STX x, address[,I]
+     * opcode 05(octal)
+     * Store Index Register to Memory. X = 1..3
+     * Memory(EA) <- c(Xx)
+     */
+    public void execute_stx(Computer computer, RXIA_Instruction i) {
+        // Memory(EA) <- c(Xx)
+        Value ea = computer.calculateEA(i);
+
+        Register targetReg = computer.cpu.regfile.getIXR(i.getR().value);
+        Value contentsReg = targetReg.read();
+
+        computer.memory.write(ea, contentsReg);
+    }
+
+    /**
      * SETCCE r
      * opcode 44(octal)
      * If c(r) = 0, the E bit of the condition code is set to 1,

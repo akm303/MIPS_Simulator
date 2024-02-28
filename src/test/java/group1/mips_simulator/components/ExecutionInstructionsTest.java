@@ -72,10 +72,121 @@ class ExecutionInstructionsTest {
         assertFalse(computer.cpu.regfile.getCC().getEBit());
     }
 
+    @Test
+    void execute_ldr() {
+        // Set up inputs
+        Computer computer = buildComputer();
+        RXIA_Instruction instruction = new RXIA_Instruction(
+                new OpCode("ldr"),
+                new Vector<>() {{
+                    add(new Field(0, 2));   // R
+                    add(new Field(0, 2));   // X
+                    add(new Field(0, 1));   // I
+                    add(new Field(20, 5));  // A
+                }}
+        );
+
+        // This value will be put into register
+        computer.memory.write((short) 20, (short) 100);
+
+        // Run code under test to demonstrate change
+        assertEquals(new Value(0), computer.cpu.regfile.getGPR(0).read());
+        computer.executeInstruction(instruction);
+        assertEquals(new Value(100), computer.cpu.regfile.getGPR(0).read());
+    }
+
+    @Test
+    void execute_str() {
+        // Set up inputs
+        Computer computer = buildComputer();
+        RXIA_Instruction instruction = new RXIA_Instruction(
+                new OpCode("str"),
+                new Vector<>() {{
+                    add(new Field(0, 2));   // R
+                    add(new Field(0, 2));   // X
+                    add(new Field(0, 1));   // I
+                    add(new Field(20, 5));  // A
+                }}
+        );
+
+        // This value will be written into memory
+        computer.cpu.regfile.getGPR(0).write(new Value(100));
+
+        // Run code under test to demonstrate change
+        assertEquals(new Value(0), computer.memory.read((short) 20));
+        computer.executeInstruction(instruction);
+        assertEquals(new Value(100), computer.memory.read((short) 20));
+    }
+
+    @Test
+    void execute_lda() {
+        // Set up inputs
+        Computer computer = buildComputer();
+        RXIA_Instruction instruction = new RXIA_Instruction(
+                new OpCode("lda"),
+                new Vector<>() {{
+                    add(new Field(1, 2));   // R
+                    add(new Field(0, 2));   // X
+                    add(new Field(0, 1));   // I
+                    add(new Field(20, 5));  // A
+                }}
+        );
+
+        // Run code under test to demonstrate change
+        // EA will be written into register
+        assertEquals(new Value(0), computer.cpu.regfile.getGPR(1).read());
+        computer.executeInstruction(instruction);
+        assertEquals(new Value(20), computer.cpu.regfile.getGPR(1).read());
+    }
+
+    @Test
+    void execute_ldx() {
+        // Set up inputs
+        Computer computer = buildComputer();
+        RXIA_Instruction instruction = new RXIA_Instruction(
+                new OpCode("ldx"),
+                new Vector<>() {{
+                    add(new Field(1, 2));   // R
+                    add(new Field(0, 2));   // X
+                    add(new Field(0, 1));   // I
+                    add(new Field(20, 5));  // A
+                }}
+        );
+
+        // This will be put into index reg
+        computer.memory.write((short) 20, (short) 99);
+
+        // Run code under test to demonstrate change
+        assertEquals(new Value(0), computer.cpu.regfile.getIXR(1).read());
+        computer.executeInstruction(instruction);
+        assertEquals(new Value(99), computer.cpu.regfile.getIXR(1).read());
+    }
+
+    @Test
+    void execute_stx() {
+        // Set up inputs
+        Computer computer = buildComputer();
+        RXIA_Instruction instruction = new RXIA_Instruction(
+                new OpCode("stx"),
+                new Vector<>() {{
+                    add(new Field(1, 2));   // R
+                    add(new Field(0, 2));   // X
+                    add(new Field(0, 1));   // I
+                    add(new Field(20, 5));  // A
+                }}
+        );
+
+        // This will be put into index reg
+        computer.cpu.regfile.getIXR(1).write(55);
+
+        // Run code under test to demonstrate change
+        assertEquals(new Value(0), computer.memory.read(20));
+        computer.executeInstruction(instruction);
+        assertEquals(new Value(55), computer.memory.read(20));
+    }
 
     @Test
     void execute_jz() {
-        ExecutionInstructions underTest = new ExecutionInstructions();
         Computer computer = buildComputer();
 
         RXIA_Instruction instruction = new RXIA_Instruction(
