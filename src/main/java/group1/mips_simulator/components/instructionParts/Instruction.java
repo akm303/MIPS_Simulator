@@ -57,7 +57,7 @@ public class Instruction {
      */
     public boolean isTransferInstruction() {
         return switch (this.opCode.name.toLowerCase()) {
-            case "setcce", "jz", "jne", "jcc", "jma", "jsr", "rfs", "sob", "jge" -> true;
+            case "trap", "setcce", "jz", "jne", "jcc", "jma", "jsr", "rfs", "sob", "jge" -> true;
             default -> false;
         };
     }

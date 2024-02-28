@@ -63,7 +63,8 @@ public class Computer {
         ExecutionInstructions exe = new ExecutionInstructions();
         switch (instruction.opCode.name.toLowerCase()) {
             // Miscellaneous Instructions
-            // TODO
+            case "hlt" -> exe.execute_hlt(this, instruction); // Halt instructions stop machine
+            case "trap" -> exe.execute_trap(this, instruction);
             // Load/Store Instructions
             // TODO
             // Transfer Instructions
