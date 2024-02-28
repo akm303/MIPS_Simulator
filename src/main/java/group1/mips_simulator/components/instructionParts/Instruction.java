@@ -1,6 +1,7 @@
 package group1.mips_simulator.components.instructionParts;
 
 import group1.mips_simulator.Utility;
+import group1.mips_simulator.components.Config;
 import group1.mips_simulator.components.instructionParts.FieldProcessors.FieldProcessor;
 
 import java.util.Vector;
@@ -26,7 +27,7 @@ public class Instruction {
     }
 
     public static Instruction buildInstruction_fromShort(short number) {
-        return buildInstruction_fromBinary(Utility.shortToBinaryString(number, Utility.WORD_SIZE));
+        return buildInstruction_fromBinary(Utility.shortToBinaryString(number, Config.WORD_SIZE));
     }
 
     public Instruction(OpCode opCode, Vector<Field> fields) {
