@@ -6,8 +6,12 @@ import group1.mips_simulator.components.Value;
 /**
  * A Register is a space that holds a value, and makes it available for
  * the CPU to read/ write quickly.
+ * <p>
+ * All Registers are initialized with a Value of 0, and can be modified from there
  */
 public class Register {
+
+    //getter methods
     protected Value value = new Value(0);
     protected short bitWidth = Utility.WORD_SIZE;
 
@@ -23,17 +27,25 @@ public class Register {
         this.value = v.clone();
     }
 
-    public Value read() {
+    public Value read() { // previously get()
+        // get the Value in the register
         return this.value;
     }
 
-    public void write(short newValue) {
-        write(new Value(newValue));
-    }
-
+    // setter methods
     public void write(Value newValue) {
         this.value = newValue.clone();
         this.value.setSize(this.bitWidth);
+    }
+
+    public void write(short newValue) {
+        // set the Value of the register
+        this.write(new Value(newValue));
+    }
+
+    public void write(int value_) {
+        // write an int to the register
+        this.write((short) value_);
     }
 
     public void increment() {
@@ -45,10 +57,12 @@ public class Register {
         this.value.setSize(width);
     }
 
+    /**
+     * increment by multiple
+     * implemented using increment in case we want to add logic based on, for example,
+     * an instruction PC might need to access as it increments
+     */
     public void incrementBy(int n) {
-        //increment by multiple
-        // implemented using increment in case we want to add logic based on, for example,
-        // an instruction PC might need to access as it increments
         for (int i = 0; i < n; i++) {
             this.increment();
         }

@@ -10,28 +10,43 @@ Remember, your machine can have up to 2048 words maximum! What considerations mu
 
 package group1.mips_simulator.components.memParts;
 
+import group1.mips_simulator.components.ComputerConfig;
 import group1.mips_simulator.components.Value;
 
 /**
  * A Memory class represents the entire memory lookup for our computer simulator.
+ * <p>
+ * Memory has a static size, defined during init
+ * Other classes can read/write Values from/to Memory.
+ * Memory addresses are either Values or integers
  */
-public class Memory {
+public class Memory extends Storage {
+    private int size_;
 
-    public short read(Value address) {
+    public Memory() {
+        this(ComputerConfig.MEMORY_SIZE);
+    }
+
+    public Memory(int size) {
+        super(size);
+    }
+
+    public Value read(int address) {
+        return this.data[address];
+    }
+
+
+    public Value read(Value address) {
         return read(address.get());
     }
 
-    public short read(short address) {
-        // todo
-        return 0;
-    }
 
     public void write(Value address, Value valueToWrite) {
         write(address.get(), valueToWrite.get());
     }
 
     public void write(short address, short valueToWrite) {
-        // todo;
+        this.data[address].set(valueToWrite);
     }
 
 }

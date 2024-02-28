@@ -8,6 +8,7 @@ import group1.mips_simulator.components.instructionParts.Instruction;
 import group1.mips_simulator.components.instructionParts.RXIA_Instruction;
 import group1.mips_simulator.components.memParts.Memory;
 
+
 /**
  * A Mips Computer is a class to represent the classical computer architecture
  * being discussed in class.
@@ -20,7 +21,8 @@ public class Computer {
 
     public Computer() {
         cpu = new CPU();
-        memory = new Memory();
+
+        memory = new Memory(ComputerConfig.MEMORY_SIZE);
     }
 
     /**
@@ -37,7 +39,8 @@ public class Computer {
     public boolean runCurrentPC() {
         // Get instruction from memory (specified by the Program Counter)
         Value pcAddress = this.cpu.regfile.getPC().read();
-        Instruction nextInstruction = Instruction.buildInstruction_fromShort(this.memory.read(pcAddress));
+
+        Instruction nextInstruction = Instruction.buildInstruction_fromShort(this.memory.read(pcAddress).get());
         try {
             return this.executeInstruction(nextInstruction);
         } catch (IllegalArgumentException e) {
@@ -205,13 +208,12 @@ public class Computer {
                 //pointer where the address field has the location of the EA
                 //in memory
                 // both indirect addressing and indexing
-                short addressContents = memory.read(address.value);
-                return new Value(addressContents);
+                return memory.read(address.value);
             } else {
                 // c(c(IX) + c(Address Field))
                 short ixContents = this.cpu.regfile.getIXR(ix.value).read().get();
                 short addressField = address.value;
-                return new Value(memory.read((short) (ixContents + addressField)));
+                return memory.read((short) (ixContents + addressField));
             }
         }
     }

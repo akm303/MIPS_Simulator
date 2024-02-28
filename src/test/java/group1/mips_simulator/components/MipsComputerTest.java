@@ -51,7 +51,7 @@ class ComputerTest {
         Computer underTest = new Computer();
 
         // Set up index registers
-        underTest.cpu.regfile.IXR = new Register[]{
+        underTest.cpu.regfile.ixr = new Register[]{
                 new Register((short) 5),  // 00
                 new Register((short) 10), // 01
                 new Register((short) 15), // 10 **
@@ -76,7 +76,7 @@ class ComputerTest {
         Computer underTest = new Computer();
 
         // Set up registers
-        underTest.cpu.regfile.IXR = new Register[]{
+        underTest.cpu.regfile.ixr = new Register[]{
                 new Register((short) 5),  // 00
                 new Register((short) 10), // 01 **
                 new Register((short) 15), // 10
