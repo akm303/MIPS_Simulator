@@ -21,6 +21,7 @@ public class Computer {
     public Computer() {
         cpu = new CPU();
         mem = new Memory(Config.MEM_SIZE);
+
     }
 
     /**

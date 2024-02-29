@@ -17,6 +17,7 @@ public class Register {
     public short bitWidth = Config.WORD_SIZE;
 
     public Value get() { // previously get()
+
         // get the Value in the register
         return this.value;
     }
@@ -32,6 +33,7 @@ public class Register {
         this.value = newValue.clone();
         this.value.setSize(this.bitWidth);
     }
+
 
     public void write(short value_) {
         // write a short to the register
@@ -55,5 +57,6 @@ public class Register {
     public String toString_Binary() {
         return this.value.toString_Binary();
     }
+
 
 }

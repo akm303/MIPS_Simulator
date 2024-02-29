@@ -8,6 +8,7 @@ public class Value {
     protected short value_;
     protected short size = Config.WORD_SIZE; // 16 by default
 
+
     //region Constructors
     public Value(short value) {
         value_ = value;
@@ -36,6 +37,7 @@ public class Value {
     }
 
     public void set(Value value_) { this.set(value_.get()); }
+
 
     public void set(int value) {
         this.set((short) value);

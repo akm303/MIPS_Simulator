@@ -72,5 +72,6 @@ public class Memory extends Storage{
         // todo
         // for instruction on rom, put rom in first mem location, then increment mem location
 
+
     }
 }

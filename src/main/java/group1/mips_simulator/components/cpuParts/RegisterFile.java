@@ -34,6 +34,7 @@ public class RegisterFile {
             newReg.setBitWidth((short) Config.WORD_SIZE);
             gpr[i] = newReg;
         }
+
         for (int i = 0; i < ixr.length; i++) {
             Register newReg = new Register();
             newReg.write(0);
