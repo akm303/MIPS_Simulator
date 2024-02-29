@@ -4,7 +4,6 @@ import group1.mips_simulator.components.cpuParts.CPU;
 import group1.mips_simulator.components.cpuParts.Register;
 import group1.mips_simulator.components.instructionParts.Instruction;
 import group1.mips_simulator.components.memParts.Memory;
-import group1.mips_simulator.components.ComputerConfig;
 
 
 import java.util.Vector;
@@ -15,14 +14,14 @@ import java.util.Vector;
  */
 public class Computer {
 
+    public ROM rom = new ROM();
     public Memory mem;
     public CPU cpu;
 
-    public ROM readOnlyMemory = new ROM();
-
     public Computer() {
         cpu = new CPU();
-        mem = new Memory(ComputerConfig.memorySize);
+        mem = new Memory(Config.MEM_SIZE);
+
     }
 
     /**
@@ -37,7 +36,7 @@ public class Computer {
      */
     public boolean runCurrentPC() {
         // Get instruction from memory (specified by the Program Counter)
-        Value pcAddress = this.cpu.regfile.getPC().read();
+        Value pcAddress = this.cpu.regfile.getPC().get();
         Instruction nextInstruction = Instruction.buildInstruction_fromShort(this.mem.read(pcAddress));
         return this.executeInstruction(nextInstruction);
     }
@@ -69,9 +68,5 @@ public class Computer {
         Register pc = this.cpu.regfile.getPC();
         pc.increment();
     }
-//    public void incrementPC() {
-//        Value pc = this.programCounter.read();
-//        pc.set(pc.get() + 1);
-//        this.programCounter.write(pc);
-//    }
+
 }

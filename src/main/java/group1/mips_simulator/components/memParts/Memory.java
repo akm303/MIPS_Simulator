@@ -11,7 +11,7 @@ Remember, your machine can have up to 2048 words maximum! What considerations mu
 package group1.mips_simulator.components.memParts;
 
 import group1.mips_simulator.components.Value;
-
+import group1.mips_simulator.components.ROM;
 /**
  * A Memory class represents the entire memory lookup for our computer simulator.
  *
@@ -26,23 +26,52 @@ public class Memory extends Storage{
         super(size);
     }
 
-    public Value read(int address) {
+
+    // GETTERS
+    /* get() will get the Value from memory */
+
+    public Value get(short address){
+        // get the Value from memory address as a short
         return this.data[address];
     }
 
-//     public Value read(Value address) {
-      // potentially redundant from merge conflict
-//         return this.read(address.get());
-//     }
+    public Value get(int address) {
+        // get the Value from memory address as an int
+        return get((short) address);
+    }
+
+
+    /* read() will read the short data from memory */
 
     public short read(Value address) {
-        return read(address.get());
+        // read the data from address in a Value
+        return get(address.get()).get();
+    }
+
+    public short read(short address){
+        // read the data from address as a short
+        return get(address).get();
+    }
+
+    public short read(int address){
+        // read the item from address as an int
+        return get(address).get();
     }
 
 
 
-
+    // SETTERS
     public void write(Value address, Value valueToWrite) {
+        // write value to address at value
         this.data[address.get()].set(valueToWrite);
+    }
+
+
+    // FUNCTION
+    public void importRom(ROM rom){
+        // todo
+        // for instruction on rom, put rom in first mem location, then increment mem location
+
+
     }
 }

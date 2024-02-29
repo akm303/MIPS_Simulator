@@ -109,8 +109,8 @@ public class SimController {
      */
     public void loadOnClick(ActionEvent actionEvent) {
         Register memAddReg = this.computer.cpu.regfile.getMAR();
-        short valueInMemory = this.computer.mem.read(memAddReg.read());
-        this.computer.cpu.regfile.getMBR().write(valueInMemory);
+        Value valueInMemory = this.computer.mem.get(memAddReg.read());
+        this.computer.cpu.regfile.getMBR().set(valueInMemory);
         redraw();
     }
 
@@ -122,7 +122,7 @@ public class SimController {
     public void loadPlusOnClick(ActionEvent actionEvent) {
         loadOnClick(actionEvent);
         Register memAddReg = this.computer.cpu.regfile.getMAR();
-        memAddrReg.write((short) (memAddrReg.read().get() + 1));
+        memAddReg.write((short) (memAddReg.read() + 1));
         redraw();
     }
 
@@ -133,7 +133,7 @@ public class SimController {
     public void storeOnClick(ActionEvent actionEvent) {
         Register memBuffReg = this.computer.cpu.regfile.getMBR();
         Register memAddReg = this.computer.cpu.regfile.getMAR();
-        this.computer.mem.write(memAddReg.read(), memBuffReg.read());
+        this.computer.mem.write(memAddReg.get(), memBuffReg.get());
         redraw();
     }
 
@@ -143,7 +143,7 @@ public class SimController {
      */
     public void storePlusOnClick(ActionEvent actionEvent) {
         Register memAddReg = this.computer.cpu.regfile.getMAR();
-        memAddReg.write((short) (memAddReg.read().get() + 1));
+        memAddReg.write((short) (memAddReg.read() + 1));
         storeOnClick(actionEvent);
         redraw();
     }
@@ -297,7 +297,7 @@ public class SimController {
                 return;
             }
             // Else it is a valid binary
-            r.write(new Value(Utility.binaryToShort(userInputBinStr)));
+            r.write(Utility.binaryToShort(userInputBinStr));
             redraw();
         });
     }
@@ -319,7 +319,7 @@ public class SimController {
 
             // Hand the file to the ROM loader
             try {
-                computer.readOnlyMemory.readFromFile(selectedFile);
+                computer.rom.readFromFile(selectedFile);
                 FileToLoad.setStyle("-fx-text-fill: black"); // Color of text
             } catch (IOException e) {
                 System.out.println("Encountered an error when reading file: " + e);

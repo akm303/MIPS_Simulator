@@ -6,8 +6,8 @@ public class Storage {
     public Storage(int size){
         // Creates an array of values, the data held in storage
         data = new Value[size];
-        for (Value value : data){
-            value.set(0);
+        for(int i = 0; i < data.length; i++){
+            data[i] = new Value(0);
         }
     }
 }
