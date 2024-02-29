@@ -89,8 +89,8 @@ class ExecutionInstructionsTest {
         );
 
         computer.cpu.regfile.getCC().setBit(ConditionCode.EBIT_INDEX, true);
-        assertEquals(computer.cpu.regfile.getPC().read().get(), 0);
+        assertEquals(computer.cpu.regfile.getPC().read(), 0);
         computer.executeInstruction(instruction);
-        assertEquals(20, computer.cpu.regfile.getPC().read().get());
+        assertEquals(20, computer.cpu.regfile.getPC().read());
     }
 }

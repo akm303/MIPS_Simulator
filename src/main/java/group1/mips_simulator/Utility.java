@@ -1,8 +1,8 @@
 package group1.mips_simulator;
-
+import group1.mips_simulator.components.Config;
 
 public class Utility {
-    public static final int WORD_SIZE = 16;
+
 
     public static boolean isNumeric(String str) {
         try {

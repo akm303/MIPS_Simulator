@@ -18,8 +18,8 @@ public class ExecutionInstructions {
      */
     public void execute_setcce(Computer computer, RXIA_Instruction i) {
         Register targetR = computer.cpu.regfile.getGPR(i.getR().value);
-        Value regContents = targetR.read();
-        boolean newEBit = (regContents.get() == 0); // if c(r) == 0, then newEBit is true (1).
+        short regContents = targetR.read();
+        boolean newEBit = (regContents == 0); // if c(r) == 0, then newEBit is true (1).
         computer.cpu.regfile.getCC().setBit(ConditionCode.EBIT_INDEX, newEBit);
     }
 
@@ -109,7 +109,7 @@ public class ExecutionInstructions {
     public void execute_jsr(Computer computer, RXIA_Instruction i) {
         // R3 <− PC+1;
         Register r = computer.cpu.regfile.getGPR(3);
-        short pcPlus1 = (short) (computer.cpu.regfile.getPC().read().get() + 1);
+        short pcPlus1 = (short) (computer.cpu.regfile.getPC().read() + 1);
         r.write(new Value(pcPlus1));
 
         // PC <− EA
@@ -155,11 +155,11 @@ public class ExecutionInstructions {
     public void execute_sob(Computer computer, RXIA_Instruction i) {
         // r <− c(r) – 1
         // Contents of register r, minus 1
-        int r = computer.cpu.regfile.getGPR(i.getR().value).read().get() - 1;
+        int r = computer.cpu.regfile.getGPR(i.getR().value).read() - 1;
 
         // If c(r) > 0,  PC <- EA;
         Register targetReg = computer.cpu.regfile.getGPR(r);
-        if (targetReg.read().get() > 0) {
+        if (targetReg.read() > 0) {
             Value ea = computer.calculateEA(i);
             computer.cpu.regfile.getPC().write(ea);
             return;
@@ -178,7 +178,7 @@ public class ExecutionInstructions {
     public void execute_jge(Computer computer, RXIA_Instruction i) {
         // If c(r) >= 0
         Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
-        if (targetReg.read().get() >= 0) {
+        if (targetReg.read() >= 0) {
             // then PC <- EA
             Value ea = computer.calculateEA(i);
             computer.cpu.regfile.getPC().write(ea);

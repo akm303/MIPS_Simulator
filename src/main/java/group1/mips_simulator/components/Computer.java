@@ -14,15 +14,14 @@ import group1.mips_simulator.components.memParts.Memory;
  * being discussed in class.
  */
 public class Computer {
-    public Memory memory;
-    public CPU cpu;
 
-    public ROM readOnlyMemory = new ROM();
+    public Memory memory;
+    public ROM rom = new ROM();
+    public CPU cpu;
 
     public Computer() {
         cpu = new CPU();
-
-        memory = new Memory(ComputerConfig.MEMORY_SIZE);
+        memory = new Memory(Config.MEM_SIZE);
     }
 
     /**
@@ -38,9 +37,8 @@ public class Computer {
      */
     public boolean runCurrentPC() {
         // Get instruction from memory (specified by the Program Counter)
-        Value pcAddress = this.cpu.regfile.getPC().read();
-
-        Instruction nextInstruction = Instruction.buildInstruction_fromShort(this.memory.read(pcAddress).get());
+        short pcAddress = this.cpu.regfile.getPC().read();
+        Instruction nextInstruction = Instruction.buildInstruction_fromShort(this.memory.read(pcAddress));
         try {
             return this.executeInstruction(nextInstruction);
         } catch (IllegalArgumentException e) {
@@ -195,7 +193,7 @@ public class Computer {
                 // that is, the IX field has an
                 // index register number, the contents of that register are
                 // added to the contents of the address field
-                short ixContents = this.cpu.regfile.getIXR(ix.value).read().get();
+                short ixContents = this.cpu.regfile.getIXR(ix.value).read();
                 short addressField = address.value;
                 return new Value(ixContents + addressField);
             }
@@ -207,14 +205,13 @@ public class Computer {
                 //pointer where the address field has the location of the EA
                 //in memory
                 // both indirect addressing and indexing
-                return memory.read(address.value);
+                return new Value(memory.read(address.value));
             } else {
                 // c(c(IX) + c(Address Field))
-                short ixContents = this.cpu.regfile.getIXR(ix.value).read().get();
+                short ixContents = this.cpu.regfile.getIXR(ix.value).read();
                 short addressField = address.value;
-                return memory.read((short) (ixContents + addressField));
+                return new Value(memory.read((short) (ixContents + addressField)));
             }
         }
     }
-
 }
