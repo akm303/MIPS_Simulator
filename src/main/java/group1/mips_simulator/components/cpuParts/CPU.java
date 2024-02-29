@@ -35,12 +35,11 @@ import group1.mips_simulator.components.instructionParts.InstructionSet;
 
 public class CPU {
     public RegisterFile regfile;
-    private RomLoader romLoader;
+    public RomLoader romLoader;
     InstructionSet isa;
 
     public CPU(){
         regfile = new RegisterFile();
-        romLoader = new RomLoader();
     }
 
 //    public void run() {
