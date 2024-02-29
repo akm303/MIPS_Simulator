@@ -74,6 +74,9 @@ public class Utility {
     }
 
     public static int binaryToInt(String binary) {
+        // Strip all un-expected characters
+        binary = binary.replaceAll("[^10]", "");
+
         int result = 0;
         for (int i = binary.length() - 1; i >= 0; i--) {
             char currentBit = binary.charAt(i);

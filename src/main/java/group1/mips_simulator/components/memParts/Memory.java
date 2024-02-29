@@ -10,19 +10,25 @@ Remember, your machine can have up to 2048 words maximum! What considerations mu
 
 package group1.mips_simulator.components.memParts;
 
-import group1.mips_simulator.components.Value;
+import group1.mips_simulator.components.ComputerConfig;
 import group1.mips_simulator.components.ROM;
+import group1.mips_simulator.components.Value;
+
 /**
  * A Memory class represents the entire memory lookup for our computer simulator.
- *
+ * <p>
  * Memory has a static size, defined during init
- * Other classes can read/write Values from/to Memory
+ * Other classes can read/write Values from/to Memory.
  * Memory addresses are either Values or integers
  */
-public class Memory extends Storage{
+public class Memory extends Storage {
     private int size_;
-    
-    public Memory(int size){
+
+    public Memory() {
+        this(ComputerConfig.MEMORY_SIZE);
+    }
+
+    public Memory(int size) {
         super(size);
     }
 
@@ -30,9 +36,13 @@ public class Memory extends Storage{
     // GETTERS
     /* get() will get the Value from memory */
 
-    public Value get(short address){
+    public Value get(short address) {
         // get the Value from memory address as a short
         return this.data[address];
+    }
+
+    public void write(short address, short valueToWrite) {
+        this.data[address].set(valueToWrite);
     }
 
     public Value get(int address) {
@@ -48,16 +58,15 @@ public class Memory extends Storage{
         return get(address.get()).get();
     }
 
-    public short read(short address){
+    public short read(short address) {
         // read the data from address as a short
         return get(address).get();
     }
 
-    public short read(int address){
+    public short read(int address) {
         // read the item from address as an int
         return get(address).get();
     }
-
 
 
     // SETTERS
@@ -68,7 +77,7 @@ public class Memory extends Storage{
 
 
     // FUNCTION
-    public void importRom(ROM rom){
+    public void importRom(ROM rom) {
         // todo
         // for instruction on rom, put rom in first mem location, then increment mem location
 

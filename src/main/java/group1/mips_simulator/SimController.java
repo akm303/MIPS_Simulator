@@ -109,8 +109,8 @@ public class SimController {
      */
     public void loadOnClick(ActionEvent actionEvent) {
         Register memAddReg = this.computer.cpu.regfile.getMAR();
-        Value valueInMemory = this.computer.mem.get(memAddReg.read());
-        this.computer.cpu.regfile.getMBR().set(valueInMemory);
+        short valueInMemory = this.computer.memory.read(memAddReg.read());
+        this.computer.cpu.regfile.getMBR().write(valueInMemory);
         redraw();
     }
 
@@ -133,7 +133,7 @@ public class SimController {
     public void storeOnClick(ActionEvent actionEvent) {
         Register memBuffReg = this.computer.cpu.regfile.getMBR();
         Register memAddReg = this.computer.cpu.regfile.getMAR();
-        this.computer.mem.write(memAddReg.get(), memBuffReg.get());
+        this.computer.memory.write(memAddReg.read(), memBuffReg.read());
         redraw();
     }
 
