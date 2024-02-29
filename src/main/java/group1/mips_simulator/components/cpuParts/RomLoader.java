@@ -15,15 +15,12 @@ public class RomLoader {
 
     public RomLoader(ROM rom, Memory mem){
         Vector<Instruction> romData = rom.getInstructions();
-
-
-    }
-    public RomLoader(String directory){
-
+        for(int i = 0; i < romData.size(); i++){
+            writeToMemory(romData.get(i));
+        }
     }
 
-    public void loadFrom(String directory){
-
-
+    public void writeToMemory(Instruction instr){
+        instr.
     }
 }

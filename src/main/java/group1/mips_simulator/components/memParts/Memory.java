@@ -10,7 +10,7 @@ Remember, your machine can have up to 2048 words maximum! What considerations mu
 
 package group1.mips_simulator.components.memParts;
 
-import group1.mips_simulator.components.ComputerConfig;
+import group1.mips_simulator.components.Config;
 import group1.mips_simulator.components.ROM;
 import group1.mips_simulator.components.Value;
 
@@ -25,7 +25,7 @@ public class Memory extends Storage {
     private int size_;
 
     public Memory() {
-        this(ComputerConfig.MEMORY_SIZE);
+        this(Config.MEM_SIZE);
     }
 
     public Memory(int size) {
