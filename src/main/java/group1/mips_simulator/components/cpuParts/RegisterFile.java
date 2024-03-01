@@ -1,7 +1,6 @@
 package group1.mips_simulator.components.cpuParts;
 
-import group1.mips_simulator.Utility;
-import group1.mips_simulator.components.Value;
+import group1.mips_simulator.components.Config;
 
 /**
  * A register file is a collection of all registers accessible and usable by a CPU
@@ -13,24 +12,13 @@ public class RegisterFile {
 
     public static final int GPR_COUNT = 4;
     public static final int IXR_COUNT = 3;
+    public Register[] gpr = new Register[GPR_COUNT];//General Purpose Reg: R0-R3
+    public Register[] ixr = new Register[IXR_COUNT];//Index Reg: X1-X3.
 
-    public Register[] gpr = new Register[]{ //General Purpose Reg: R0-R3
-            new Register(), // GPR0
-            new Register(), // GPR1
-            new Register(), // GPR2
-            new Register()  // GPR3
-    };
-    public Register[] ixr = new Register[]{ //Index Reg: X1-X3.
-            new Register(), // IXR0
-            new Register(), // IXR1
-            new Register()  // IXR2
-    };
-
-    //Index Reg: X1-X3.
     Register pc = new Register();       //Prog Counter Reg : address of next instruction to be executed
-
     //Condition Code Reg : set when arith/logical operations executed
     // ONZE (Overflow, uNderflow, divZero, Equalornot)
+
     ConditionCode cc = new ConditionCode();
     Register ir = new Register();       //Instruction Reg : holds instruction to be exe
     Register mar = new Register();      //Mem Addr Reg : holds address of word to be fetched from memory
@@ -43,14 +31,15 @@ public class RegisterFile {
 
         for (int i = 0; i < GPR_COUNT; i++) {
             Register newReg = new Register();
-            newReg.write(new Value(0));
-            newReg.setBitWidth((short) Utility.WORD_SIZE);
+            newReg.write(0);
+            newReg.setBitWidth(Config.WORD_SIZE);
             gpr[i] = newReg;
         }
+
         for (int i = 0; i < IXR_COUNT; i++) {
             Register newReg = new Register();
-            newReg.write(new Value(0));
-            newReg.setBitWidth((short) Utility.WORD_SIZE);
+            newReg.write(0);
+            newReg.setBitWidth(Config.WORD_SIZE);
             ixr[i] = newReg;
         }
         //for (Register reg : FPR){ 
@@ -61,14 +50,17 @@ public class RegisterFile {
         Register[] allOtherReg = new Register[]{pc, cc, ir, mar, mbr, mfr};
         //todo Note* add fpr and other registers as you update Reg File implementation
         for (Register reg : allOtherReg) {
-            reg.write(new Value(0));
+            reg.write(0);
         }
 
         pc.setBitWidth((short) 12);
         mar.setBitWidth((short) 12);
         cc.setBitWidth((short) 4);
-        mbr.setBitWidth((short) Utility.WORD_SIZE);
-        ir.setBitWidth((short) Utility.WORD_SIZE);
+
+        mbr.setBitWidth(Config.WORD_SIZE);
+        ir.setBitWidth(Config.WORD_SIZE);
+        mbr.setBitWidth(Config.WORD_SIZE);
+        ir.setBitWidth(Config.WORD_SIZE);
         mfr.setBitWidth((short) 4);
 
     }
