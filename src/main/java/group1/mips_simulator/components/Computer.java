@@ -26,8 +26,8 @@ public class Computer {
     }
 
     public void loadROM(){
-        cpu.romLoader = new RomLoader(memory);
-        cpu.romLoader.load(rom);
+        cpu.romLoader = new RomLoader();
+        cpu.romLoader.load(rom,memory);
 
     }
 
