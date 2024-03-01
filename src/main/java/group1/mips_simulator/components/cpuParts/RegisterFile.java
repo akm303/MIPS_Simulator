@@ -10,10 +10,8 @@ import group1.mips_simulator.components.Config;
  */
 public class RegisterFile {
 
-    public static final int GPR_COUNT = 4;
-    public static final int IXR_COUNT = 3;
-    public Register[] gpr = new Register[GPR_COUNT];//General Purpose Reg: R0-R3
-    public Register[] ixr = new Register[IXR_COUNT];//Index Reg: X1-X3.
+    public Register[] gpr = new Register[Config.GPR_COUNT];//General Purpose Reg: R0-R3
+    public Register[] ixr = new Register[Config.IXR_COUNT];//Index Reg: X1-X3.
 
     Register pc = new Register();       //Prog Counter Reg : address of next instruction to be executed
     //Condition Code Reg : set when arith/logical operations executed
@@ -29,14 +27,14 @@ public class RegisterFile {
     public RegisterFile() {
         //initialize all reg w/ null
 
-        for (int i = 0; i < GPR_COUNT; i++) {
+        for (int i = 0; i < Config.GPR_COUNT; i++) {
             Register newReg = new Register();
             newReg.write(0);
             newReg.setBitWidth(Config.WORD_SIZE);
             gpr[i] = newReg;
         }
 
-        for (int i = 0; i < IXR_COUNT; i++) {
+        for (int i = 0; i < Config.IXR_COUNT; i++) {
             Register newReg = new Register();
             newReg.write(0);
             newReg.setBitWidth(Config.WORD_SIZE);
@@ -57,8 +55,6 @@ public class RegisterFile {
         mar.setBitWidth((short) 12);
         cc.setBitWidth((short) 4);
 
-        mbr.setBitWidth(Config.WORD_SIZE);
-        ir.setBitWidth(Config.WORD_SIZE);
         mbr.setBitWidth(Config.WORD_SIZE);
         ir.setBitWidth(Config.WORD_SIZE);
         mfr.setBitWidth((short) 4);
