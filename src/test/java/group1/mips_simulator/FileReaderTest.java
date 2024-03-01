@@ -17,7 +17,7 @@ class FileReaderTest {
     @Test
     void readBinaryFile() {
         FileReader underTest = new FileReader();
-        Vector<Instruction> result = null;
+        Vector<String[]> result = null;
         try {
             result = underTest.readBinaryFile("src/test/java/group1/mips_simulator/testFile.txt");
         } catch (IOException e) {
