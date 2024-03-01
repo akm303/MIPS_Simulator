@@ -2,7 +2,6 @@ package group1.mips_simulator;
 
 import group1.mips_simulator.FrontEnd.Redraw;
 import group1.mips_simulator.components.Computer;
-import group1.mips_simulator.components.Value;
 import group1.mips_simulator.components.cpuParts.Register;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;

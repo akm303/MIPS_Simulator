@@ -35,7 +35,7 @@ public class ExecutionInstructions {
         if (eBit) {
             // if eBit is 1
             // PC <-- EA
-            Value ea = computer.calculateEA(i);
+            Word ea = computer.calculateEA(i);
             computer.cpu.regfile.getPC().write(ea);
             return;
         }
@@ -55,7 +55,7 @@ public class ExecutionInstructions {
         if (!eBit) {
             // if eBit is 0
             // PC <-- EA
-            Value ea = computer.calculateEA(i);
+            Word ea = computer.calculateEA(i);
             computer.cpu.regfile.getPC().write(ea);
             return;
         }
@@ -77,7 +77,7 @@ public class ExecutionInstructions {
         if (targetCcBit) {
             // if cc bit = 1
             // PC <-- EA
-            Value ea = computer.calculateEA(i);
+            Word ea = computer.calculateEA(i);
             computer.cpu.regfile.getPC().write(ea);
             return;
         }
@@ -93,7 +93,7 @@ public class ExecutionInstructions {
      * Note: r is ignored in this instruction
      */
     public void execute_jma(Computer computer, RXIA_Instruction i) {
-        Value ea = computer.calculateEA(i);
+        Word ea = computer.calculateEA(i);
         computer.cpu.regfile.getPC().write(ea);
     }
 
@@ -110,10 +110,10 @@ public class ExecutionInstructions {
         // R3 <− PC+1;
         Register r = computer.cpu.regfile.getGPR(3);
         short pcPlus1 = (short) (computer.cpu.regfile.getPC().read() + 1);
-        r.write(new Value(pcPlus1));
+        r.write(new Word(pcPlus1));
 
         // PC <− EA
-        Value ea = computer.calculateEA(i);
+        Word ea = computer.calculateEA(i);
         computer.cpu.regfile.getPC().write(ea);
 
         // TODO:
@@ -136,7 +136,7 @@ public class ExecutionInstructions {
 
         // R0 <− Immed
         Register r0 = computer.cpu.regfile.getGPR(0);
-        r0.write(new Value(immed.value));
+        r0.write(new Word(immed.value));
         computer.cpu.regfile.getGPR(0).write(r0.read());
 
         // PC <- c(R3)
@@ -160,7 +160,7 @@ public class ExecutionInstructions {
         // If c(r) > 0,  PC <- EA;
         Register targetReg = computer.cpu.regfile.getGPR(r);
         if (targetReg.read() > 0) {
-            Value ea = computer.calculateEA(i);
+            Word ea = computer.calculateEA(i);
             computer.cpu.regfile.getPC().write(ea);
             return;
         }
@@ -180,7 +180,7 @@ public class ExecutionInstructions {
         Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
         if (targetReg.read() >= 0) {
             // then PC <- EA
-            Value ea = computer.calculateEA(i);
+            Word ea = computer.calculateEA(i);
             computer.cpu.regfile.getPC().write(ea);
             return;
         }

@@ -124,7 +124,7 @@ public class Computer {
      * @return The memory location that is the Effective Address for the provided
      * instruction.
      */
-    public Value calculateEA(RXIA_Instruction instruction) {
+    public Word calculateEA(RXIA_Instruction instruction) {
         return this.calculateEA(instruction.getIX(), instruction.getAddress(), instruction.getI());
     }
 
@@ -141,7 +141,7 @@ public class Computer {
      * @return The memory location that is the Effective Address for the provided
      * instruction.
      */
-    public Value calculateEA(Field ix, Field address) {
+    public Word calculateEA(Field ix, Field address) {
         return this.calculateEA(ix, address, new Field(0, 1));
     }
 
@@ -157,7 +157,7 @@ public class Computer {
      * @return The memory location that is the Effective Address for the provided
      * instruction.
      */
-    public Value calculateEA(Field ix, Field address, Field i) {
+    public Word calculateEA(Field ix, Field address, Field i) {
         /*
         Effective Address (EA) =
         if I field = 0:
@@ -187,7 +187,7 @@ public class Computer {
             // NO indirect addressing
             if (ix.value == 0) {
                 // EA = contents of the Address field       c(Address Field)
-                return new Value(address.value);
+                return new Word(address.value);
             } else {
                 // EA = c(IX) + c(Address Field)
                 // that is, the IX field has an
@@ -195,7 +195,7 @@ public class Computer {
                 // added to the contents of the address field
                 short ixContents = this.cpu.regfile.getIXR(ix.value).read();
                 short addressField = address.value;
-                return new Value(ixContents + addressField);
+                return new Word(ixContents + addressField);
             }
         } else {
             // Indirection bit is set
@@ -205,12 +205,12 @@ public class Computer {
                 //pointer where the address field has the location of the EA
                 //in memory
                 // both indirect addressing and indexing
-                return new Value(memory.read(address.value));
+                return new Word(memory.read(address.value));
             } else {
                 // c(c(IX) + c(Address Field))
                 short ixContents = this.cpu.regfile.getIXR(ix.value).read();
                 short addressField = address.value;
-                return new Value(memory.read((short) (ixContents + addressField)));
+                return new Word(memory.read((short) (ixContents + addressField)));
             }
         }
     }
