@@ -15,7 +15,7 @@ public class InstructionFactory {
 
     public Instruction buildInstruction_fromBinary(String binary) {
         binary = binary.replace(" ", "");
-        if (binary.length() != Instruction.BIT_COUNT) {
+        if (binary.length() != Config.WORD_SIZE) {
             throw new IllegalArgumentException("Can not build instruction from binary:" +
                     "Not expected size. Given binary: " + binary);
         }

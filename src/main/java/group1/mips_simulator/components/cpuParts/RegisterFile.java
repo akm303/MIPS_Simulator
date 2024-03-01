@@ -9,7 +9,6 @@ import group1.mips_simulator.components.Config;
  * That's why we're using a fixed array for the GPR and IXR representations.
  */
 public class RegisterFile {
-
     public Register[] gpr = new Register[Config.GPR_COUNT];//General Purpose Reg: R0-R3
     public Register[] ixr = new Register[Config.IXR_COUNT];//Index Reg: X1-X3.
 

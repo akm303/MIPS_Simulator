@@ -1,6 +1,5 @@
 package group1.mips_simulator.components.instructionParts;
 
-
 import group1.mips_simulator.components.Value;
 
 import java.util.Arrays;
@@ -8,8 +7,6 @@ import java.util.Objects;
 import java.util.Vector;
 
 public class Instruction {
-
-    public static final int BIT_COUNT = 16;
 
     public static Instruction buildInstruction_fromOctal(String octal) {
         InstructionFactory factory = new InstructionFactory();
