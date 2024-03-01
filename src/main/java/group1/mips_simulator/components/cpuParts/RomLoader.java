@@ -28,3 +28,4 @@ public class RomLoader {
         this.memory.write(address, instruction);
     }
 }
+
