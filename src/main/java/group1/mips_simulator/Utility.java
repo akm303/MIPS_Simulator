@@ -128,16 +128,5 @@ public class Utility {
     }
 
 
-    public static short instructionToShort(Instruction instr){
-        int rvalue = 0;
-        char[] instruction = instr.toString_Binary().toCharArray();
 
-        for(int i = 0; i < instruction.length; i++){
-            if(instruction[i] == '1')
-                rvalue |= 1<<i;
-        }
-
-        return (short) rvalue;
-
-    }
 }

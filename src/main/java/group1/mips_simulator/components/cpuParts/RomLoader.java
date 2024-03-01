@@ -24,7 +24,7 @@ public class RomLoader {
     }
 
     public void writeToMemory(short address, Instruction i){
-        short instruction = Utility.instructionToShort(i);
+        short instruction = i.toShort();
         this.memory.write(address, instruction);
     }
 }
