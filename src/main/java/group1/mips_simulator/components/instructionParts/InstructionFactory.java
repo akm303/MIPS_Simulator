@@ -1,6 +1,7 @@
 package group1.mips_simulator.components.instructionParts;
 
 import group1.mips_simulator.Utility;
+import group1.mips_simulator.components.Config;
 import group1.mips_simulator.components.instructionParts.FieldProcessors.FieldProcessor;
 
 import java.util.Vector;
@@ -8,7 +9,7 @@ import java.util.Vector;
 public class InstructionFactory {
 
     public Instruction buildInstruction_fromOctal(String octal) {
-        String binary = Utility.octalStringToBinaryString(octal, Utility.WORD_SIZE);
+        String binary = Utility.octalStringToBinaryString(octal, Config.WORD_SIZE);
         return buildInstruction_fromBinary(binary);
     }
 
@@ -31,7 +32,7 @@ public class InstructionFactory {
     }
 
     public Instruction buildInstruction_fromShort(short number) {
-        String binary = Utility.shortToBinaryString(number, Utility.WORD_SIZE);
+        String binary = Utility.shortToBinaryString(number, Config.WORD_SIZE);
         return buildInstruction_fromBinary(binary);
     }
 

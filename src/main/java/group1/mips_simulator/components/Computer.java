@@ -15,15 +15,14 @@ import group1.mips_simulator.components.memParts.Memory;
  * being discussed in class.
  */
 public class Computer {
-    public Memory memory;
-    public CPU cpu;
 
-    public ROM readOnlyMemory = new ROM();
+    public Memory memory;
+    public ROM rom = new ROM();
+    public CPU cpu;
 
     public Computer() {
         cpu = new CPU();
-
-        memory = new Memory(ComputerConfig.MEMORY_SIZE);
+        memory = new Memory(Config.MEM_SIZE);
     }
 
     /**
@@ -39,10 +38,10 @@ public class Computer {
      */
     public boolean runCurrentPC() {
         // Get instruction from memory (specified by the Program Counter)
-        Value pcAddress = this.cpu.regfile.getPC().read();
-
+        short pcAddress = this.cpu.regfile.getPC().read();
         InstructionFactory factory = new InstructionFactory();
-        Instruction nextInstruction = factory.buildInstruction_fromShort(this.memory.read(pcAddress).get());
+        Instruction nextInstruction = factory.buildInstruction_fromShort(this.memory.read(pcAddress));
+
         try {
             return this.executeInstruction(nextInstruction);
         } catch (IllegalArgumentException e) {
@@ -132,7 +131,7 @@ public class Computer {
      * @return The memory location that is the Effective Address for the provided
      * instruction.
      */
-    public Value calculateEA(RXIA_Instruction instruction) {
+    public short calculateEA(RXIA_Instruction instruction) {
         return this.calculateEA(instruction.getIX(), instruction.getAddress(), instruction.getI());
     }
 
@@ -149,7 +148,7 @@ public class Computer {
      * @return The memory location that is the Effective Address for the provided
      * instruction.
      */
-    public Value calculateEA(Field ix, Field address) {
+    public short calculateEA(Field ix, Field address) {
         return this.calculateEA(ix, address, new Field(0, 1));
     }
 
@@ -165,7 +164,7 @@ public class Computer {
      * @return The memory location that is the Effective Address for the provided
      * instruction.
      */
-    public Value calculateEA(Field ix, Field address, Field i) {
+    public short calculateEA(Field ix, Field address, Field i) {
         /*
         Effective Address (EA) =
         if I field = 0:
@@ -195,15 +194,15 @@ public class Computer {
             // NO indirect addressing
             if (ix.value == 0) {
                 // EA = contents of the Address field       c(Address Field)
-                return new Value(address.value);
+                return address.value;
             } else {
                 // EA = c(IX) + c(Address Field)
                 // that is, the IX field has an
                 // index register number, the contents of that register are
                 // added to the contents of the address field
-                short ixContents = this.cpu.regfile.getIXR(ix.value).read().get();
+                short ixContents = this.cpu.regfile.getIXR(ix.value).read();
                 short addressField = address.value;
-                return new Value(ixContents + addressField);
+                return (short)(ixContents + addressField);
             }
         } else {
             // Indirection bit is set
@@ -216,11 +215,10 @@ public class Computer {
                 return memory.read(address.value);
             } else {
                 // c(c(IX) + c(Address Field))
-                short ixContents = this.cpu.regfile.getIXR(ix.value).read().get();
+                short ixContents = this.cpu.regfile.getIXR(ix.value).read();
                 short addressField = address.value;
                 return memory.read((short) (ixContents + addressField));
             }
         }
     }
-
 }

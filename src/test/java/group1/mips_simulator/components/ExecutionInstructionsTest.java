@@ -90,9 +90,9 @@ class ExecutionInstructionsTest {
         computer.memory.write((short) 20, (short) 100);
 
         // Run code under test to demonstrate change
-        assertEquals(new Value(0), computer.cpu.regfile.getGPR(0).read());
+        assertEquals(0, computer.cpu.regfile.getGPR(0).read());
         computer.executeInstruction(instruction);
-        assertEquals(new Value(100), computer.cpu.regfile.getGPR(0).read());
+        assertEquals(100, computer.cpu.regfile.getGPR(0).read());
     }
 
     @Test
@@ -113,9 +113,9 @@ class ExecutionInstructionsTest {
         computer.cpu.regfile.getGPR(0).write(new Value(100));
 
         // Run code under test to demonstrate change
-        assertEquals(new Value(0), computer.memory.read((short) 20));
+        assertEquals(0, computer.memory.read((short) 20));
         computer.executeInstruction(instruction);
-        assertEquals(new Value(100), computer.memory.read((short) 20));
+        assertEquals(100, computer.memory.read((short) 20));
     }
 
     @Test
@@ -134,9 +134,9 @@ class ExecutionInstructionsTest {
 
         // Run code under test to demonstrate change
         // EA will be written into register
-        assertEquals(new Value(0), computer.cpu.regfile.getGPR(1).read());
+        assertEquals(0, computer.cpu.regfile.getGPR(1).read());
         computer.executeInstruction(instruction);
-        assertEquals(new Value(20), computer.cpu.regfile.getGPR(1).read());
+        assertEquals(20, computer.cpu.regfile.getGPR(1).read());
     }
 
     @Test
@@ -157,9 +157,9 @@ class ExecutionInstructionsTest {
         computer.memory.write((short) 20, (short) 99);
 
         // Run code under test to demonstrate change
-        assertEquals(new Value(0), computer.cpu.regfile.getIXR(1).read());
+        assertEquals(0, computer.cpu.regfile.getIXR(1).read());
         computer.executeInstruction(instruction);
-        assertEquals(new Value(99), computer.cpu.regfile.getIXR(1).read());
+        assertEquals(99, computer.cpu.regfile.getIXR(1).read());
     }
 
     @Test
@@ -180,9 +180,9 @@ class ExecutionInstructionsTest {
         computer.cpu.regfile.getIXR(1).write(55);
 
         // Run code under test to demonstrate change
-        assertEquals(new Value(0), computer.memory.read(20));
+        assertEquals(0, computer.memory.read(20));
         computer.executeInstruction(instruction);
-        assertEquals(new Value(55), computer.memory.read(20));
+        assertEquals(55, computer.memory.read(20));
     }
 
     @Test
@@ -200,8 +200,8 @@ class ExecutionInstructionsTest {
         );
 
         computer.cpu.regfile.getCC().setBit(ConditionCode.EBIT_INDEX, true);
-        assertEquals(computer.cpu.regfile.getPC().read().get(), 0);
+        assertEquals(computer.cpu.regfile.getPC().read(), 0);
         computer.executeInstruction(instruction);
-        assertEquals(20, computer.cpu.regfile.getPC().read().get());
+        assertEquals(20, computer.cpu.regfile.getPC().read());
     }
 }

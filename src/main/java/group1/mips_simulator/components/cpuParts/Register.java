@@ -1,6 +1,6 @@
 package group1.mips_simulator.components.cpuParts;
 
-import group1.mips_simulator.Utility;
+import group1.mips_simulator.components.Config;
 import group1.mips_simulator.components.Value;
 
 /**
@@ -13,7 +13,7 @@ public class Register {
 
     //getter methods
     protected Value value = new Value(0);
-    protected short bitWidth = Utility.WORD_SIZE;
+    protected short bitWidth = Config.WORD_SIZE;
 
     public Register() {
         this((short) 0);
@@ -27,13 +27,20 @@ public class Register {
         this.value = v.clone();
     }
 
-    public Value read() { // previously get()
+    public Value get() { // previously get()
+
         // get the Value in the register
         return this.value;
     }
 
+    public short read() {
+        // read the data in the register
+        return this.value.get();
+    }
+
     // setter methods
     public void write(Value newValue) {
+        // set the Value into register
         this.value = newValue.clone();
         this.value.setSize(this.bitWidth);
     }
@@ -55,17 +62,6 @@ public class Register {
     public void setBitWidth(short width) {
         this.bitWidth = width;
         this.value.setSize(width);
-    }
-
-    /**
-     * increment by multiple
-     * implemented using increment in case we want to add logic based on, for example,
-     * an instruction PC might need to access as it increments
-     */
-    public void incrementBy(int n) {
-        for (int i = 0; i < n; i++) {
-            this.increment();
-        }
     }
 
     public String toString_Binary() {
