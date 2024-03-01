@@ -1,14 +1,93 @@
 package group1.mips_simulator.components;
 
+import group1.mips_simulator.Utility;
 import group1.mips_simulator.components.cpuParts.ConditionCode;
 import group1.mips_simulator.components.cpuParts.Register;
 import group1.mips_simulator.components.instructionParts.Field;
+import group1.mips_simulator.components.instructionParts.Instruction;
 import group1.mips_simulator.components.instructionParts.RXIA_Instruction;
 
 /**
  * A class that holds all the functions for actually executing an Instruction object
  */
-public class ExecutionInstructions {
+public class InstructionExecutions {
+
+    /**
+     * L0DR r, x, address[,I]
+     * opcode 01(octal)˜
+     * Load Register From Memory, r = 0..3
+     * r <− c(EA)
+     * note that EA is computed as given above
+     */
+    public void execute_ldr(Computer computer, RXIA_Instruction i) {
+        // r <- c(EA)
+        short ea = computer.calculateEA(i);
+        short contentsEA = computer.memory.read(ea);
+
+        Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
+        targetReg.write(contentsEA);
+    }
+
+    /**
+     * STR r, x, address[,I]
+     * opcode 02(octal)
+     * Store Register To Memory, r = 0..3
+     * Memory(EA) <− c(r)
+     */
+    public void execute_str(Computer computer, RXIA_Instruction i) {
+        // Memory(EA) <− c(r)
+        short ea = computer.calculateEA(i);
+
+        Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
+        short contentsReg = targetReg.read();
+
+        computer.memory.write(ea, contentsReg);
+    }
+
+    /**
+     * LDA r, x, address[,I]
+     * opcode 03(octal)
+     * Load Register with Address, r = 0..3
+     * r <− EA
+     */
+    public void execute_lda(Computer computer, RXIA_Instruction i) {
+        // r <− EA
+        short ea = computer.calculateEA(i);
+        Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
+
+        targetReg.write(ea);
+    }
+
+    /**
+     * LDX x, address[,I]
+     * opcode 04(octal)
+     * Load Index Register from Memory, x = 1..3
+     * Xx <- c(EA)
+     */
+    public void execute_ldx(Computer computer, RXIA_Instruction i) {
+        // Xx <- c(EA)
+        short ea = computer.calculateEA(i);
+        short contentsEA = computer.memory.read(ea);
+        Register targetReg = computer.cpu.regfile.getIXR(i.getR().value);
+
+        targetReg.write(contentsEA);
+    }
+
+    /**
+     * STX x, address[,I]
+     * opcode 05(octal)
+     * Store Index Register to Memory. X = 1..3
+     * Memory(EA) <- c(Xx)
+     */
+    public void execute_stx(Computer computer, RXIA_Instruction i) {
+        // Memory(EA) <- c(Xx)
+        short ea = computer.calculateEA(i);
+
+        Register targetReg = computer.cpu.regfile.getIXR(i.getR().value);
+        short contentsReg = targetReg.read();
+
+        computer.memory.write(ea, contentsReg);
+    }
 
     /**
      * SETCCE r
@@ -35,7 +114,7 @@ public class ExecutionInstructions {
         if (eBit) {
             // if eBit is 1
             // PC <-- EA
-            Value ea = computer.calculateEA(i);
+            short ea = computer.calculateEA(i);
             computer.cpu.regfile.getPC().write(ea);
             return;
         }
@@ -55,7 +134,7 @@ public class ExecutionInstructions {
         if (!eBit) {
             // if eBit is 0
             // PC <-- EA
-            Value ea = computer.calculateEA(i);
+            short ea = computer.calculateEA(i);
             computer.cpu.regfile.getPC().write(ea);
             return;
         }
@@ -77,7 +156,7 @@ public class ExecutionInstructions {
         if (targetCcBit) {
             // if cc bit = 1
             // PC <-- EA
-            Value ea = computer.calculateEA(i);
+            short ea = computer.calculateEA(i);
             computer.cpu.regfile.getPC().write(ea);
             return;
         }
@@ -93,7 +172,7 @@ public class ExecutionInstructions {
      * Note: r is ignored in this instruction
      */
     public void execute_jma(Computer computer, RXIA_Instruction i) {
-        Value ea = computer.calculateEA(i);
+        short ea = computer.calculateEA(i);
         computer.cpu.regfile.getPC().write(ea);
     }
 
@@ -113,7 +192,7 @@ public class ExecutionInstructions {
         r.write(new Value(pcPlus1));
 
         // PC <− EA
-        Value ea = computer.calculateEA(i);
+        short ea = computer.calculateEA(i);
         computer.cpu.regfile.getPC().write(ea);
 
         // TODO:
@@ -160,7 +239,7 @@ public class ExecutionInstructions {
         // If c(r) > 0,  PC <- EA;
         Register targetReg = computer.cpu.regfile.getGPR(r);
         if (targetReg.read() > 0) {
-            Value ea = computer.calculateEA(i);
+            short ea = computer.calculateEA(i);
             computer.cpu.regfile.getPC().write(ea);
             return;
         }
@@ -180,7 +259,7 @@ public class ExecutionInstructions {
         Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
         if (targetReg.read() >= 0) {
             // then PC <- EA
-            Value ea = computer.calculateEA(i);
+            short ea = computer.calculateEA(i);
             computer.cpu.regfile.getPC().write(ea);
             return;
         }
@@ -188,4 +267,48 @@ public class ExecutionInstructions {
         computer.incrementPC();
     }
 
+    /**
+     * HLT
+     * 0(octal)
+     * Stops the machine.
+     */
+    public void execute_hlt(Computer computer, Instruction i) {
+        // No action taken
+    }
+
+    /**
+     * TRAP code
+     * 45(cotal)
+     * Traps to memory address 0, which contains the address of a table in memory.
+     * Stores the PC+1 in memory location 2. The table can have a maximum of 16
+     * entries representing 16 routines for user-specified instructions stored
+     * elsewhere in memory. Trap code contains an index into the table, e.g. it
+     * takes values 0 – 15. When a TRAP instruction is executed, it goes to the
+     * routine whose address is in memory location 0, executes those instructions,
+     * and returns to the instruction stored in memory location 2. The PC+1 of the
+     * TRAP instruction is stored in memory location 2.
+     */
+    public void execute_trap(Computer computer, Instruction i) {
+        // Stores the PC+1 in mem location 2
+        short pcPlus1 = (short)(computer.cpu.regfile.getPC().read() + 1);
+        computer.memory.write((short)2, pcPlus1);
+
+        // Traps to mem address 0
+        short tableAddress = computer.memory.read((short)0);
+
+        // Trap code = index into table
+        Field blank = i.fields.get(0);
+        Field code = i.fields.get(1);
+
+        short targetAddress = (short)(tableAddress + code.value);
+        short targetInstruction_short = computer.memory.read(targetAddress);
+        Instruction targetInstruction = Instruction.buildInstruction_fromShort(targetInstruction_short);
+
+        //Execute the instruction here
+        computer.executeInstruction(targetInstruction);
+
+        // Return to location PC+1 (found in mem location 2)
+        pcPlus1 = computer.memory.read((short)2);
+        computer.cpu.regfile.getPC().write(pcPlus1);
+    }
 }
