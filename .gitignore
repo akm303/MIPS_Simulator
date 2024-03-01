@@ -80,7 +80,9 @@ cmake-build-*/
 *.iws
 
 # IntelliJ
+!out/Assembler.jar
 out/
+
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
