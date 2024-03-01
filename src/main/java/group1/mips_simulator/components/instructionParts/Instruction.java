@@ -51,6 +51,8 @@ public class Instruction {
         return result.toString();
     }
 
+
+
     /**
      * Is this instruction a "Transfer Instruction"? True if so, false otherwise.
      * This is useful to quickly check because transfer instructions change the Program Counter

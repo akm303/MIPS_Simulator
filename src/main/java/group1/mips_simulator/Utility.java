@@ -1,5 +1,6 @@
 package group1.mips_simulator;
 import group1.mips_simulator.components.Config;
+import group1.mips_simulator.components.instructionParts.Instruction;
 
 public class Utility {
 
@@ -124,5 +125,19 @@ public class Utility {
             sb.insert(i, ' ');
         }
         return sb.toString().trim().replace(' ', '_');
+    }
+
+
+    public static short instructionToShort(Instruction instr){
+        int rvalue = 0;
+        char[] instruction = instr.toString_Binary().toCharArray();
+
+        for(int i = 0; i < instruction.length; i++){
+            if(instruction[i] == '1')
+                rvalue |= 1<<i;
+        }
+
+        return (short) rvalue;
+
     }
 }
