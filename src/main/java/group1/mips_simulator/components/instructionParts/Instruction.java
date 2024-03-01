@@ -7,8 +7,6 @@ import java.util.Vector;
 
 public class Instruction {
 
-    public static final int BIT_COUNT = 16;
-
     public static Instruction buildInstruction_fromOctal(String octal) {
         InstructionFactory factory = new InstructionFactory();
         return factory.buildInstruction_fromOctal(octal);
