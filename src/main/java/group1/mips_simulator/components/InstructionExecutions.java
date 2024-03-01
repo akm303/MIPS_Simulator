@@ -1,8 +1,10 @@
 package group1.mips_simulator.components;
 
+import group1.mips_simulator.Utility;
 import group1.mips_simulator.components.cpuParts.ConditionCode;
 import group1.mips_simulator.components.cpuParts.Register;
 import group1.mips_simulator.components.instructionParts.Field;
+import group1.mips_simulator.components.instructionParts.Instruction;
 import group1.mips_simulator.components.instructionParts.RXIA_Instruction;
 
 /**
@@ -265,4 +267,48 @@ public class InstructionExecutions {
         computer.incrementPC();
     }
 
+    /**
+     * HLT
+     * 0(octal)
+     * Stops the machine.
+     */
+    public void execute_hlt(Computer computer, Instruction i) {
+        // No action taken
+    }
+
+    /**
+     * TRAP code
+     * 45(cotal)
+     * Traps to memory address 0, which contains the address of a table in memory.
+     * Stores the PC+1 in memory location 2. The table can have a maximum of 16
+     * entries representing 16 routines for user-specified instructions stored
+     * elsewhere in memory. Trap code contains an index into the table, e.g. it
+     * takes values 0 – 15. When a TRAP instruction is executed, it goes to the
+     * routine whose address is in memory location 0, executes those instructions,
+     * and returns to the instruction stored in memory location 2. The PC+1 of the
+     * TRAP instruction is stored in memory location 2.
+     */
+    public void execute_trap(Computer computer, Instruction i) {
+        // Stores the PC+1 in mem location 2
+        short pcPlus1 = (short)(computer.cpu.regfile.getPC().read().get() + 1);
+        computer.memory.write((short)2, pcPlus1);
+
+        // Traps to mem address 0
+        short tableAddress = computer.memory.read((short)0);
+
+        // Trap code = index into table
+        Field blank = i.fields.get(0);
+        Field code = i.fields.get(1);
+
+        short targetAddress = (short)(tableAddress + code.value);
+        short targetInstruction_short = computer.memory.read(targetAddress);
+        Instruction targetInstruction = Instruction.buildInstruction_fromShort(targetInstruction_short);
+
+        //Execute the instruction here
+        computer.executeInstruction(targetInstruction);
+
+        // Return to location PC+1 (found in mem location 2)
+        pcPlus1 = computer.memory.read((short)2);
+        computer.cpu.regfile.getPC().write(pcPlus1);
+    }
 }

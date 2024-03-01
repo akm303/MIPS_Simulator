@@ -74,7 +74,8 @@ public class Computer {
         InstructionExecutions exe = new InstructionExecutions();
         switch (instruction.opCode.name.toLowerCase()) {
             // Miscellaneous Instructions
-            // TODO
+            case "hlt" -> exe.execute_hlt(this, instruction); // Halt instructions stop machine
+            case "trap" -> exe.execute_trap(this, instruction);
             // Load/Store Instructions
             case "ldr" -> exe.execute_ldr(this, (RXIA_Instruction) instruction);
             case "str" -> exe.execute_str(this, (RXIA_Instruction) instruction);
