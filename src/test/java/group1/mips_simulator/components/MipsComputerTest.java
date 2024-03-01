@@ -2,8 +2,15 @@ package group1.mips_simulator.components;
 
 import group1.mips_simulator.components.cpuParts.Register;
 import group1.mips_simulator.components.instructionParts.Field;
+import group1.mips_simulator.components.instructionParts.Instruction;
 import group1.mips_simulator.components.memParts.Memory;
 import org.junit.jupiter.api.Test;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Vector;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 class ComputerTest {
@@ -97,8 +104,23 @@ class ComputerTest {
 
 
     @Test
-    void loadROM(){
+    void loadROM() throws IOException {
         ROM rom = new ROM();
+        File bi = new File("src/main/java/group1/mips_simulator/simulator/programs/LoadStore.bi");
+        rom.readFromFile(bi);
+        Vector<Instruction> instructions = rom.getInstructions();
+
+        Computer computer = new Computer();
+        computer.loadROM(rom);
+
+        int memWriteOffset = Config.INSTR_OFFSET;
+        for(int i = 0; i < instructions.size(); i++){
+            assertEquals(
+                    instructions.get(i).toShort(), //confirm the instruction value (as a short)
+                    computer.memory.read(i + memWriteOffset) // equals the computer's memory value (as a short)
+            );
+        }
+
 
     }
 }

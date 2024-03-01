@@ -1,6 +1,7 @@
 package group1.mips_simulator.components.cpuParts;
 
 import group1.mips_simulator.Utility;
+import group1.mips_simulator.components.Config;
 import group1.mips_simulator.components.ROM;
 import group1.mips_simulator.components.instructionParts.Instruction;
 import group1.mips_simulator.components.memParts.Memory;
@@ -15,9 +16,10 @@ public class RomLoader {
      */
 
     public void load(ROM rom, Memory mem){
+        int memWriteOffset = Config.INSTR_OFFSET;
         Vector<Instruction> romData = rom.getInstructions();
         for(int i = 0; i < romData.size(); i++){
-            mem.write((short) i, romData.get(i).toShort());
+            mem.write((short) (i + memWriteOffset), romData.get(i).toShort());
         }
     }
 

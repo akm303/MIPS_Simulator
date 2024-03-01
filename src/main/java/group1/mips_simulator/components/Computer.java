@@ -18,13 +18,15 @@ public class Computer {
 
     public Memory memory;
     public CPU cpu;
+    public ROM rom = new ROM();
 
     public Computer() {
         cpu = new CPU();
         memory = new Memory(Config.MEM_SIZE);
     }
 
-    public void loadROM(ROM rom){
+    public void loadROM(ROM rom_){
+        rom = rom_;
         cpu.romLoader = new RomLoader();
         cpu.romLoader.load(rom,memory);
     }
