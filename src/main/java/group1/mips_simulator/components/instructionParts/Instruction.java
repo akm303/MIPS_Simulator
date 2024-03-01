@@ -1,9 +1,6 @@
 package group1.mips_simulator.components.instructionParts;
 
-import group1.mips_simulator.Utility;
-import group1.mips_simulator.components.Config;
 import group1.mips_simulator.components.Value;
-import group1.mips_simulator.components.instructionParts.FieldProcessors.FieldProcessor;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -11,28 +8,19 @@ import java.util.Vector;
 
 public class Instruction {
 
-    public static final int BIT_COUNT = 16;
-
     public static Instruction buildInstruction_fromOctal(String octal) {
-        String binary = Utility.octalStringToBinaryString(octal, 16);
-        return buildInstruction_fromBinary(binary);
+        InstructionFactory factory = new InstructionFactory();
+        return factory.buildInstruction_fromOctal(octal);
     }
 
     public static Instruction buildInstruction_fromBinary(String binary) {
-        // Op Code is the first 6 bits
-        String opCodeBinary = binary.substring(0, 6); // [0, 6)
-        String fieldsBinary = binary.substring(6); //[6, end]
-
-        OpCode code = OpCode.fromNumber_Decimal(Utility.binaryToInt(opCodeBinary));
-        // Each OpCode has its own schema for processing the remaining 10 bits
-        FieldProcessor processor = new FieldProcessor();
-        Vector<Field> fields = processor.getFieldsForOpCode(code, fieldsBinary);
-
-        return new Instruction(code, fields);
+        InstructionFactory factory = new InstructionFactory();
+        return factory.buildInstruction_fromBinary(binary);
     }
 
     public static Instruction buildInstruction_fromShort(short number) {
-        return buildInstruction_fromBinary(Utility.shortToBinaryString(number, Config.WORD_SIZE));
+        InstructionFactory factory = new InstructionFactory();
+        return factory.buildInstruction_fromShort(number);
     }
 
     public Instruction(OpCode opCode, Vector<Field> fields) {
@@ -53,19 +41,19 @@ public class Instruction {
     }
 
 
-    public short toShort(){
+    public short toShort() {
         // generates an int from string of self,
         // returns a short casting of this value
         int rvalue = 0;
         char[] instructions = toString_Binary().toCharArray();
-        for(int i = 0; i < instructions.length; i++){
-            if(instructions[instructions.length - i - 1] == '1')
-                rvalue |= 1<<i;
+        for (int i = 0; i < instructions.length; i++) {
+            if (instructions[instructions.length - i - 1] == '1')
+                rvalue |= 1 << i;
         }
         return (short) rvalue;
     }
 
-    public Value toValue(){
+    public Value toValue() {
         //generate a Value of itself
         return new Value(this.toShort());
     }

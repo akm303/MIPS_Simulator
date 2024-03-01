@@ -9,19 +9,8 @@ import group1.mips_simulator.components.Config;
  * That's why we're using a fixed array for the GPR and IXR representations.
  */
 public class RegisterFile {
-
-
-    public Register[] gpr = new Register[]{ //General Purpose Reg: R0-R3
-            new Register(), // GPR0
-            new Register(), // GPR1
-            new Register(), // GPR2
-            new Register()  // GPR3
-    };
-    public Register[] ixr = new Register[]{ //Index Reg: X1-X3.
-            new Register(), // IXR0
-            new Register(), // IXR1
-            new Register()  // IXR2
-    };
+    public Register[] gpr = new Register[Config.GPR_COUNT];//General Purpose Reg: R0-R3
+    public Register[] ixr = new Register[Config.IXR_COUNT];//Index Reg: X1-X3.
 
     Register pc = new Register();       //Prog Counter Reg : address of next instruction to be executed
     //Condition Code Reg : set when arith/logical operations executed
@@ -37,14 +26,14 @@ public class RegisterFile {
     public RegisterFile() {
         //initialize all reg w/ null
 
-        for (int i = 0; i < gpr.length; i++) {
+        for (int i = 0; i < Config.GPR_COUNT; i++) {
             Register newReg = new Register();
             newReg.write(0);
             newReg.setBitWidth(Config.WORD_SIZE);
             gpr[i] = newReg;
         }
 
-        for (int i = 0; i < ixr.length; i++) {
+        for (int i = 0; i < Config.IXR_COUNT; i++) {
             Register newReg = new Register();
             newReg.write(0);
             newReg.setBitWidth(Config.WORD_SIZE);
