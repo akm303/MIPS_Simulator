@@ -8,7 +8,7 @@ import group1.mips_simulator.components.instructionParts.RXIA_Instruction;
 /**
  * A class that holds all the functions for actually executing an Instruction object
  */
-public class ExecutionInstructions {
+public class InstructionExecutions {
 
     /**
      * L0DR r, x, address[,I]

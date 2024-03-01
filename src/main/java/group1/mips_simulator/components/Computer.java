@@ -64,7 +64,7 @@ public class Computer {
      * @param instruction The instruction to run.
      */
     public boolean executeInstruction(Instruction instruction) {
-        ExecutionInstructions exe = new ExecutionInstructions();
+        InstructionExecutions exe = new InstructionExecutions();
         switch (instruction.opCode.name.toLowerCase()) {
             // Miscellaneous Instructions
             // TODO

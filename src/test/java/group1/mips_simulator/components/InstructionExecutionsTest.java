@@ -12,7 +12,7 @@ import java.util.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ExecutionInstructionsTest {
+class InstructionExecutionsTest {
 
     Computer buildComputer() {
         Computer result = new Computer();
@@ -24,7 +24,7 @@ class ExecutionInstructionsTest {
 
     @Test
     void execute_setcce_test_FalseToTrue() {
-        ExecutionInstructions underTest = new ExecutionInstructions();
+        InstructionExecutions underTest = new InstructionExecutions();
         Computer computer = buildComputer();
 
         RXIA_Instruction instruction = new RXIA_Instruction(
@@ -49,7 +49,7 @@ class ExecutionInstructionsTest {
 
     @Test
     void execute_setcce_test_TrueToFalse() {
-        ExecutionInstructions underTest = new ExecutionInstructions();
+        InstructionExecutions underTest = new InstructionExecutions();
         Computer computer = buildComputer();
 
         RXIA_Instruction instruction = new RXIA_Instruction(
