@@ -12,6 +12,7 @@ import java.util.Vector;
  * Contains program to be run(?)
  **/
 public class ROM {
+    Vector<String[]> dataFromFile;
 
     /**
      * The main functional use of a ROM is to take data and load
@@ -26,11 +27,16 @@ public class ROM {
         System.out.println("ROM reading from bi file: " + biFile.getAbsolutePath());
         FileReader fr = new FileReader();
         try {
-            Vector<Instruction> dataFromFile = fr.readBinaryFile(biFile.getAbsolutePath());
+
+            dataFromFile = fr.readBinaryFile(biFile.getAbsolutePath());
         } catch (Exception e) {
             throw new IOException("Ran into an error when trying to parse .bi file.\n" +
                     "File name: " + biFile.getAbsolutePath() +
                     "\nError encountered: " + e);
         }
+    }
+
+    public Vector<String[]> getInstructions(){
+        return dataFromFile;
     }
 }

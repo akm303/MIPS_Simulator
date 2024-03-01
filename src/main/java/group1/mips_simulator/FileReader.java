@@ -53,9 +53,9 @@ public class FileReader {
      * @param fileToRead The target file to read.
      * @return All the lines in the program file converted into Instructions
      */
-    public Vector<Instruction> readBinaryFile(String fileToRead) throws IOException {
+    public Vector<String[]> readBinaryFile(String fileToRead) throws IOException {
         BufferedReader reader;
-        Vector<Instruction> result = new Vector<>();
+        Vector<String[]> result = new Vector<>();
 
         try {
 
@@ -68,7 +68,7 @@ public class FileReader {
                     line = reader.readLine();
                     continue;
                 }
-                Instruction newInstruction = processLine(line);
+                String[] newInstruction = processLine(line);
                 result.add(newInstruction);
 
                 // grab next line from file
@@ -91,7 +91,7 @@ public class FileReader {
      * @param line
      * @return
      */
-    public Instruction processLine(String line) {
+    public String[] processLine(String line) {
         InstructionFactory factory = new InstructionFactory();
 
         // Split the line into it's various columns
@@ -105,7 +105,7 @@ public class FileReader {
         String instructionInOctal = lineSplitIntoTokens.get(1); // 1st is instruction
 
         // Turn instruction octal into Instruction object
-        return factory.buildInstruction_fromOctal(instructionInOctal);
+        return new String[]{memoryLocationInOctal,instructionInOctal};
 
     }
 }
