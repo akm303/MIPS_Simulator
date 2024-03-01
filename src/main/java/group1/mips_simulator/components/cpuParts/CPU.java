@@ -40,7 +40,6 @@ public class CPU {
 
     public CPU(){
         regfile = new RegisterFile();
-
     }
 
 }

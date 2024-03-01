@@ -22,7 +22,7 @@ class InstructionTest {
     void toShort(){
         InstructionFactory factory = new InstructionFactory();
         Instruction hlt = factory.buildInstruction_fromBinary("0000000000000000");
-        assertEquals((short) 0, hlt.toShort());
+        assertEquals( 0, hlt.toShort());
 
         Instruction ldr = factory.buildInstruction_fromBinary("0000010101101101");
         assertEquals( 0b0000010101101101, ldr.toShort());    }

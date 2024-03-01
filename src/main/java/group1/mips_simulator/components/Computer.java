@@ -3,6 +3,7 @@ package group1.mips_simulator.components;
 
 import group1.mips_simulator.components.cpuParts.CPU;
 import group1.mips_simulator.components.cpuParts.Register;
+import group1.mips_simulator.components.cpuParts.RomLoader;
 import group1.mips_simulator.components.instructionParts.Field;
 import group1.mips_simulator.components.instructionParts.Instruction;
 import group1.mips_simulator.components.instructionParts.RXIA_Instruction;
@@ -25,6 +26,8 @@ public class Computer {
     }
 
     public void loadROM(){
+        cpu.romLoader = new RomLoader(memory);
+        cpu.romLoader.load(rom);
 
     }
 

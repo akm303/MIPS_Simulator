@@ -59,7 +59,7 @@ public class Instruction {
         int rvalue = 0;
         char[] instructions = toString_Binary().toCharArray();
         for(int i = 0; i < instructions.length; i++){
-            if(instructions[i] == '1')
+            if(instructions[instructions.length - i - 1] == '1')
                 rvalue |= 1<<i;
         }
         return (short) rvalue;
