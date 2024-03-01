@@ -320,6 +320,7 @@ public class SimController {
             // Hand the file to the ROM loader
             try {
                 computer.rom.readFromFile(selectedFile);
+                computer.loadROM();
                 FileToLoad.setStyle("-fx-text-fill: black"); // Color of text
             } catch (IOException e) {
                 System.out.println("Encountered an error when reading file: " + e);
