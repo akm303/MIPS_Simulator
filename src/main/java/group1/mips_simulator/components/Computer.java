@@ -17,7 +17,6 @@ import group1.mips_simulator.components.memParts.Memory;
 public class Computer {
 
     public Memory memory;
-    public ROM rom = new ROM();
     public CPU cpu;
 
     public Computer() {
@@ -25,10 +24,9 @@ public class Computer {
         memory = new Memory(Config.MEM_SIZE);
     }
 
-    public void loadROM(){
+    public void loadROM(ROM rom){
         cpu.romLoader = new RomLoader();
         cpu.romLoader.load(rom,memory);
-
     }
 
     /**

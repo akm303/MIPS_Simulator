@@ -14,7 +14,6 @@ public class RomLoader {
     The ROM Loader then transfers control to the program which executes until completion or error
      */
 
-
     public void load(ROM rom, Memory mem){
         Vector<Instruction> romData = rom.getInstructions();
         for(int i = 0; i < romData.size(); i++){

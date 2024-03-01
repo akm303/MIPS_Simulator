@@ -94,4 +94,11 @@ class ComputerTest {
         // 33
         // assertEquals(33, underTest.calculateEA(inputIx, inputAddress, inputI).get());
     }
+
+
+    @Test
+    void loadROM(){
+        ROM rom = new ROM();
+
+    }
 }
