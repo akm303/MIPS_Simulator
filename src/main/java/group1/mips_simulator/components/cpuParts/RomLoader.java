@@ -14,9 +14,11 @@ public class RomLoader {
     read the boot program from the ROM and place it into memory in a location you designated.
     The ROM Loader then transfers control to the program which executes until completion or error
      */
-
-    public RomLoader(ROM rom, Memory mem){
+    public RomLoader(Memory mem){
         memory = mem;
+    }
+
+    public void load(ROM rom){
         Vector<Instruction> romData = rom.getInstructions();
         for(int i = 0; i < romData.size(); i++){
             writeToMemory((short) i, romData.get(i));

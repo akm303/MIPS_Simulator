@@ -24,6 +24,10 @@ public class Computer {
         memory = new Memory(Config.MEM_SIZE);
     }
 
+    public void loadROM(){
+
+    }
+
     /**
      * Uses the current Program Counter to read an instruction from Memory
      * Executes that Instruction (which will probably change the PC and other

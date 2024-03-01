@@ -40,13 +40,7 @@ public class CPU {
 
     public CPU(){
         regfile = new RegisterFile();
+
     }
 
-//    public void run() {
-//        this.romLoader.loadROM();
-//    }
-
-    private void loadROM(String directory){
-        this.romLoader.loadFrom(directory);
-    }
 }
