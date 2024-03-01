@@ -3,6 +3,7 @@ package group1.mips_simulator.components;
 
 import group1.mips_simulator.components.cpuParts.CPU;
 import group1.mips_simulator.components.cpuParts.Register;
+import group1.mips_simulator.components.cpuParts.RomLoader;
 import group1.mips_simulator.components.instructionParts.Field;
 import group1.mips_simulator.components.instructionParts.Instruction;
 import group1.mips_simulator.components.instructionParts.RXIA_Instruction;
@@ -16,12 +17,18 @@ import group1.mips_simulator.components.memParts.Memory;
 public class Computer {
 
     public Memory memory;
-    public ROM rom = new ROM();
     public CPU cpu;
+    public ROM rom = new ROM();
 
     public Computer() {
         cpu = new CPU();
         memory = new Memory(Config.MEM_SIZE);
+    }
+
+    public void loadROM(ROM rom_){
+        rom = rom_;
+        cpu.romLoader = new RomLoader();
+        cpu.romLoader.load(rom,memory);
     }
 
     /**
