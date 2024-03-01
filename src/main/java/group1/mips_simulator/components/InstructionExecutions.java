@@ -12,7 +12,7 @@ public class InstructionExecutions {
 
     /**
      * L0DR r, x, address[,I]
-     * opcode 01(octal)
+     * opcode 01(octal)˜
      * Load Register From Memory, r = 0..3
      * r <− c(EA)
      * note that EA is computed as given above
