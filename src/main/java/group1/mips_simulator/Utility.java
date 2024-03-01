@@ -1,5 +1,6 @@
 package group1.mips_simulator;
 import group1.mips_simulator.components.Config;
+import group1.mips_simulator.components.instructionParts.Instruction;
 
 public class Utility {
 
@@ -125,4 +126,7 @@ public class Utility {
         }
         return sb.toString().trim().replace(' ', '_');
     }
+
+
+
 }
