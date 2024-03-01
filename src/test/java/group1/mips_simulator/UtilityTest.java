@@ -1,5 +1,7 @@
 package group1.mips_simulator;
 
+import group1.mips_simulator.components.instructionParts.Field;
+import group1.mips_simulator.components.instructionParts.Instruction;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -42,6 +44,13 @@ class UtilityTest {
         assertEquals(Utility.shortToBinaryString_Pretty((short) -1, (short) 4), "1111");
         assertEquals(Utility.shortToBinaryString_Pretty((short) 15, (short) 12), "0000_0000_1111");
         assertEquals(Utility.shortToBinaryString_Pretty((short) 15, (short) 16), "0000_0000_0000_1111");
+    }
+
+    @Test
+    void instructionToShort() {
+//        Field f1 = new Field(0);
+//        Instruction i1 = new Instruction();
+//        assertEquals(Utility.instructionToShort( ));
     }
 
 }

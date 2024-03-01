@@ -2,6 +2,7 @@ package group1.mips_simulator.components.instructionParts;
 
 import group1.mips_simulator.Utility;
 import group1.mips_simulator.components.Config;
+import group1.mips_simulator.components.Value;
 import group1.mips_simulator.components.instructionParts.FieldProcessors.FieldProcessor;
 
 import java.util.Arrays;
@@ -49,6 +50,24 @@ public class Instruction {
             result.append(f.toBinString());
         }
         return result.toString();
+    }
+
+
+    public short toShort(){
+        // generates an int from string of self,
+        // returns a short casting of this value
+        int rvalue = 0;
+        char[] instructions = toString_Binary().toCharArray();
+        for(int i = 0; i < instructions.length; i++){
+            if(instructions[instructions.length - i - 1] == '1')
+                rvalue |= 1<<i;
+        }
+        return (short) rvalue;
+    }
+
+    public Value toValue(){
+        //generate a Value of itself
+        return new Value(this.toShort());
     }
 
     /**
