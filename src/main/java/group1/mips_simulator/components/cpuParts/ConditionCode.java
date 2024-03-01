@@ -15,10 +15,10 @@ import java.util.Vector;
  */
 public class ConditionCode extends Register {
 
-    public static final int OBIT_INDEX = 0;
-    public static final int UBIT_INDEX = 1;
-    public static final int DBIT_INDEX = 2;
-    public static final int EBIT_INDEX = 3;
+    public static final int OBIT_INDEX = 0; //Overflow bit
+    public static final int UBIT_INDEX = 1; //Underflow bit
+    public static final int DBIT_INDEX = 2; //Divide-by-0 bit
+    public static final int EBIT_INDEX = 3; // Equal-or-Not bit
 
     protected Vector<Boolean> conditionCodes = new Vector<Boolean>(4) {{
         add(false); // cc(0)  Overflow bit
@@ -27,18 +27,22 @@ public class ConditionCode extends Register {
         add(false); // cc(3)  Equal or Not bit
     }};
 
+    //Overflow bit
     public boolean getOBit() {
         return getBit(OBIT_INDEX);
     }
 
+    //Underflow bit
     public boolean getUit() {
         return getBit(UBIT_INDEX);
     }
 
+    //Divide-by-0 bit
     public boolean getDBit() {
         return getBit(DBIT_INDEX);
     }
 
+    // Equal-or-Not bit
     public boolean getEBit() {
         return getBit(EBIT_INDEX);
     }
