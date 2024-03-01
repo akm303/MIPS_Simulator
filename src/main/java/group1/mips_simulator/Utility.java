@@ -2,6 +2,8 @@ package group1.mips_simulator;
 import group1.mips_simulator.components.Config;
 import group1.mips_simulator.components.instructionParts.Instruction;
 
+import java.util.Vector;
+
 public class Utility {
 
 
@@ -128,5 +130,17 @@ public class Utility {
     }
 
 
+    public static Vector<short[]> octalStringVector_ToShort(Vector<String[]> stringVector) {
+        // convert Vector of two octal strings into a Vector of two shorts
+        Vector<short[]> rVector = new Vector<>();
+
+        for (String[] octalString : stringVector) {
+            short val1 = Utility.binaryToShort(Utility.octalStringToBinaryString(octalString[0]));
+            short val2 = Utility.binaryToShort(Utility.octalStringToBinaryString(octalString[1]));
+            short[] line = new short[]{val1, val2};
+            rVector.add(line);
+        }
+        return rVector;
+    }
 
 }

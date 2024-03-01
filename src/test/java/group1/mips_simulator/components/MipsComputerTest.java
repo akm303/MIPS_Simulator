@@ -1,5 +1,6 @@
 package group1.mips_simulator.components;
 
+import group1.mips_simulator.Utility;
 import group1.mips_simulator.components.cpuParts.Register;
 import group1.mips_simulator.components.instructionParts.Field;
 import group1.mips_simulator.components.instructionParts.Instruction;
@@ -105,21 +106,23 @@ class ComputerTest {
 
     @Test
     void loadROM() throws IOException {
-        ROM rom = new ROM();
         File bi = new File("src/main/java/group1/mips_simulator/simulator/programs/LoadStore.bi");
+        ROM rom = new ROM();
         rom.readFromFile(bi);
-        Vector<Instruction> instructions = rom.getInstructions();
 
-        Computer computer = new Computer();
-        computer.loadROM(rom);
+        Vector<short[]> instructions = Utility.octalStringVector_ToShort(rom.getInstructions());
 
-        int memWriteOffset = Config.INSTR_OFFSET;
+        Computer testComputer = new Computer();
+        testComputer.loadROM(rom);
+
+//        int memWriteOffset = Config.INSTR_OFFSET;
         for(int i = 0; i < instructions.size(); i++){
             assertEquals(
-                    instructions.get(i).toShort(), //confirm the instruction value (as a short)
-                    computer.memory.read(i + memWriteOffset) // equals the computer's memory value (as a short)
+                    instructions.get(i)[1], //confirm the instruction value (as a short)
+                    testComputer.memory.read(instructions.get(i)[0]) // equals the computer's memory value (as a short)
             );
         }
+
 
 
     }

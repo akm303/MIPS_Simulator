@@ -17,11 +17,15 @@ public class RomLoader {
 
     public void load(ROM rom, Memory mem){
         int memWriteOffset = Config.INSTR_OFFSET;
-        Vector<Instruction> romData = rom.getInstructions();
-        for(int i = 0; i < romData.size(); i++){
-            mem.write((short) (i + memWriteOffset), romData.get(i).toShort());
+        Vector<short[]> romData = Utility.octalStringVector_ToShort(rom.getInstructions());
+
+        for (int i = 0; i < romData.size(); i++){
+            mem.write((romData.get(i)[0]), romData.get(i)[1]);
         }
     }
+
+
+
 
 }
 
