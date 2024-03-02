@@ -68,7 +68,7 @@ public class InstructionExecutions {
         // Xx <- c(EA)
         short ea = computer.calculateEA(i);
         short contentsEA = computer.memory.read(ea);
-        Register targetReg = computer.cpu.regfile.getIXR(i.getR().value);
+        Register targetReg = computer.cpu.regfile.getIXR(i.getIX().value);
 
         targetReg.write(contentsEA);
     }
@@ -83,7 +83,7 @@ public class InstructionExecutions {
         // Memory(EA) <- c(Xx)
         short ea = computer.calculateEA(i);
 
-        Register targetReg = computer.cpu.regfile.getIXR(i.getR().value);
+        Register targetReg = computer.cpu.regfile.getIXR(i.getIX().value);
         short contentsReg = targetReg.read();
 
         computer.memory.write(ea, contentsReg);
