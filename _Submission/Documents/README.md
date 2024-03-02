@@ -15,7 +15,7 @@ java --module-path out/artifacts/MIPS_Simulator_jar/ \
 ```
 
 NOTE: This command may take up to ~10 seconds for the application window to launch.<br>
-Please be patient. If it still won't run, see the Troubleshooting section for more information.
+Please be patient. For issues, see the Troubleshooting section of this README for more information.
 
 ![image info](./pictures/ProjectView_Default.png)
 
