@@ -4,16 +4,18 @@ This project is part 1 of a MIPS Simulator.
 
 ## Running the Simulator
 
-To run the simulator, simply run the following java command:
-
-NOTE: This command may take up to ~10 seconds for the application window to launch.
-Please be patient.
-
+To run the simulator:
+1. Open terminal/cmd
+2. Navigate to `~/MIPS_Simulator` root directory
+3. Run the following command in terminal/cmd:
 ```bash
 java --module-path out/artifacts/MIPS_Simulator_jar/ \
      --add-modules javafx.controls,javafx.fxml,javafx.graphics \
      -jar out/artifacts/MIPS_Simulator_jar/MIPS_Simulator.jar
 ```
+
+NOTE: This command may take up to ~10 seconds for the application window to launch.<br>
+Please be patient. If it still won't run, see the Troubleshooting section for more information.
 
 ![image info](./pictures/ProjectView_Default.png)
 
@@ -93,3 +95,21 @@ been `Run`.
 
 The user may specify a `.bi` (or a `.txt`) file that contains machine code. This file will be loaded into memory via the
 RomLoader.
+
+
+## Troubleshooting
+If the simulator does not start from running the command listed earlier:
+```bash
+java --module-path out/artifacts/MIPS_Simulator_jar/ \
+     --add-modules javafx.controls,javafx.fxml,javafx.graphics \
+     -jar out/artifacts/MIPS_Simulator_jar/MIPS_Simulator.jar
+```
+Consider the following:
+- Running the command from this file in an IDE like IntelliJ may attempt to run the command in the <br>
+`~/MIPS_Simulator/_Submission/Documents` directory. This will not work. <br>
+Make sure to navigate to `your/save/location/MIPS_Simulator/` directory in a terminal window, <br>
+and run the command there.
+- The bash command is based on the following:
+  - `--module-path` build location of all `.jar` artifacts of our project
+  - `--add-modules` javaFX modules for UI elements <br>(must be installed prior to running)
+  - `-jar` jar file location for `MIPS_Simulator.jar`
