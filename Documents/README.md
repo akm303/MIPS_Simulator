@@ -45,7 +45,7 @@ MBR <- c(MAR)
 The `Load+` button is similar to the `Load` button, but will increase the MAR value after the load operation.
 
 ```
-MBR <- c(MAR)`
+MBR <- c(MAR)
 MAR <- MAR+1
 ```
 

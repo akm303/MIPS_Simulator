@@ -12,7 +12,6 @@ public class Instruction {
         InstructionFactory factory = new InstructionFactory();
         return factory.buildInstruction_fromOctal(octal);
     }
-
     public static Instruction buildInstruction_fromBinary(String binary) {
         InstructionFactory factory = new InstructionFactory();
         return factory.buildInstruction_fromBinary(binary);
