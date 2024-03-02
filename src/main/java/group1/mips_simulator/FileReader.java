@@ -22,8 +22,7 @@ public class FileReader {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select .bi file");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Text Files", "*.txt"),
-                new FileChooser.ExtensionFilter("Binary files", "*.bi"),
+                new FileChooser.ExtensionFilter("Bin & Text files", "*.txt", "*.bi"),
                 new FileChooser.ExtensionFilter("All Files", "*.*"));
         File selectedFile = fileChooser.showOpenDialog(stage);
         if (selectedFile == null) {

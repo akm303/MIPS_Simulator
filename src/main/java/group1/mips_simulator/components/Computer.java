@@ -47,14 +47,21 @@ public class Computer {
         // Get instruction from memory (specified by the Program Counter)
         short pcAddress = this.cpu.regfile.getPC().read();
         InstructionFactory factory = new InstructionFactory();
-        Instruction nextInstruction = factory.buildInstruction_fromShort(this.memory.read(pcAddress));
+
+        // Load mem address into IR
+        short memoryContents = this.memory.read(pcAddress);
+        this.cpu.regfile.getIR().write(memoryContents);
+
+        // Convert IR into Instruction object
+        Instruction nextInstruction = factory.buildInstruction_fromShort(this.cpu.regfile.getIR().read());
 
         try {
+            System.out.println("Executing instruction: " + nextInstruction.toString_Binary());
             return this.executeInstruction(nextInstruction);
         } catch (IllegalArgumentException e) {
             // If we run into some issue while running the program
             // For example if we see an unknown instruction
-            // TODO: Consider printing the error to the front pannel?
+            // TODO: Consider printing the error to the front panel?
             return false; // Signal the computer can NOT continue running instructions
         }
     }
@@ -72,6 +79,7 @@ public class Computer {
      */
     public boolean executeInstruction(Instruction instruction) {
         InstructionExecutions exe = new InstructionExecutions();
+        System.out.println("Running instruction op code: " + instruction.opCode.name);
         switch (instruction.opCode.name.toLowerCase()) {
             // Miscellaneous Instructions
             case "hlt" -> exe.execute_hlt(this, instruction); // Halt instructions stop machine
@@ -210,7 +218,7 @@ public class Computer {
                 // added to the contents of the address field
                 short ixContents = this.cpu.regfile.getIXR(ix.value).read();
                 short addressField = address.value;
-                return (short)(ixContents + addressField);
+                return (short) (ixContents + addressField);
             }
         } else {
             // Indirection bit is set

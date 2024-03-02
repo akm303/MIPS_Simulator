@@ -290,7 +290,7 @@ public class InstructionExecutions {
      */
     public void execute_trap(Computer computer, Instruction i) {
         // Stores the PC+1 in mem location 2
-        short pcPlus1 = (short)(computer.cpu.regfile.getPC().read().get() + 1);
+        short pcPlus1 = (short)(computer.cpu.regfile.getPC().read() + 1);
         computer.memory.write((short)2, pcPlus1);
 
         // Traps to mem address 0

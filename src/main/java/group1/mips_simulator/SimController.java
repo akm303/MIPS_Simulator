@@ -2,6 +2,7 @@ package group1.mips_simulator;
 
 import group1.mips_simulator.FrontEnd.Redraw;
 import group1.mips_simulator.components.Computer;
+import group1.mips_simulator.components.ROM;
 import group1.mips_simulator.components.Value;
 import group1.mips_simulator.components.cpuParts.Register;
 import javafx.application.Platform;
@@ -319,7 +320,9 @@ public class SimController {
 
             // Hand the file to the ROM loader
             try {
-                computer.rom.readFromFile(selectedFile);
+                ROM rom = new ROM();
+                rom.readFromFile(selectedFile);
+                computer.loadROM(rom);
                 FileToLoad.setStyle("-fx-text-fill: black"); // Color of text
             } catch (IOException e) {
                 System.out.println("Encountered an error when reading file: " + e);

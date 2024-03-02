@@ -56,8 +56,6 @@ public class RegisterFile {
 
         mbr.setBitWidth(Config.WORD_SIZE);
         ir.setBitWidth(Config.WORD_SIZE);
-        mbr.setBitWidth(Config.WORD_SIZE);
-        ir.setBitWidth(Config.WORD_SIZE);
         mfr.setBitWidth((short) 4);
 
     }
@@ -75,6 +73,9 @@ public class RegisterFile {
          * i.e. to access I1, call ~.getGPR(1)
          * */
         assert ((i >= 1) && (i <= 3));
+        if (i == 0) {
+            i = 1;
+        }
         return ixr[i - 1];
     }
 
