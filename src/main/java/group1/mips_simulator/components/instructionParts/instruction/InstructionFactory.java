@@ -58,7 +58,7 @@ public class InstructionFactory {
             // Shift/ Rotate operations, pg 18
             case "src", "rrc" -> new Instruction(code, fields);
             // I/O operations, pg 20
-            case "in", "out", "chk" -> new Instruction(code, fields);
+            case "in", "out", "chk" -> new IO_Instruction(code, fields);
             default -> throw new IllegalArgumentException("Unknown OpCode: " + code.name);
         };
     }
