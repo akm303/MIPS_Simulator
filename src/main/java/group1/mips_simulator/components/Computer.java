@@ -124,14 +124,6 @@ public class Computer {
         return executionResult.shouldHaltComputer;
     }
 
-    /**
-     * Update the program counter register by incrementing it to the
-     * next position (+1)
-     */
-//    public void incrementPC() {
-//        Register pc = this.cpu.regfile.getPC();
-//        pc.increment();
-//    }
     public short currentPC() {
         return this.cpu.regfile.getPC().read();
     }
