@@ -1,5 +1,7 @@
 package group1.mips_simulator;
 
+import group1.mips_simulator.FrontEnd.ConsoleKeyboardStage;
+import group1.mips_simulator.FrontEnd.ConsolePrinterStage;
 import group1.mips_simulator.components.Computer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,13 +19,20 @@ public class SimApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(SimApplication.class.getResource("hello-view.fxml"));
 
-        SimController controller = new SimController(new Computer(), stage);
+        SimController controller = new SimController(
+                new Computer(),
+                stage,
+                new ConsolePrinterStage(),
+                new ConsoleKeyboardStage()
+        );
         fxmlLoader.setController(controller);
         Scene scene = new Scene(fxmlLoader.load(), WIDTH, HEIGHT);
-        
-        stage.setTitle("Hello!");
+
+        stage.setTitle("MIPS Computer Front Panel");
         stage.setScene(scene);
         stage.show();
+
+
     }
 
     public static void main(String[] args) {

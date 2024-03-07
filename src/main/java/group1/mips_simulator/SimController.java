@@ -1,9 +1,11 @@
 package group1.mips_simulator;
 
+import group1.mips_simulator.FrontEnd.ConsoleKeyboardStage;
+import group1.mips_simulator.FrontEnd.ConsolePrinterStage;
+import group1.mips_simulator.FrontEnd.LogLevel;
 import group1.mips_simulator.FrontEnd.Redraw;
 import group1.mips_simulator.components.Computer;
 import group1.mips_simulator.components.ROM;
-import group1.mips_simulator.components.Value;
 import group1.mips_simulator.components.cpuParts.Register;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -18,6 +20,8 @@ import java.io.File;
 import java.io.IOException;
 
 public class SimController {
+    protected ConsolePrinterStage consolePrinterStage;
+    protected ConsoleKeyboardStage consoleKeyboardStage;
 
     public Computer computer;
     Thread programRunnerThread = null;
@@ -25,10 +29,15 @@ public class SimController {
     private boolean userHalt = false;
     Redraw redraw = new Redraw();
 
+    private static SimController singleton;
 
-    public SimController(Computer c, Stage stage) {
+    public SimController(Computer c, Stage stage, ConsolePrinterStage cs, ConsoleKeyboardStage ck) {
         this.computer = c;
         mainStage = stage;
+        consolePrinterStage = cs;
+        consoleKeyboardStage = ck;
+
+        singleton = this;
         // do NOT call restartComputer here.
     }
 
@@ -282,6 +291,7 @@ public class SimController {
         setupRegisterButton(IR_button, computer.cpu.regfile.getIR());
 
         setupIPL_Button(mainStage, new FileReader());
+
         // Draw the initial state
         redraw();
     }
@@ -330,5 +340,10 @@ public class SimController {
             }
         });
     }
+
+    public static void LOG_TO_CONSOLE(String msg, LogLevel level) {
+        singleton.consolePrinterStage.addLabel(msg, level);
+    }
+
 
 }
