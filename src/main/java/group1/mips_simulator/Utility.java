@@ -127,7 +127,6 @@ public class Utility {
         return sb.toString().trim().replace(' ', '_');
     }
 
-
     public static Vector<short[]> octalStringVector_ToShort(Vector<String[]> stringVector) {
         // convert Vector of two octal strings into a Vector of two shorts
         Vector<short[]> rVector = new Vector<>();
@@ -139,6 +138,14 @@ public class Utility {
             rVector.add(line);
         }
         return rVector;
+    }
+
+    public static short charToShort(char c) {
+        return (short) c;
+    }
+
+    public static char shortToChar(short c) {
+        return (char) c;
     }
 
 }

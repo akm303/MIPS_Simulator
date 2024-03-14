@@ -1,8 +1,10 @@
 package group1.mips_simulator.components;
 
-
 import group1.mips_simulator.components.cpuParts.CPU;
 import group1.mips_simulator.components.cpuParts.RomLoader;
+import group1.mips_simulator.components.deviceParts.DeviceDriver;
+import group1.mips_simulator.components.deviceParts.KeyboardDriver;
+import group1.mips_simulator.components.deviceParts.PrinterDriver;
 import group1.mips_simulator.components.instructionExecution.ExecutionResult;
 import group1.mips_simulator.components.instructionExecution.InstructionExecutions;
 import group1.mips_simulator.components.instructionParts.Field;
@@ -11,6 +13,7 @@ import group1.mips_simulator.components.instructionParts.instruction.Instruction
 import group1.mips_simulator.components.instructionParts.instruction.RXIA_Instruction;
 import group1.mips_simulator.components.memParts.Memory;
 
+import java.util.HashMap;
 
 /**
  * A Mips Computer is a class to represent the classical computer architecture
@@ -22,9 +25,28 @@ public class Computer {
     public CPU cpu;
     public ROM rom = new ROM();
 
+    protected HashMap<Integer, DeviceDriver> drivers = new HashMap<>();
+
     public Computer() {
         cpu = new CPU();
         memory = new Memory(Config.MEM_SIZE);
+
+        this.installDriver(new KeyboardDriver());
+        this.installDriver(new PrinterDriver());
+    }
+
+    public DeviceDriver getDriver(int targetDriverId) {
+        if (drivers.containsKey(targetDriverId)) {
+            return drivers.get(targetDriverId);
+        }
+        return null;
+    }
+
+    protected void installDriver(DeviceDriver newDriver) {
+        if (drivers.containsKey(newDriver.DeviceId())) {
+            System.out.println("Warning: Driver with id already set. Replacing Driver ID: " + newDriver.DeviceId());
+        }
+        this.drivers.put(newDriver.DeviceId(), newDriver);
     }
 
     public void loadROM(ROM rom_) {
@@ -132,6 +154,8 @@ public class Computer {
         return (short) (this.currentPC() + 1);
     }
 
+    //region Effective Address
+
     /**
      * The Effective Address (EA) is a memory location that considers
      * a bunch of various modifications including:
@@ -147,7 +171,6 @@ public class Computer {
     public short calculateEA(RXIA_Instruction instruction) {
         return this.calculateEA(instruction.getIX(), instruction.getAddress(), instruction.getI());
     }
-
 
     /**
      * The Effective Address (EA) is a memory location that considers
@@ -234,4 +257,6 @@ public class Computer {
             }
         }
     }
+
+    //endregion
 }
