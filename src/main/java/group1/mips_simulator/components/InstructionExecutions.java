@@ -1,6 +1,5 @@
 package group1.mips_simulator.components;
 
-import group1.mips_simulator.Utility;
 import group1.mips_simulator.components.cpuParts.ConditionCode;
 import group1.mips_simulator.components.cpuParts.Register;
 import group1.mips_simulator.components.instructionParts.Field;
@@ -189,7 +188,7 @@ public class InstructionExecutions {
         // R3 <− PC+1;
         Register r = computer.cpu.regfile.getGPR(3);
         short pcPlus1 = (short) (computer.cpu.regfile.getPC().read() + 1);
-        r.write(new Value(pcPlus1));
+        r.write(new Word(pcPlus1));
 
         // PC <− EA
         short ea = computer.calculateEA(i);
@@ -215,7 +214,7 @@ public class InstructionExecutions {
 
         // R0 <− Immed
         Register r0 = computer.cpu.regfile.getGPR(0);
-        r0.write(new Value(immed.value));
+        r0.write(new Word(immed.value));
         computer.cpu.regfile.getGPR(0).write(r0.read());
 
         // PC <- c(R3)

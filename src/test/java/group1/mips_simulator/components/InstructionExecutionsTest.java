@@ -110,7 +110,7 @@ class InstructionExecutionsTest {
         );
 
         // This value will be written into memory
-        computer.cpu.regfile.getGPR(0).write(new Value(100));
+        computer.cpu.regfile.getGPR(0).write(new Word(100));
 
         // Run code under test to demonstrate change
         assertEquals(0, computer.memory.read((short) 20));
