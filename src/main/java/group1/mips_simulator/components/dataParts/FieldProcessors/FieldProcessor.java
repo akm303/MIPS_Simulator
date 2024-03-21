@@ -32,7 +32,7 @@ public class FieldProcessor {
     public Vector<Field> getFieldsForOpCode(OpCode code, String binaryFields) {
         // Strip away all the non `1` or `0` characters
         binaryFields = binaryFields.replaceAll("[^10]", "");
-        assertBinLength(binaryFields);
+        assertBinLength(binaryFields,10);
         return switch (code.name.toLowerCase()) {
             // Miscellaneous Instructions, pg 12
             case "hlt" -> binaryToFields_Halt(binaryFields);
@@ -55,15 +55,28 @@ public class FieldProcessor {
         };
     }
 
+    /**
+     * [S exponent mantissa]
+     * [0 1234567  8. . .16]
+     */
     public Vector<Field> getFieldsForFloat(String binaryFields) {
         assertBinLength(binaryFields,15);
+        String sign = binaryFields.substring(0, 1);
+        String exp = binaryFields.substring(1, 7 + 1);
+        String mantissa = binaryFields.substring(8, 15 + 1);
+
+        return new Vector<Field>(3) {{
+            add(new Field(Utility.binaryToShort(sign), 1));
+            add(new Field(Utility.binaryToShort(exp), 7));
+            add(new Field(Utility.binaryToShort(mantissa), 1));
+        }};
 
     }
 
 
     protected void assertBinLength(String binaryFields,int size) {
         if (binaryFields.length() != size) {
-            throw new IllegalArgumentException("Invalid fields provided. Expected 10 bits, instead got: " + binaryFields);
+            throw new IllegalArgumentException("Invalid fields provided. Expected" + size + "bits, instead got: " + binaryFields);
         }
     }
 

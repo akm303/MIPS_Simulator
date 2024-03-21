@@ -9,6 +9,9 @@ import java.util.Vector;
 
 public class FloatFactory {
 
+    public Vector<Field> fields;
+
+
     public Float buildFloat_fromOctal(String octal) {
         String binary = Utility.octalStringToBinaryString(octal, Config.WORD_SIZE);
         return buildFloat_fromBinary(binary);
@@ -20,16 +23,20 @@ public class FloatFactory {
             throw new IllegalArgumentException("Can not build Float from binary:" +
                     "Not expected size. Given binary: " + binary);
         }
-        // sign bit is first bit
-        String signBit = binary.substring(0, 1); // [0, 1)
-        // exponent bits are next 7 bits
-        String exponentBinary = binary.substring(1,8); //[6, 8)
-        // mantissa bits are remaining bits
-        String mantissaBinary = binary.substring(8); //[8,end]
+        //todo commented out because it depends on which you prefer implementation wise.
+        // floats are consistent, so doesnt need a seperate handler, but we have a class
+        // already dedicated to handling fields, we might as well use it
+//        // sign bit is first bit
+//        String signBit = binary.substring(0, 1); // [0, 1)
+//        // exponent bits are next 7 bits
+//        String exponentBinary = binary.substring(1,8); //[6, 8)
+//        // mantissa bits are remaining bits
+//        String mantissaBinary = binary.substring(8); //[8,end]
 
-        // Each OpCode has its own schema for processing the remaining 10 bits
+        // Every float shares schema for processing all bits.
+        // Will pass whole binary to the FieldProcessor to convert the fields into floats.
         FieldProcessor processor = new FieldProcessor();
-        Vector<Field> fields = processor.getFieldsForOpCode(fieldsBinary);
+        Vector<Field> fields = processor.getFieldsForFloat(binary);
 
         return packageFloat(fields);
     }
@@ -39,7 +46,7 @@ public class FloatFactory {
         return buildFloat_fromBinary(binary);
     }
 
-    protected Float packageFloat(fields){
-
+    protected Float packageFloat(Vector<Field> fields){
+        return new Float(fields);
     }
 }
