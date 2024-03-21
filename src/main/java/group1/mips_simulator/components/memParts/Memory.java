@@ -63,11 +63,6 @@ public class Memory extends Storage {
         return get(address).get();
     }
 
-    public short read(int address) {
-        // read the item from address as an int
-        return get(address).get();
-    }
-
 
     // SETTERS
     public void write(Word address, Word valueToWrite) {
