@@ -12,7 +12,7 @@ package group1.mips_simulator.components.memParts;
 
 import group1.mips_simulator.components.Config;
 import group1.mips_simulator.components.ROM;
-import group1.mips_simulator.components.Value;
+import group1.mips_simulator.components.dataParts.Value;
 
 /**
  * A Memory class represents the entire memory lookup for our computer simulator.

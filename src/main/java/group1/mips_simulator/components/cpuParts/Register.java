@@ -1,7 +1,7 @@
 package group1.mips_simulator.components.cpuParts;
 
 import group1.mips_simulator.components.Config;
-import group1.mips_simulator.components.Value;
+import group1.mips_simulator.components.dataParts.Value;
 
 /**
  * A Register is a space that holds a value, and makes it available for

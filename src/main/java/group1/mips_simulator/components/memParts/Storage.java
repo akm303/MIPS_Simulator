@@ -1,6 +1,6 @@
 package group1.mips_simulator.components.memParts;
 
-import group1.mips_simulator.components.Value;
+import group1.mips_simulator.components.dataParts.Value;
 
 public class Storage {
     public Value[] data;

@@ -1,6 +1,7 @@
 package group1.mips_simulator.components.dataParts.instructionParts;
 
-import group1.mips_simulator.components.Value;
+import group1.mips_simulator.components.dataParts.Field;
+import group1.mips_simulator.components.dataParts.Value;
 
 import java.util.Arrays;
 import java.util.Objects;

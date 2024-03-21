@@ -2,6 +2,7 @@ package group1.mips_simulator.components.dataParts.instructionParts;
 
 import group1.mips_simulator.Utility;
 import group1.mips_simulator.components.Config;
+import group1.mips_simulator.components.dataParts.Field;
 import group1.mips_simulator.components.dataParts.instructionParts.FieldProcessors.FieldProcessor;
 
 import java.util.Vector;

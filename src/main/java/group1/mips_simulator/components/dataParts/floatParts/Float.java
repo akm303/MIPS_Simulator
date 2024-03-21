@@ -1,5 +1,5 @@
 package group1.mips_simulator.components.dataParts.floatParts;
-import group1.mips_simulator.components.Value;
+import group1.mips_simulator.components.dataParts.Value;
 
 
 public class Float {

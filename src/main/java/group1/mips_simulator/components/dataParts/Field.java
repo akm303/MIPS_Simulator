@@ -1,4 +1,4 @@
-package group1.mips_simulator.components.dataParts.instructionParts;
+package group1.mips_simulator.components.dataParts;
 
 
 import group1.mips_simulator.Utility;

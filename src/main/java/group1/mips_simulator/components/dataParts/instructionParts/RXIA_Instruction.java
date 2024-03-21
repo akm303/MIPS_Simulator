@@ -1,5 +1,7 @@
 package group1.mips_simulator.components.dataParts.instructionParts;
 
+import group1.mips_simulator.components.dataParts.Field;
+
 import java.util.Vector;
 
 /**
