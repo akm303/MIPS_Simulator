@@ -1,4 +1,4 @@
-package group1.mips_simulator.components.floatParts;
+package group1.mips_simulator.components.dataParts.floatParts;
 import group1.mips_simulator.components.Value;
 
 

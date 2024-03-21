@@ -2,9 +2,9 @@ package group1.mips_simulator.components;
 
 import group1.mips_simulator.components.cpuParts.ConditionCode;
 import group1.mips_simulator.components.cpuParts.RegisterFile;
-import group1.mips_simulator.components.instructionParts.Field;
-import group1.mips_simulator.components.instructionParts.OpCode;
-import group1.mips_simulator.components.instructionParts.RXIA_Instruction;
+import group1.mips_simulator.components.dataParts.instructionParts.Field;
+import group1.mips_simulator.components.dataParts.instructionParts.OpCode;
+import group1.mips_simulator.components.dataParts.instructionParts.RXIA_Instruction;
 import group1.mips_simulator.components.memParts.Memory;
 import org.junit.jupiter.api.Test;
 

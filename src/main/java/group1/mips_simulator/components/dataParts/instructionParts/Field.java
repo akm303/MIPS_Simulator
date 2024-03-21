@@ -1,4 +1,4 @@
-package group1.mips_simulator.components.instructionParts;
+package group1.mips_simulator.components.dataParts.instructionParts;
 
 
 import group1.mips_simulator.Utility;
@@ -77,7 +77,7 @@ public class Field {
             return false;
         }
 
-        final group1.mips_simulator.components.instructionParts.Field other = (group1.mips_simulator.components.instructionParts.Field) obj;
+        final Field other = (Field) obj;
         return this.value == other.value &&
                 this.size == other.size;
     }

@@ -1,8 +1,7 @@
 package group1.mips_simulator;
 
 
-import group1.mips_simulator.components.instructionParts.Instruction;
-import group1.mips_simulator.components.instructionParts.InstructionFactory;
+import group1.mips_simulator.components.dataParts.instructionParts.InstructionFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 

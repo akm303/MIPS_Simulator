@@ -1,11 +1,10 @@
 package group1.mips_simulator.components;
 
-import group1.mips_simulator.Utility;
 import group1.mips_simulator.components.cpuParts.ConditionCode;
 import group1.mips_simulator.components.cpuParts.Register;
-import group1.mips_simulator.components.instructionParts.Field;
-import group1.mips_simulator.components.instructionParts.Instruction;
-import group1.mips_simulator.components.instructionParts.RXIA_Instruction;
+import group1.mips_simulator.components.dataParts.instructionParts.Field;
+import group1.mips_simulator.components.dataParts.instructionParts.Instruction;
+import group1.mips_simulator.components.dataParts.instructionParts.RXIA_Instruction;
 
 /**
  * A class that holds all the functions for actually executing an Instruction object
