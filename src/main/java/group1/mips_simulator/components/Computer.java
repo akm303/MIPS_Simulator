@@ -2,12 +2,13 @@ package group1.mips_simulator.components;
 
 
 import group1.mips_simulator.components.cpuParts.CPU;
-import group1.mips_simulator.components.cpuParts.Register;
 import group1.mips_simulator.components.cpuParts.RomLoader;
+import group1.mips_simulator.components.instructionExecution.ExecutionResult;
+import group1.mips_simulator.components.instructionExecution.InstructionExecutions;
 import group1.mips_simulator.components.instructionParts.Field;
-import group1.mips_simulator.components.instructionParts.Instruction;
-import group1.mips_simulator.components.instructionParts.InstructionFactory;
-import group1.mips_simulator.components.instructionParts.RXIA_Instruction;
+import group1.mips_simulator.components.instructionParts.instruction.Instruction;
+import group1.mips_simulator.components.instructionParts.instruction.InstructionFactory;
+import group1.mips_simulator.components.instructionParts.instruction.RXIA_Instruction;
 import group1.mips_simulator.components.memParts.Memory;
 
 
@@ -26,10 +27,10 @@ public class Computer {
         memory = new Memory(Config.MEM_SIZE);
     }
 
-    public void loadROM(ROM rom_){
+    public void loadROM(ROM rom_) {
         rom = rom_;
         cpu.romLoader = new RomLoader();
-        cpu.romLoader.load(rom,memory);
+        cpu.romLoader.load(rom, memory);
     }
 
     /**
@@ -46,13 +47,13 @@ public class Computer {
     public boolean runCurrentPC() {
         // Get instruction from memory (specified by the Program Counter)
         short pcAddress = this.cpu.regfile.getPC().read();
-        InstructionFactory factory = new InstructionFactory();
 
         // Load mem address into IR
         short memoryContents = this.memory.read(pcAddress);
         this.cpu.regfile.getIR().write(memoryContents);
 
         // Convert IR into Instruction object
+        InstructionFactory factory = new InstructionFactory();
         Instruction nextInstruction = factory.buildInstruction_fromShort(this.cpu.regfile.getIR().read());
 
         try {
@@ -80,7 +81,7 @@ public class Computer {
     public boolean executeInstruction(Instruction instruction) {
         InstructionExecutions exe = new InstructionExecutions();
         System.out.println("Running instruction op code: " + instruction.opCode.name);
-        switch (instruction.opCode.name.toLowerCase()) {
+        ExecutionResult executionResult = switch (instruction.opCode.name.toLowerCase()) {
             // Miscellaneous Instructions
             case "hlt" -> exe.execute_hlt(this, instruction); // Halt instructions stop machine
             case "trap" -> exe.execute_trap(this, instruction);
@@ -113,26 +114,22 @@ public class Computer {
             default ->
                     throw new IllegalArgumentException("Unknown instruction op code name: " + instruction.opCode.name +
                             "\nInstruction: " + instruction);
-        }
-        // After every instruction then we increment the Program Counter
-        // EXCEPT if the instruction is a transfer instruction. Transfer instructions
-        // are responsible for setting the PC themselves.
-        if (!instruction.isTransferInstruction()) {
-            this.incrementPC();
-        }
+        };
 
-        // Return if the instruction is HLT then return false to signal that
-        // the program should shut down.
-        return !instruction.isHaltInstruction();
+        // Set the PC to whatever the instruction results dictates
+        this.cpu.regfile.getPC().write(executionResult.newPC);
+
+        // Return if the instruction is HLT, or an error has occurred, or whatever other reason
+        // to signal the stop of the computer
+        return executionResult.shouldHaltComputer;
     }
 
-    /**
-     * Update the program counter register by incrementing it to the
-     * next position (+1)
-     */
-    public void incrementPC() {
-        Register pc = this.cpu.regfile.getPC();
-        pc.increment();
+    public short currentPC() {
+        return this.cpu.regfile.getPC().read();
+    }
+
+    public short currentPcPlus1() {
+        return (short) (this.currentPC() + 1);
     }
 
     /**

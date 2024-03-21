@@ -1,7 +1,6 @@
 package group1.mips_simulator.components;
 
 import group1.mips_simulator.FileReader;
-import group1.mips_simulator.components.instructionParts.Instruction;
 
 import java.io.File;
 import java.io.IOException;
