@@ -1,9 +1,5 @@
 package group1.mips_simulator;
 
-import group1.mips_simulator.components.instructionParts.Field;
-import group1.mips_simulator.components.instructionParts.Instruction;
-import group1.mips_simulator.components.instructionParts.OpCode;
-import group1.mips_simulator.components.instructionParts.RXIA_Instruction;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

@@ -1,8 +1,12 @@
-package group1.mips_simulator.components.instructionParts;
+package group1.mips_simulator.components.instructionParts.instruction;
 
 import group1.mips_simulator.Utility;
 import group1.mips_simulator.components.Config;
+import group1.mips_simulator.components.instructionParts.Field;
 import group1.mips_simulator.components.instructionParts.FieldProcessors.FieldProcessor;
+import group1.mips_simulator.components.instructionParts.OpCode;
+import group1.mips_simulator.components.instructionParts.instruction.Instruction;
+import group1.mips_simulator.components.instructionParts.instruction.RXIA_Instruction;
 
 import java.util.Vector;
 
