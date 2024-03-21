@@ -1,4 +1,4 @@
-package group1.mips_simulator.components.dataParts;
+package group1.mips_simulator.components.dataParts.FieldProcessors;
 
 
 import group1.mips_simulator.Utility;

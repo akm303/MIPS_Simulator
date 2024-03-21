@@ -3,7 +3,7 @@ package group1.mips_simulator.components;
 import group1.mips_simulator.components.cpuParts.ConditionCode;
 import group1.mips_simulator.components.cpuParts.Register;
 import group1.mips_simulator.components.dataParts.Value;
-import group1.mips_simulator.components.dataParts.Field;
+import group1.mips_simulator.components.dataParts.FieldProcessors.Field;
 import group1.mips_simulator.components.dataParts.instructionParts.Instruction;
 import group1.mips_simulator.components.dataParts.instructionParts.RXIA_Instruction;
 

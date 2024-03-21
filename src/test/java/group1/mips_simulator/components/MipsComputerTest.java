@@ -2,7 +2,7 @@ package group1.mips_simulator.components;
 
 import group1.mips_simulator.Utility;
 import group1.mips_simulator.components.cpuParts.Register;
-import group1.mips_simulator.components.dataParts.Field;
+import group1.mips_simulator.components.dataParts.FieldProcessors.Field;
 import group1.mips_simulator.components.memParts.Memory;
 import org.junit.jupiter.api.Test;
 
