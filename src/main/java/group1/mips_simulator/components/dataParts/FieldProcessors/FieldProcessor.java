@@ -55,9 +55,14 @@ public class FieldProcessor {
         };
     }
 
+    public Vector<Field> getFieldsForFloat(String binaryFields) {
+        assertBinLength(binaryFields,15);
 
-    protected void assertBinLength(String binaryFields) {
-        if (binaryFields.length() != 10) {
+    }
+
+
+    protected void assertBinLength(String binaryFields,int size) {
+        if (binaryFields.length() != size) {
             throw new IllegalArgumentException("Invalid fields provided. Expected 10 bits, instead got: " + binaryFields);
         }
     }
@@ -67,7 +72,7 @@ public class FieldProcessor {
      * [01 23 4 5   9]
      */
     Vector<Field> binaryToFields_rxia(String binaryFields) {
-        assertBinLength(binaryFields);
+        assertBinLength(binaryFields,10);
         String rr = binaryFields.substring(0, 1 + 1);
         String xx = binaryFields.substring(2, 3 + 1);
         String i = binaryFields.substring(4, 4 + 1);
@@ -86,7 +91,7 @@ public class FieldProcessor {
      * [0  3 4    9]
      */
     Vector<Field> binaryToFields_Halt(String binaryFields) {
-        assertBinLength(binaryFields);
+        assertBinLength(binaryFields,10);
         String blank = binaryFields.substring(0, 3 + 1);
         String zeros = binaryFields.substring(4, 9 + 1);
 
@@ -101,7 +106,7 @@ public class FieldProcessor {
      * [0    5 6  9]
      */
     Vector<Field> binaryToFields_Trap(String binaryFields) {
-        assertBinLength(binaryFields);
+        assertBinLength(binaryFields,10);
         String blank = binaryFields.substring(0, 5 + 1);
         String trapCode = binaryFields.substring(6, 9 + 1);
 
@@ -116,7 +121,7 @@ public class FieldProcessor {
      * [01 23 4    9]
      */
     Vector<Field> binaryToFields_reg2reg(String binaryFields) {
-        assertBinLength(binaryFields);
+        assertBinLength(binaryFields,10);
         String rx = binaryFields.substring(0, 1 + 1);
         String ry = binaryFields.substring(2, 3 + 1);
         String blank = binaryFields.substring(4, 9 + 1);
@@ -133,7 +138,7 @@ public class FieldProcessor {
      * [01 2 3 45 6  9]
      */
     Vector<Field> binaryToFields_shiftRotate(String binaryFields) {
-        assertBinLength(binaryFields);
+        assertBinLength(binaryFields,10);
         String rr = binaryFields.substring(0, 1 + 1);
         String a = binaryFields.substring(2, 2 + 1);
         String r = binaryFields.substring(3, 3 + 1);
@@ -154,7 +159,7 @@ public class FieldProcessor {
      * [01 2 4 5   9]
      */
     Vector<Field> binaryToFields_io(String binaryFields) {
-        assertBinLength(binaryFields);
+        assertBinLength(binaryFields,10);
         String r = binaryFields.substring(0, 1 + 1);
         String blank = binaryFields.substring(2, 4 + 1);
         String deviceId = binaryFields.substring(5, 9 + 1);
