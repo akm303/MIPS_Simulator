@@ -28,7 +28,6 @@ public class Register {
     }
 
     public Value get() { // previously get()
-
         // get the Value in the register
         return this.value;
     }
