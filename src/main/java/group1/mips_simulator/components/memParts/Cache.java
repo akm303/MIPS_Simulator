@@ -6,7 +6,8 @@ public class Cache extends Memory{
     /*
     16 line
     fully associative
-    Whenever you access cache, you will pass a line number (line tag) which determins
+    Cache is accessed usually by seeing if a certain data location is in a cache
+    i.e. if the binary of a memory location has a tag that matches a line tag in cache.
      */
     CacheLine[] blocks = new CacheLine[Config.CACHE_LINES];
     short[] lastAccessedArray = new short[Config.CACHE_LINES];
@@ -22,27 +23,35 @@ public class Cache extends Memory{
             lastAccessedArray[i] = 0; //set all counts to -
     }
 
-    public CacheLine getLine(int lineNumber){
+    public CacheLine getLine(int dataLocation){
         // get the full line of data at that line number
+        int lineNumber = getTag(dataLocation);
         updateAccessCounts(lineNumber);
         return blocks[lineNumber];
     }
 
-    public void setLine(int lineNumber, Memory memory){
-        // todo: set the line with highest access count with the data from memory at those locations
+    public void setLine(int dataLocation,Memory memory){
+        // todo: set the line with highest access count with the data from memory at those locations.
+        // make sure correct items in memory are getting pulled,
+
+        int lineNumber = getTag(dataLocation);
         CacheLine line = blocks[lineNumber];
         for(int i = 0; i < Config.ENTRIES_PER_BLOCK; i++)
-            line.setEntry(i,memory.get(i+asdf));
+            line.setEntry(i,memory.get(i + asdf));
         updateAccessCounts(lineNumber);
     }
 
-    public void updateAccessCounts(int lineNumber){
+    public void updateAccessCounts(int dataLocation){
+        int lineNumber = getTag(dataLocation);
         for(int i = 0; i < lastAccessedArray.length; i++)
             lastAccessedArray[i] += 1; //update all counters (will reset appropriate one to 0 at end)
         lastAccessedArray[lineNumber] = 0; //then set current line count to 0
     }
 
-    private int getTag(short location){
+    private int getTag(int dataLocation){
         //todo: get tag bits of memory location references.
+        // return an integer of it
+        int lineNumber = 0;
+
     }
 }
