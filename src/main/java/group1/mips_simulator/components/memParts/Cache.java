@@ -2,6 +2,8 @@ package group1.mips_simulator.components.memParts;
 
 import  group1.mips_simulator.components.Config;
 
+import java.util.Arrays;
+
 public class Cache extends Memory{
     /*
     16 line
@@ -19,13 +21,13 @@ public class Cache extends Memory{
     // count set to 0
 
     public Cache(){
-        for(int i = 0; i < lastAccessedArray.length; i++)
-            lastAccessedArray[i] = 0; //set all counts to -
+        //set all counts to 0
+        Arrays.fill(lastAccessedArray, (short) 0);
     }
 
     public CacheLine getLine(int dataAddress){
         // get the full line of data at that line number
-        int lineNumber = getTag(dataAddress);
+        int lineNumber = getLineTag(dataAddress);
         updateAccessCounts(lineNumber);
         return blocks[lineNumber];
     }
@@ -34,24 +36,30 @@ public class Cache extends Memory{
         // todo: set the line with highest access count with the data from memory at those locations.
         // make sure correct items in memory are getting pulled,
 
-        int lineNumber = getTag(dataAddress);
+        int lineNumber = getLineTag(dataAddress);
         CacheLine line = blocks[lineNumber];
         for(int i = 0; i < Config.ENTRIES_PER_BLOCK; i++)
             line.setEntry(i,memory.get(dataAddress));
         updateAccessCounts(lineNumber);
     }
 
-    public void updateAccessCounts(int dataAddress){
-        int lineNumber = getTag(dataAddress);
+    public void updateAccessCounts(int lineNumber){
         for(int i = 0; i < lastAccessedArray.length; i++)
-            lastAccessedArray[i] += 1; //update all counters (will reset appropriate one to 0 at end)
-        lastAccessedArray[lineNumber] = 0; //then set current line count to 0
+            lastAccessedArray[i] += 1;      //update all counters (will reset appropriate one to 0 at end)
+        lastAccessedArray[lineNumber] = 0;  //then set current line count to 0
     }
 
-    private int getTag(int dataAddress){
+    private int getLineTag(int dataAddress){
         //todo: get tag bits of memory location references.
         // return an integer of it
         int tag = 0;
         return tag;
+    }
+
+    private boolean inCache(int dataAddress) {
+        int tag = getLineTag(dataAddress);
+        for(int i = 0; i < lastAccessedArray.length; i++){
+
+        }
     }
 }
