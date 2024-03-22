@@ -37,18 +37,16 @@ public class Memory extends Storage {
     /* get() will get the Value from memory */
 
     public Word get(short address) {
+        // main get method (all other get() and read() are routed through here)
         // get the Value from memory address as a short
         return this.data[address];
-    }
-
-    public void write(short address, short valueToWrite) {
-        this.data[address].set(valueToWrite);
     }
 
     public Word get(int address) {
         // get the Value from memory address as an int
         return get((short) address);
     }
+
 
 
     /* read() will read the short data from memory */
@@ -65,11 +63,39 @@ public class Memory extends Storage {
 
 
     // SETTERS
+    /* set() will set the Value into memory at an address */
+
+    public void set(short address, Word valueToWrite) {
+        // main set method (all set() and write() methods routed through here)
+        // set the Word in memory at a short address
+        this.data[address] = valueToWrite;
+    }
+
+    public void set(Word address, Word valueToWrite) {
+        set(address.get(),valueToWrite);
+    }
+    public void set(short address, short valueToWrite) {
+        set(address,new Word(valueToWrite));
+    }
+
+    public void set(Word address, short valueToWrite) {
+        //god forbid
+        set(address.get(),new Word(valueToWrite));
+    }
+
+
+
+    /* write() will write the short data to memory */
+
     public void write(Word address, Word valueToWrite) {
         // write value to address at value
         this.data[address.get()].set(valueToWrite);
     }
 
+    public void write(short address, short shortToWrite) {
+        // write a short to that address in memory
+        this.data[address].set(shortToWrite);
+    }
 
     // FUNCTION
     public void importRom(ROM rom) {

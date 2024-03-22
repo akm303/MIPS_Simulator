@@ -18,11 +18,12 @@ import group1.mips_simulator.components.memParts.Memory;
  * being discussed in class.
  */
 public class Computer {
-
-    public Memory memory;
-    public Cache cache;
-    public CPU cpu;
-    public ROM rom = new ROM();
+    //computer parts
+    public Memory memory;       // computer memory
+    public Cache I_cache;       // instruction cache
+    public Cache D_cache;       // data cache
+    public CPU cpu;             // central processing unit
+    public ROM rom = new ROM(); // read-only-memory
 
     public Computer() {
         cpu = new CPU();
