@@ -15,16 +15,19 @@ public class CacheLine{
     }
 
     public Word getEntry(int addressLocation){
+        //todo: write unit tests
         int blockNumber = getBlockNumber(addressLocation);
         return entries[blockNumber];
     }
 
     public void setEntry(int addressLocation, Word entry){
+        //todo: write unit tests
         int blockNumber = getBlockNumber(addressLocation);
         entries[blockNumber] = entry;
     }
 
     public int getBlockNumber(int addressLocation){
+        //todo: write unit tests
         return (addressLocation | 0b111);
     }
 
