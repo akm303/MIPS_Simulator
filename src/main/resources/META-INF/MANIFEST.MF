@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
-Main-Class: group1.mips_simulator.SimApplication
-Class-Path: javafx-graphics-21-mac-aarch64.jar javafx-controls-21-mac-aa
- rch64.jar javafx-base-21.jar javafx-base-21-mac-aarch64.jar javafx-fxml
- -21-mac-aarch64.jar javafx-controls-21.jar javafx-fxml-21.jar javafx-gr
- aphics-21.jar
+Main-Class: Launcher
+Class-Path: javafx-base-21.0.1.jar javafx-graphics-21.0.1-win.jar javafx
+ -controls-21.0.1-win.jar javafx-base-21.0.1-win.jar javafx-controls-21.
+ 0.1.jar javafx-graphics-21.0.1.jar javafx-fxml-21.0.1-win.jar javafx-fx
+ ml-21.0.1.jar
 
