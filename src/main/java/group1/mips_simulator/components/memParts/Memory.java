@@ -97,11 +97,4 @@ public class Memory extends Storage {
         this.data[address].set(shortToWrite);
     }
 
-    // FUNCTION
-    public void importRom(ROM rom) {
-        // todo
-        // for instruction on rom, put rom in first mem location, then increment mem location
-
-
-    }
 }
