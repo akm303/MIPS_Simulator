@@ -6,7 +6,7 @@ public class Config {
     public static final int GPR_COUNT = 4; // 4 general purpose registers
     public static final int IXR_COUNT = 3; // 3 index registers
     public static final short WORD_SIZE = 16;
-    public static final int WORDS_PER_BLOCK = 8;
+    public static final int ENTRIES_PER_BLOCK = 8;
     public static final int CACHE_LINES = 16;
 
 }

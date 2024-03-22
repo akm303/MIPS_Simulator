@@ -6,6 +6,7 @@ public class Cache extends Memory{
     /*
     16 line
     fully associative
+    Whenever you access cache, you will pass a line number (line tag) which determins
      */
     CacheLine[] blocks = new CacheLine[Config.CACHE_LINES];
     short[] lastAccessedArray = new short[Config.CACHE_LINES];
@@ -22,18 +23,26 @@ public class Cache extends Memory{
     }
 
     public CacheLine getLine(int lineNumber){
+        // get the full line of data at that line number
+        updateAccessCounts(lineNumber);
         return blocks[lineNumber];
     }
 
     public void setLine(int lineNumber, Memory memory){
+        // todo: set the line with highest access count with the data from memory at those locations
         CacheLine line = blocks[lineNumber];
-
+        for(int i = 0; i < Config.ENTRIES_PER_BLOCK; i++)
+            line.setEntry(i,memory.get(i+asdf));
+        updateAccessCounts(lineNumber);
     }
 
     public void updateAccessCounts(int lineNumber){
-        for(int i = 0; i < lastAccessedArray.length; i++){
-            lastAccessedArray[i] += 1; //update all
-        }
+        for(int i = 0; i < lastAccessedArray.length; i++)
+            lastAccessedArray[i] += 1; //update all counters (will reset appropriate one to 0 at end)
         lastAccessedArray[lineNumber] = 0; //then set current line count to 0
+    }
+
+    private int getTag(short location){
+        //todo: get tag bits of memory location references.
     }
 }
