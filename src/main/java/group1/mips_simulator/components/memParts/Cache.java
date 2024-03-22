@@ -23,35 +23,35 @@ public class Cache extends Memory{
             lastAccessedArray[i] = 0; //set all counts to -
     }
 
-    public CacheLine getLine(int dataLocation){
+    public CacheLine getLine(int dataAddress){
         // get the full line of data at that line number
-        int lineNumber = getTag(dataLocation);
+        int lineNumber = getTag(dataAddress);
         updateAccessCounts(lineNumber);
         return blocks[lineNumber];
     }
 
-    public void setLine(int dataLocation,Memory memory){
+    public void setLine(int dataAddress,Memory memory){
         // todo: set the line with highest access count with the data from memory at those locations.
         // make sure correct items in memory are getting pulled,
 
-        int lineNumber = getTag(dataLocation);
+        int lineNumber = getTag(dataAddress);
         CacheLine line = blocks[lineNumber];
         for(int i = 0; i < Config.ENTRIES_PER_BLOCK; i++)
-            line.setEntry(i,memory.get(i + asdf));
+            line.setEntry(i,memory.get(dataAddress));
         updateAccessCounts(lineNumber);
     }
 
-    public void updateAccessCounts(int dataLocation){
-        int lineNumber = getTag(dataLocation);
+    public void updateAccessCounts(int dataAddress){
+        int lineNumber = getTag(dataAddress);
         for(int i = 0; i < lastAccessedArray.length; i++)
             lastAccessedArray[i] += 1; //update all counters (will reset appropriate one to 0 at end)
         lastAccessedArray[lineNumber] = 0; //then set current line count to 0
     }
 
-    private int getTag(int dataLocation){
+    private int getTag(int dataAddress){
         //todo: get tag bits of memory location references.
         // return an integer of it
-        int lineNumber = 0;
-
+        int tag = 0;
+        return tag;
     }
 }

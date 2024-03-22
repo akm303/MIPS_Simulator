@@ -9,17 +9,23 @@ public class CacheLine{
     // tag is    vvv  for
     // octal [88 888 8]
 
-    Word[] entries = new Word[Config.WORDS_PER_BLOCK]; //8 words per block
+    Word[] entries = new Word[Config.ENTRIES_PER_BLOCK]; //8 words per block, each word is an entry
     public CacheLine(){
 
     }
 
-    public Word getEntry(int blockNumber){
+    public Word getEntry(int addressLocation){
+        int blockNumber = getBlockNumber(addressLocation);
         return entries[blockNumber];
     }
 
-    public void setEntry(int blockNumber, Word entry){
+    public void setEntry(int addressLocation, Word entry){
+        int blockNumber = getBlockNumber(addressLocation);
         entries[blockNumber] = entry;
+    }
+
+    public int getBlockNumber(int addressLocation){
+        return (addressLocation | 0b111);
     }
 
 }
