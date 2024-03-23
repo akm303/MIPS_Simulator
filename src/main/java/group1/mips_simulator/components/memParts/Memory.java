@@ -61,6 +61,11 @@ public class Memory extends Storage {
         return get(address).get();
     }
 
+    public short read(int address) {
+        // read the data from address as a int
+        return get(address).get();
+    }
+
 
     // SETTERS
     /* set() will set the Value into memory at an address */
