@@ -1,4 +1,4 @@
-package group1.mips_simulator.FrontEnd;
+package group1.mips_simulator.FrontEnd.Archive;
 
 /**
  * The level of debut to show.

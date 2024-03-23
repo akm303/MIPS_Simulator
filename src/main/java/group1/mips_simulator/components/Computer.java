@@ -121,7 +121,7 @@ public class Computer {
 
         // Return if the instruction is HLT, or an error has occurred, or whatever other reason
         // to signal the stop of the computer
-        return executionResult.shouldHaltComputer;
+        return !executionResult.shouldHaltComputer;
     }
 
     public short currentPC() {

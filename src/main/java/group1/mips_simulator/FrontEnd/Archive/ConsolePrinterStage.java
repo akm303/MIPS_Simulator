@@ -1,4 +1,4 @@
-package group1.mips_simulator.FrontEnd;
+package group1.mips_simulator.FrontEnd.Archive;
 
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;

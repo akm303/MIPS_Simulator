@@ -1,9 +1,9 @@
 package group1.mips_simulator;
 
-import group1.mips_simulator.FrontEnd.ConsoleKeyboardStage;
-import group1.mips_simulator.FrontEnd.ConsolePrinterStage;
-import group1.mips_simulator.FrontEnd.LogLevel;
-import group1.mips_simulator.FrontEnd.Redraw;
+import group1.mips_simulator.FrontEnd.Archive.ConsoleKeyboardStage;
+import group1.mips_simulator.FrontEnd.Archive.ConsolePrinterStage;
+import group1.mips_simulator.FrontEnd.Archive.LogLevel;
+import group1.mips_simulator.FrontEnd.Archive.Redraw;
 import group1.mips_simulator.components.Computer;
 import group1.mips_simulator.components.ROM;
 import group1.mips_simulator.components.cpuParts.Register;

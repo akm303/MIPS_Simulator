@@ -1,4 +1,4 @@
-package group1.mips_simulator.FrontEnd;
+package group1.mips_simulator.FrontEnd.Archive;
 
 import group1.mips_simulator.SimController;
 import group1.mips_simulator.components.Computer;
