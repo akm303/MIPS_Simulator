@@ -11,7 +11,7 @@ class FileReaderTest {
 
     @Test
     void readBinaryFile() {
-        FileReader underTest = new FileReader();
+        FileReaderSwing underTest = new FileReaderSwing();
         Vector<String[]> result = null;
         try {
             result = underTest.readBinaryFile("src/test/java/group1/mips_simulator/testFile.txt");
@@ -23,7 +23,7 @@ class FileReaderTest {
 
     @Test
     void processLineTest() {
-        FileReader underTest = new FileReader();
+        FileReaderSwing underTest = new FileReaderSwing();
         String[] expectedResult = new String[]{
                 "000011",
                 "003242"
@@ -34,7 +34,7 @@ class FileReaderTest {
 
     @Test
     void processLineTest_jz() {
-        FileReader underTest = new FileReader();
+        FileReaderSwing underTest = new FileReaderSwing();
         String[] expectedResult = new String[]{
                 "000011",
                 "014242"

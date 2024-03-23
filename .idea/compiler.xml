@@ -12,7 +12,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="MIPS_Simulator" options="--add-exports javafx.fxml/javafx=group1.mips_simulator" />
+      <module name="MIPS_Simulator" options="" />
     </option>
   </component>
 </project>
