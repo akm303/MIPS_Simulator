@@ -190,7 +190,13 @@ public class SimController {
         // or the computer itself requests a halt.
         while (!userHalt && computerMayContinue) {
             System.out.println("Running Instruction");
-            computerMayContinue = this.computer.runCurrentPC();
+            try {
+                computerMayContinue = this.computer.runCurrentPC();
+            } catch (Exception ignored) {
+                // Ignoring the exception
+                System.out.println("Encountered error: " + ignored);
+                break;
+            }
         }
         Platform.runLater(this::redraw);
     }
