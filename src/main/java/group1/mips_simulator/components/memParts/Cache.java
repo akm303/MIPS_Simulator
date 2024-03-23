@@ -73,8 +73,7 @@ public class Cache extends Memory{
     private short getLineTag(short dataAddress){
         //todo: get tag bits of memory location references.
         // return an integer of it
-        short lineTag = (short)((int)dataAddress % 0b1111);
-        return lineTag;
+        return (short)((int)dataAddress % 0b1111);
     }
 
 }
