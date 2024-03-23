@@ -68,6 +68,9 @@ public class SwingConsole {
         textFields.get("IR").setText(computer.cpu.regfile.getIR().toString_Binary());
         textFields.get("MFR").setText(computer.cpu.regfile.getMFR().toString_Binary());
         textFields.get("CC").setText(computer.cpu.regfile.getCC().toString_Binary());
+
+        // Update the cache
+        //cacheGui.redrawCache(computer.memory.cache);
     }
 
 }
