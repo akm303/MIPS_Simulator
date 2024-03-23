@@ -1,6 +1,6 @@
 package group1.mips_simulator.components.instructionParts.instruction;
 
-import group1.mips_simulator.components.Value;
+import group1.mips_simulator.components.Word;
 import group1.mips_simulator.components.instructionParts.Field;
 import group1.mips_simulator.components.instructionParts.OpCode;
 
@@ -39,9 +39,9 @@ public class Instruction {
         return (short) rvalue;
     }
 
-    public Value toValue() {
+    public Word toValue() {
         //generate a Value of itself
-        return new Value(this.toShort());
+        return new Word(this.toShort());
     }
 
     /**

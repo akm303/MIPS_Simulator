@@ -1,6 +1,6 @@
 package group1.mips_simulator.components;
 
-import group1.mips_simulator.FileReader;
+import group1.mips_simulator.FileReaderSwing;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,9 +24,8 @@ public class ROM {
     public void readFromFile(File biFile) throws IOException {
         // TODO: Implement this function
         System.out.println("ROM reading from bi file: " + biFile.getAbsolutePath());
-        FileReader fr = new FileReader();
+        FileReaderSwing fr = new FileReaderSwing();
         try {
-
             dataFromFile = fr.readBinaryFile(biFile.getAbsolutePath());
         } catch (Exception e) {
             throw new IOException("Ran into an error when trying to parse .bi file.\n" +

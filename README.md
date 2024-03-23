@@ -7,3 +7,6 @@ See `Documents/README.md` for more details.
 - Ganesh Ghimire
 - Ari Majumdar
 - Assytan Tandia
+
+### Dev Notes:
+Jar built using Jar -> From module with dependencies -> Extract to Jar File 

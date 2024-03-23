@@ -2,21 +2,21 @@ package group1.mips_simulator.components.instructionExecution;
 
 public class ExecutionResult {
     public final short newPC;
-    public final boolean shouldHaltComputer;
+    public final boolean shouldContinue;
 
     public ExecutionResult(int newPC_) {
-        this(newPC_, false);
+        this(newPC_, true);
     }
-    public ExecutionResult(int newPC_, boolean shouldHaltComputer) {
-        this((short) newPC_, shouldHaltComputer);
+    public ExecutionResult(int newPC_, boolean shouldContinue) {
+        this((short) newPC_, shouldContinue);
     }
 
     public ExecutionResult(short newPC_) {
-        this(newPC_, false);
+        this(newPC_, true);
     }
 
-    public ExecutionResult(short newPC_, boolean shouldHaltComputer_) {
+    public ExecutionResult(short newPC_, boolean shouldContinue_) {
         newPC = newPC_;
-        shouldHaltComputer = shouldHaltComputer_;
+        shouldContinue = shouldContinue_;
     }
 }

@@ -19,6 +19,7 @@ public class RomLoader {
         Vector<short[]> romData = Utility.octalStringVector_ToShort(rom.getInstructions());
 
         for (short[] locationAndData : romData) {
+            System.out.println("Loading data into memory " + locationAndData[0] + "  " + locationAndData[1]);
             mem.write((locationAndData[0]), locationAndData[1]);
         }
     }
