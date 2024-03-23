@@ -1,28 +1,13 @@
 package group1.mips_simulator.components.dataParts.instructionParts;
 
+import group1.mips_simulator.components.Word;
 import group1.mips_simulator.components.dataParts.FieldProcessors.Field;
-import group1.mips_simulator.components.dataParts.Value;
 
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Vector;
 
 public class Instruction {
-
-    public static Instruction buildInstruction_fromOctal(String octal) {
-        InstructionFactory factory = new InstructionFactory();
-        return factory.buildInstruction_fromOctal(octal);
-    }
-    public static Instruction buildInstruction_fromBinary(String binary) {
-        InstructionFactory factory = new InstructionFactory();
-        return factory.buildInstruction_fromBinary(binary);
-    }
-
-    public static Instruction buildInstruction_fromShort(short number) {
-        InstructionFactory factory = new InstructionFactory();
-        return factory.buildInstruction_fromShort(number);
-    }
-
     public Instruction(OpCode opCode, Vector<Field> fields) {
         this.opCode = opCode;
         this.fields = fields;
@@ -53,9 +38,9 @@ public class Instruction {
         return (short) rvalue;
     }
 
-    public Value toValue() {
+    public Word toValue() {
         //generate a Value of itself
-        return new Value(this.toShort());
+        return new Word(this.toShort());
     }
 
     /**

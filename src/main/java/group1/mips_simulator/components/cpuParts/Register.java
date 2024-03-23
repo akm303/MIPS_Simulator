@@ -1,7 +1,7 @@
 package group1.mips_simulator.components.cpuParts;
 
 import group1.mips_simulator.components.Config;
-import group1.mips_simulator.components.dataParts.Value;
+import group1.mips_simulator.components.Word;
 
 /**
  * A Register is a space that holds a value, and makes it available for
@@ -12,7 +12,7 @@ import group1.mips_simulator.components.dataParts.Value;
 public class Register {
 
     //getter methods
-    protected Value value = new Value(0);
+    protected Word value = new Word(0);
     protected short bitWidth = Config.WORD_SIZE;
 
     public Register() {
@@ -20,15 +20,14 @@ public class Register {
     }
 
     public Register(short v) {
-        this(new Value(v));
+        this(new Word(v));
     }
 
-    public Register(Value v) {
+    public Register(Word v) {
         this.value = v.clone();
     }
 
-    public Value get() { // previously get()
-
+    public Word get() { // previously get()
         // get the Value in the register
         return this.value;
     }
@@ -39,7 +38,7 @@ public class Register {
     }
 
     // setter methods
-    public void write(Value newValue) {
+    public void write(Word newValue) {
         // set the Value into register
         this.value = newValue.clone();
         this.value.setSize(this.bitWidth);
@@ -47,7 +46,7 @@ public class Register {
 
     public void write(short newValue) {
         // set the Value of the register
-        this.write(new Value(newValue));
+        this.write(new Word(newValue));
     }
 
     public void write(int value_) {

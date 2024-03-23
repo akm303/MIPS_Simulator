@@ -1,5 +1,6 @@
 package group1.mips_simulator.components.instruction;
 
+
 import group1.mips_simulator.components.dataParts.instructionParts.Instruction;
 import group1.mips_simulator.components.dataParts.instructionParts.InstructionFactory;
 import org.junit.jupiter.api.Test;

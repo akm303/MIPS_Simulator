@@ -1,42 +1,49 @@
-package group1.mips_simulator.components.dataParts;
+package group1.mips_simulator.components;
 
 import group1.mips_simulator.Utility;
-import group1.mips_simulator.components.Config;
 
-public class Value {
+public class Word {
 
     protected short value_;
     protected short size = Config.WORD_SIZE; // 16 by default
 
 
     //region Constructors
-    public Value(short value) {
+    public Word(short value) {
         value_ = value;
     }
 
-    public Value(int value) {
+    public Word(int value) {
         this((short) value);
     }
 
-    public Value clone() {
-        return new Value(this.value_);
+    public Word clone() {
+        return new Word(this.value_);
     }
 
     //endregion
 
     //region getters
-    public short get() { return this.getShort(); }
+    public short get() {
+        return this.getShort();
+    }
 
-    public short getShort() {return value_;}
+    public short getShort() {
+        return value_;
+    }
 
-    public int getInt() {return (int) value_;}
+    public int getInt() {
+        return value_;
+    }
 
     //region setters
     public void set(short value_) {
         this.value_ = value_;
     }
 
-    public void set(Value value_) { this.set(value_.get()); }
+    public void set(Word value_) {
+        this.set(value_.get());
+    }
 
 
     public void set(int value) {
@@ -91,7 +98,7 @@ public class Value {
             return false;
         }
 
-        Value value = (Value) o;
+        Word value = (Word) o;
         return value_ == value.value_;
     }
     //endregion

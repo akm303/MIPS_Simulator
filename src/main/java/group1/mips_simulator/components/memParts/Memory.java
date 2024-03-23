@@ -12,7 +12,8 @@ package group1.mips_simulator.components.memParts;
 
 import group1.mips_simulator.components.Config;
 import group1.mips_simulator.components.ROM;
-import group1.mips_simulator.components.dataParts.Value;
+import group1.mips_simulator.components.Word;
+
 
 /**
  * A Memory class represents the entire memory lookup for our computer simulator.
@@ -36,7 +37,7 @@ public class Memory extends Storage {
     // GETTERS
     /* get() will get the Value from memory */
 
-    public Value get(short address) {
+    public Word get(short address) {
         // get the Value from memory address as a short
         return this.data[address];
     }
@@ -45,7 +46,7 @@ public class Memory extends Storage {
         this.data[address].set(valueToWrite);
     }
 
-    public Value get(int address) {
+    public Word get(int address) {
         // get the Value from memory address as an int
         return get((short) address);
     }
@@ -53,7 +54,7 @@ public class Memory extends Storage {
 
     /* read() will read the short data from memory */
 
-    public short read(Value address) {
+    public short read(Word address) {
         // read the data from address in a Value
         return get(address.get()).get();
     }
@@ -70,7 +71,7 @@ public class Memory extends Storage {
 
 
     // SETTERS
-    public void write(Value address, Value valueToWrite) {
+    public void write(Word address, Word valueToWrite) {
         // write value to address at value
         this.data[address.get()].set(valueToWrite);
     }

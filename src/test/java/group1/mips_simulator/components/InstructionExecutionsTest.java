@@ -2,10 +2,10 @@ package group1.mips_simulator.components;
 
 import group1.mips_simulator.components.cpuParts.ConditionCode;
 import group1.mips_simulator.components.cpuParts.RegisterFile;
-import group1.mips_simulator.components.dataParts.Value;
 import group1.mips_simulator.components.dataParts.FieldProcessors.Field;
 import group1.mips_simulator.components.dataParts.instructionParts.OpCode;
 import group1.mips_simulator.components.dataParts.instructionParts.RXIA_Instruction;
+import group1.mips_simulator.components.instructionExecution.InstructionExecutions;
 import group1.mips_simulator.components.memParts.Memory;
 import org.junit.jupiter.api.Test;
 
@@ -111,7 +111,7 @@ class InstructionExecutionsTest {
         );
 
         // This value will be written into memory
-        computer.cpu.regfile.getGPR(0).write(new Value(100));
+        computer.cpu.regfile.getGPR(0).write(new Word(100));
 
         // Run code under test to demonstrate change
         assertEquals(0, computer.memory.read((short) 20));
@@ -148,7 +148,7 @@ class InstructionExecutionsTest {
                 new OpCode("ldx"),
                 new Vector<>() {{
                     add(new Field(1, 2));   // R
-                    add(new Field(0, 2));   // X
+                    add(new Field(1, 2));   // X
                     add(new Field(0, 1));   // I
                     add(new Field(20, 5));  // A
                 }}
@@ -171,7 +171,7 @@ class InstructionExecutionsTest {
                 new OpCode("stx"),
                 new Vector<>() {{
                     add(new Field(1, 2));   // R
-                    add(new Field(0, 2));   // X
+                    add(new Field(1, 2));   // X
                     add(new Field(0, 1));   // I
                     add(new Field(20, 5));  // A
                 }}
@@ -181,9 +181,9 @@ class InstructionExecutionsTest {
         computer.cpu.regfile.getIXR(1).write(55);
 
         // Run code under test to demonstrate change
-        assertEquals(0, computer.memory.read(20));
+        assertEquals(0, computer.memory.read(55 + 20));
         computer.executeInstruction(instruction);
-        assertEquals(55, computer.memory.read(20));
+        assertEquals(55, computer.memory.read(55 + 20));
     }
 
     @Test

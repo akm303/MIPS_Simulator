@@ -115,13 +115,12 @@ class ComputerTest {
         testComputer.loadROM(rom);
 
 //        int memWriteOffset = Config.INSTR_OFFSET;
-        for(int i = 0; i < instructions.size(); i++){
+        for (int i = 0; i < instructions.size(); i++) {
             assertEquals(
                     instructions.get(i)[1], //confirm the instruction value (as a short)
                     testComputer.memory.read(instructions.get(i)[0]) // equals the computer's memory value (as a short)
             );
         }
-
 
 
     }

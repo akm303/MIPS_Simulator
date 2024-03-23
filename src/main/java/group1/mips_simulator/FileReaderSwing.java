@@ -1,12 +1,8 @@
 package group1.mips_simulator;
 
-
 import group1.mips_simulator.components.dataParts.instructionParts.InstructionFactory;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.util.StringTokenizer;
 import java.util.Vector;
@@ -15,23 +11,8 @@ import java.util.Vector;
  * Responsible for reading in the program binary file and converting it into
  * objects that this simulator can understand and process.
  */
-public class FileReader {
+public class FileReaderSwing {
 
-    public File getFile(Stage stage) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select .bi file");
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Bin & Text files", "*.txt", "*.bi"),
-                new FileChooser.ExtensionFilter("All Files", "*.*"));
-        File selectedFile = fileChooser.showOpenDialog(stage);
-        if (selectedFile == null) {
-            System.out.println("File is null");
-            return null;
-        }
-        System.out.println(selectedFile.getName());
-        return selectedFile;
-
-    }
 
     /**
      * Open the target file, process it line by line. Return the contents
@@ -103,7 +84,7 @@ public class FileReader {
         String instructionInOctal = lineSplitIntoTokens.get(1); // 1st is instruction
 
         // Turn instruction octal into Instruction object
-        return new String[]{memoryLocationInOctal,instructionInOctal};
+        return new String[]{memoryLocationInOctal, instructionInOctal};
 
     }
 }
