@@ -66,6 +66,7 @@ public class Computer {
             // If we run into some issue while running the program
             // For example if we see an unknown instruction
             // TODO: Consider printing the error to the front panel?
+            System.out.println("Encountered an error when running instruction: " + e);
             return false; // Signal the computer can NOT continue running instructions
         }
     }
@@ -124,7 +125,7 @@ public class Computer {
 
         // Return if the instruction is HLT, or an error has occurred, or whatever other reason
         // to signal the stop of the computer
-        return executionResult.shouldHaltComputer;
+        return executionResult.shouldContinue;
     }
 
     public short currentPC() {

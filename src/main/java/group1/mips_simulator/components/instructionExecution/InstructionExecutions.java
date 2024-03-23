@@ -276,7 +276,7 @@ public class InstructionExecutions {
      */
     public ExecutionResult execute_hlt(Computer computer, Instruction i) {
         // No action taken
-        return new ExecutionResult(computer.currentPcPlus1(), true);
+        return new ExecutionResult(computer.currentPcPlus1(), false);
     }
 
     /**
