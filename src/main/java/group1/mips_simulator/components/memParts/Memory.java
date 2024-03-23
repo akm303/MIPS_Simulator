@@ -14,6 +14,7 @@ import group1.mips_simulator.components.Config;
 import group1.mips_simulator.components.ROM;
 import group1.mips_simulator.components.Word;
 
+
 /**
  * A Memory class represents the entire memory lookup for our computer simulator.
  * <p>

@@ -1,4 +1,4 @@
-package group1.mips_simulator.components.instructionParts;
+package group1.mips_simulator.components.dataParts.instructionParts;
 
 import java.util.Objects;
 

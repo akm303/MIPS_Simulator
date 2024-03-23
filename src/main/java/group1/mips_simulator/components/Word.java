@@ -24,18 +24,26 @@ public class Word {
     //endregion
 
     //region getters
-    public short get() { return this.getShort(); }
+    public short get() {
+        return this.getShort();
+    }
 
-    public short getShort() {return value_;}
+    public short getShort() {
+        return value_;
+    }
 
-    public int getInt() {return (int) value_;}
+    public int getInt() {
+        return value_;
+    }
 
     //region setters
     public void set(short value_) {
         this.value_ = value_;
     }
 
-    public void set(Word value_) { this.set(value_.get()); }
+    public void set(Word value_) {
+        this.set(value_.get());
+    }
 
 
     public void set(int value) {

@@ -1,7 +1,6 @@
 package group1.mips_simulator;
 
-
-import group1.mips_simulator.components.instructionParts.instruction.InstructionFactory;
+import group1.mips_simulator.components.dataParts.instructionParts.InstructionFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -85,7 +84,7 @@ public class FileReaderSwing {
         String instructionInOctal = lineSplitIntoTokens.get(1); // 1st is instruction
 
         // Turn instruction octal into Instruction object
-        return new String[]{memoryLocationInOctal,instructionInOctal};
+        return new String[]{memoryLocationInOctal, instructionInOctal};
 
     }
 }

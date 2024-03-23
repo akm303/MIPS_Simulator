@@ -1,8 +1,7 @@
-package group1.mips_simulator.components.instructionParts.instruction;
+package group1.mips_simulator.components.dataParts.instructionParts;
 
 import group1.mips_simulator.components.Word;
-import group1.mips_simulator.components.instructionParts.Field;
-import group1.mips_simulator.components.instructionParts.OpCode;
+import group1.mips_simulator.components.dataParts.FieldProcessors.Field;
 
 import java.util.Arrays;
 import java.util.Objects;

@@ -3,12 +3,12 @@ package group1.mips_simulator.components;
 
 import group1.mips_simulator.components.cpuParts.CPU;
 import group1.mips_simulator.components.cpuParts.RomLoader;
+import group1.mips_simulator.components.dataParts.FieldProcessors.Field;
+import group1.mips_simulator.components.dataParts.instructionParts.Instruction;
+import group1.mips_simulator.components.dataParts.instructionParts.InstructionFactory;
+import group1.mips_simulator.components.dataParts.instructionParts.RXIA_Instruction;
 import group1.mips_simulator.components.instructionExecution.ExecutionResult;
 import group1.mips_simulator.components.instructionExecution.InstructionExecutions;
-import group1.mips_simulator.components.instructionParts.Field;
-import group1.mips_simulator.components.instructionParts.instruction.Instruction;
-import group1.mips_simulator.components.instructionParts.instruction.InstructionFactory;
-import group1.mips_simulator.components.instructionParts.instruction.RXIA_Instruction;
 import group1.mips_simulator.components.memParts.Memory;
 
 

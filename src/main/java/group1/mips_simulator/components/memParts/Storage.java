@@ -1,5 +1,6 @@
 package group1.mips_simulator.components.memParts;
 
+
 import group1.mips_simulator.components.Word;
 
 public class Storage {

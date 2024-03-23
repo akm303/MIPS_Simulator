@@ -1,8 +1,7 @@
-package group1.mips_simulator.components.instructionParts.FieldProcessors;
+package group1.mips_simulator.components.dataParts.FieldProcessors;
 
 import group1.mips_simulator.Utility;
-import group1.mips_simulator.components.instructionParts.Field;
-import group1.mips_simulator.components.instructionParts.OpCode;
+import group1.mips_simulator.components.dataParts.instructionParts.OpCode;
 
 import java.util.Vector;
 
@@ -33,7 +32,7 @@ public class FieldProcessor {
     public Vector<Field> getFieldsForOpCode(OpCode code, String binaryFields) {
         // Strip away all the non `1` or `0` characters
         binaryFields = binaryFields.replaceAll("[^10]", "");
-        assertBinLength(binaryFields);
+        assertBinLength(binaryFields,10);
         return switch (code.name.toLowerCase()) {
             // Miscellaneous Instructions, pg 12
             case "hlt" -> binaryToFields_Halt(binaryFields);
@@ -56,10 +55,28 @@ public class FieldProcessor {
         };
     }
 
+    /**
+     * [S exponent mantissa]
+     * [0 1234567  8. . .16]
+     */
+    public Vector<Field> getFieldsForFloat(String binaryFields) {
+        assertBinLength(binaryFields,15);
+        String sign = binaryFields.substring(0, 1);
+        String exp = binaryFields.substring(1, 7 + 1);
+        String mantissa = binaryFields.substring(8, 15 + 1);
 
-    protected void assertBinLength(String binaryFields) {
-        if (binaryFields.length() != 10) {
-            throw new IllegalArgumentException("Invalid fields provided. Expected 10 bits, instead got: " + binaryFields);
+        return new Vector<Field>(3) {{
+            add(new Field(Utility.binaryToShort(sign), 1));
+            add(new Field(Utility.binaryToShort(exp), 7));
+            add(new Field(Utility.binaryToShort(mantissa), 1));
+        }};
+
+    }
+
+
+    protected void assertBinLength(String binaryFields,int size) {
+        if (binaryFields.length() != size) {
+            throw new IllegalArgumentException("Invalid fields provided. Expected" + size + "bits, instead got: " + binaryFields);
         }
     }
 
@@ -68,7 +85,7 @@ public class FieldProcessor {
      * [01 23 4 5   9]
      */
     Vector<Field> binaryToFields_rxia(String binaryFields) {
-        assertBinLength(binaryFields);
+        assertBinLength(binaryFields,10);
         String rr = binaryFields.substring(0, 1 + 1);
         String xx = binaryFields.substring(2, 3 + 1);
         String i = binaryFields.substring(4, 4 + 1);
@@ -87,7 +104,7 @@ public class FieldProcessor {
      * [0  3 4    9]
      */
     Vector<Field> binaryToFields_Halt(String binaryFields) {
-        assertBinLength(binaryFields);
+        assertBinLength(binaryFields,10);
         String blank = binaryFields.substring(0, 3 + 1);
         String zeros = binaryFields.substring(4, 9 + 1);
 
@@ -102,7 +119,7 @@ public class FieldProcessor {
      * [0    5 6  9]
      */
     Vector<Field> binaryToFields_Trap(String binaryFields) {
-        assertBinLength(binaryFields);
+        assertBinLength(binaryFields,10);
         String blank = binaryFields.substring(0, 5 + 1);
         String trapCode = binaryFields.substring(6, 9 + 1);
 
@@ -117,7 +134,7 @@ public class FieldProcessor {
      * [01 23 4    9]
      */
     Vector<Field> binaryToFields_reg2reg(String binaryFields) {
-        assertBinLength(binaryFields);
+        assertBinLength(binaryFields,10);
         String rx = binaryFields.substring(0, 1 + 1);
         String ry = binaryFields.substring(2, 3 + 1);
         String blank = binaryFields.substring(4, 9 + 1);
@@ -134,7 +151,7 @@ public class FieldProcessor {
      * [01 2 3 45 6  9]
      */
     Vector<Field> binaryToFields_shiftRotate(String binaryFields) {
-        assertBinLength(binaryFields);
+        assertBinLength(binaryFields,10);
         String rr = binaryFields.substring(0, 1 + 1);
         String a = binaryFields.substring(2, 2 + 1);
         String r = binaryFields.substring(3, 3 + 1);
@@ -155,7 +172,7 @@ public class FieldProcessor {
      * [01 2 4 5   9]
      */
     Vector<Field> binaryToFields_io(String binaryFields) {
-        assertBinLength(binaryFields);
+        assertBinLength(binaryFields,10);
         String r = binaryFields.substring(0, 1 + 1);
         String blank = binaryFields.substring(2, 4 + 1);
         String deviceId = binaryFields.substring(5, 9 + 1);
