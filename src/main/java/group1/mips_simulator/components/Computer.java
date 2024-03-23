@@ -58,7 +58,7 @@ public class Computer {
 
         try {
             System.out.println("Executing instruction: " + nextInstruction.toString_Binary());
-            return this.executeInstruction(nextInstruction);
+            return !this.executeInstruction(nextInstruction);
         } catch (IllegalArgumentException e) {
             // If we run into some issue while running the program
             // For example if we see an unknown instruction
