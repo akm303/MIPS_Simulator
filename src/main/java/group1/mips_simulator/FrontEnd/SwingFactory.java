@@ -34,6 +34,7 @@ public class SwingFactory {
         result.put("OctInput", new JTextField());
 
         result.put("IPL", new JTextField());
+
         return result;
     }
 
@@ -52,12 +53,6 @@ public class SwingFactory {
         result.put("MAR", new JButton());
         result.put("MBR", new JButton());
         result.put("IR", new JButton());
-        // result.put("MFR", new JButton());
-//        result.put("Privileged", new JButton());
-//        result.put("CC (OUED)", new JButton());
-
-//        result.put("BinInput", new JButton());
-//        result.put("OctInput", new JButton());
 
         result.put("Load", new JButton("Load"));
         result.put("Load+", new JButton("Load+"));
@@ -69,6 +64,7 @@ public class SwingFactory {
         result.put("Halt", new JButton("Halt"));
 
         result.put("IPL", new JButton("IPL"));
+
         return result;
     }
 
@@ -207,7 +203,7 @@ public class SwingFactory {
             public void keyReleased(KeyEvent e) {
                 String newText = octalInput.getText();
                 if (!Utility.isValidOctal(newText)) {
-                    octalInput.setBackground(Color.RED);
+                    octalInput.setBackground(Color.PINK);
                     binInput.setText("");
                     return;
                 }
@@ -239,7 +235,7 @@ public class SwingFactory {
             public void keyReleased(KeyEvent e) {
                 String newText = binInput.getText();
                 if (!Utility.isValidBinary(newText)) {
-                    binInput.setBackground(Color.RED);
+                    binInput.setBackground(Color.PINK);
                     octalInput.setText("");
                     return;
                 }

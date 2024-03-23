@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class SwingConsole {
 
-    public static final int WIDTH = 1100;
+    public static final int WIDTH = 1000;
     public static final int HEIGHT = 550;
 
     public static Computer computer = new Computer();
@@ -17,6 +17,10 @@ public class SwingConsole {
 
     public static HashMap<String, JTextField> textFields = new HashMap<>();
     public static HashMap<String, JButton> buttonFields = new HashMap<>();
+
+    static ConsoleKeyboardFrame keyboardGui;
+    static ConsolePrinterFrame printerGui;
+    static CacheFrame cacheGui;
 
     public static void main(String[] args) {
         JFrame f = new JFrame("Mips Computer Front Panel");
@@ -36,8 +40,13 @@ public class SwingConsole {
         bfs.setupAllFunctionButtons(buttonFields, computer);
         bfs.SetUpIplButtons(buttonFields, computer);
 
+
         f.setVisible(true);
         redraw();
+
+        keyboardGui = new ConsoleKeyboardFrame(f.getX() + WIDTH, f.getY());
+        printerGui = new ConsolePrinterFrame(f.getX() + WIDTH, f.getY() + 100);
+        cacheGui = new CacheFrame(f.getX() + WIDTH, f.getY() + 100 + ConsolePrinterFrame.HEIGHT);
     }
 
     public static void redraw() {

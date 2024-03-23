@@ -164,7 +164,7 @@ public class ButtonFunctions {
             SwingConsole.textFields.get("IPL").setBackground(Color.WHITE);
         } catch (IOException e) {
             System.out.println("Encountered an error when reading file: " + e);
-            SwingConsole.textFields.get("IPL").setBackground(Color.RED);
+            SwingConsole.textFields.get("IPL").setBackground(Color.PINK);
         }
     }
 

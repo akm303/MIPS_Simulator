@@ -1,6 +1,5 @@
 package group1.mips_simulator.components;
 
-import group1.mips_simulator.FileReader;
 import group1.mips_simulator.FileReaderSwing;
 
 import java.io.File;
