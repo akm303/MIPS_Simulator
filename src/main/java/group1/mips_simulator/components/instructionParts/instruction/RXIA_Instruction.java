@@ -2,7 +2,6 @@ package group1.mips_simulator.components.instructionParts.instruction;
 
 import group1.mips_simulator.components.instructionParts.Field;
 import group1.mips_simulator.components.instructionParts.OpCode;
-import group1.mips_simulator.components.instructionParts.instruction.Instruction;
 
 import java.util.Vector;
 

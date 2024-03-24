@@ -6,4 +6,6 @@ public class Config {
     public static final int GPR_COUNT = 4; // 4 general purpose registers
     public static final int IXR_COUNT = 3; // 3 index registers
     public static final short WORD_SIZE = 16;
+
+    public static final int MAX_16_BIT_VALUE = 0b1111_1111_1111_1111;
 }
