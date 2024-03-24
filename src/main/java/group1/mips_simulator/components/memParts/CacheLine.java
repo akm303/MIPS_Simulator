@@ -6,7 +6,8 @@ import group1.mips_simulator.components.memParts.Storage;
 
 
 public class CacheLine{
-    // one line has 8 words
+    // one line has 8 words;
+    // we need a block offset of 3 (8 words = 2^3 words)
     // tag is    vvv  for
     // octal [88 888 8]
 
