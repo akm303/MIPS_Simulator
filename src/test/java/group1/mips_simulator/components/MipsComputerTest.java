@@ -121,8 +121,6 @@ class ComputerTest {
                     testComputer.memory.read(instructions.get(i)[0]) // equals the computer's memory value (as a short)
             );
         }
-
-
-
     }
+
 }

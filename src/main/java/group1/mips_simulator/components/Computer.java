@@ -9,6 +9,7 @@ import group1.mips_simulator.components.instructionParts.Field;
 import group1.mips_simulator.components.instructionParts.instruction.Instruction;
 import group1.mips_simulator.components.instructionParts.instruction.InstructionFactory;
 import group1.mips_simulator.components.instructionParts.instruction.RXIA_Instruction;
+import group1.mips_simulator.components.memParts.Cache;
 import group1.mips_simulator.components.memParts.Memory;
 
 
@@ -17,10 +18,12 @@ import group1.mips_simulator.components.memParts.Memory;
  * being discussed in class.
  */
 public class Computer {
-
-    public Memory memory;
-    public CPU cpu;
-    public ROM rom = new ROM();
+    //computer parts
+    public Memory memory;       // computer memory
+    public Cache I_cache;       // instruction cache
+    public Cache D_cache;       // data cache
+    public CPU cpu;             // central processing unit
+    public ROM rom = new ROM(); // read-only-memory
 
     public Computer() {
         cpu = new CPU();
