@@ -45,6 +45,22 @@ class UtilityTest {
     }
 
     @Test
+    void intTo32BitString() {
+        assertEquals("00000000000000000000000000000000", Utility.intTo32BitString(0));
+        assertEquals("00000000000000000000000000000001", Utility.intTo32BitString(1));
+        assertEquals("11111111111111111111111111111111", Utility.intTo32BitString(-1));
+        assertEquals("00000000000000000000000000001000", Utility.intTo32BitString(8));
+        assertEquals("11111111111111111111111111111000", Utility.intTo32BitString(-8));
+    }
+
+    @Test
+    void binaryNot() {
+        assertEquals("11111111", Utility.binaryNot("00000000"));
+        assertEquals("00000000", Utility.binaryNot("11111111"));
+        assertEquals("01010101", Utility.binaryNot("10101010"));
+    }
+
+    @Test
     void instructionToShort() {
 //        Field f1 = new Field(0);
 //        Instruction i1 = new Instruction();

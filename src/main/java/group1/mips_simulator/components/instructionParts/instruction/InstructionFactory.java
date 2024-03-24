@@ -54,7 +54,7 @@ public class InstructionFactory {
                     // Floating Point Arithmetic, pg 21
                     "fadd", "fsub", "vadd", "vsub", "cnvrt", "ldfr", "stfr" -> new RXIA_Instruction(code, fields);
             // Register to Register instructions, pg 17
-            case "mlt", "dvd", "trr", "and", "orr", "not" -> new Instruction(code, fields);
+            case "mlt", "dvd", "trr", "and", "orr", "not" -> new Reg2RegInstruction(code, fields);
             // Shift/ Rotate operations, pg 18
             case "src", "rrc" -> new Instruction(code, fields);
             // I/O operations, pg 20
