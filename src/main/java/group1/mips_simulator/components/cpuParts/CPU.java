@@ -31,14 +31,12 @@ handling the error in your system by generating a machine fault.
 //Readme ^
 
 package group1.mips_simulator.components.cpuParts;
-import group1.mips_simulator.components.instructionParts.InstructionSet;
 
 public class CPU {
     public RegisterFile regfile;
     public RomLoader romLoader;
-    InstructionSet isa;
 
-    public CPU(){
+    public CPU() {
         regfile = new RegisterFile();
     }
 

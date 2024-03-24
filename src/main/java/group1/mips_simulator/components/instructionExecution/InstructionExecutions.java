@@ -6,7 +6,6 @@ import group1.mips_simulator.components.Word;
 import group1.mips_simulator.components.cpuParts.ConditionCode;
 import group1.mips_simulator.components.cpuParts.Register;
 import group1.mips_simulator.components.instructionParts.Field;
-import group1.mips_simulator.components.instructionParts.instruction.IO_Instruction;
 import group1.mips_simulator.components.instructionParts.instruction.Instruction;
 import group1.mips_simulator.components.instructionParts.instruction.RXIA_Instruction;
 
@@ -14,6 +13,8 @@ import group1.mips_simulator.components.instructionParts.instruction.RXIA_Instru
  * A class that holds all the functions for actually executing an Instruction object
  */
 public class InstructionExecutions {
+
+    ErrorHandling errorHandling = new ErrorHandling();
 
     /**
      * L0DR r, x, address[,I]
@@ -311,5 +312,67 @@ public class InstructionExecutions {
         return new ExecutionResult(targetAddress);
     }
 
+    /**
+     * AMR r, x, address[,I]
+     * 16(octal)
+     * Add Memory To Register, r = 0..3
+     * r<− c(r) + c(EA)
+     */
+    public ExecutionResult execute_amr(Computer computer, RXIA_Instruction i) {
+        errorHandling.resetCC(computer);
 
+        Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
+        short ea = computer.calculateEA(i);
+        short newValue = errorHandling.detectOverUnderflow(computer, targetReg.read() + ea);
+        targetReg.write(newValue);
+        return new ExecutionResult(computer.currentPcPlus1());
+    }
+
+    /**
+     * SMR r, x, address[,I]
+     * 17(octal)
+     * Subtract Memory From Register, r = 0..3
+     * r <− c(r) – c(EA)
+     */
+    public ExecutionResult execute_smr(Computer computer, RXIA_Instruction i) {
+        errorHandling.resetCC(computer);
+
+        Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
+        short ea = computer.calculateEA(i);
+        short newValue = errorHandling.detectOverUnderflow(computer, targetReg.read() - ea);
+        targetReg.write(newValue);
+        return new ExecutionResult(computer.currentPcPlus1());
+    }
+
+    /**
+     * AIR r, immed
+     * 17(octal)
+     * Subtract Memory From Register, r = 0..3
+     * r <− c(r) – c(EA)
+     */
+    public ExecutionResult execute_air(Computer computer, RXIA_Instruction i) {
+        errorHandling.resetCC(computer);
+
+        Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
+        short immediate = i.getA().value; //the Address portion is considered to be the Immediate value
+        short newValue = errorHandling.detectOverUnderflow(computer, targetReg.read() + immediate);
+        targetReg.write(newValue);
+        return new ExecutionResult(computer.currentPcPlus1());
+    }
+
+    /**
+     * SIR r, immed
+     * 17(octal)
+     * Subtract Memory From Register, r = 0..3
+     * r <− c(r) – c(EA)
+     */
+    public ExecutionResult execute_sir(Computer computer, RXIA_Instruction i) {
+        errorHandling.resetCC(computer);
+
+        Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
+        short immediate = i.getA().value; //the Address portion is considered to be the Immediate value
+        short newValue = errorHandling.detectOverUnderflow(computer, targetReg.read() - immediate);
+        targetReg.write(newValue);
+        return new ExecutionResult(computer.currentPcPlus1());
+    }
 }

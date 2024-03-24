@@ -128,7 +128,10 @@ public class Computer {
             case "sob" -> exe.execute_sob(this, (RXIA_Instruction) instruction);
             case "jge" -> exe.execute_jge(this, (RXIA_Instruction) instruction);
             // Arithmetic and Logical Instructions
-            // TODO
+            case "amr" -> exe.execute_amr(this, (RXIA_Instruction) instruction);
+            case "smr" -> exe.execute_smr(this, (RXIA_Instruction) instruction);
+            case "air" -> exe.execute_air(this, (RXIA_Instruction) instruction);
+            case "sir" -> exe.execute_sir(this, (RXIA_Instruction) instruction);
             // Register to Register Instructions
             // TODO
             // Shift/Rotate Operations
