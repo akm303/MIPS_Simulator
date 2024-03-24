@@ -78,4 +78,13 @@ public class ConsoleKeyboardFrame {
         this.userTextInput.setBackground(Color.WHITE);
     }
 
+    public Character getNextChar() {
+        if (!userDone || this.userTextInput.getText().isEmpty()) {
+            return null;
+        }
+        String currentText = this.userTextInput.getText();
+        Character result = currentText.charAt(0); // Grab the 0th character
+        this.userTextInput.setText(currentText.substring(1)); // strip it from the remaining string
+        return result;
+    }
 }

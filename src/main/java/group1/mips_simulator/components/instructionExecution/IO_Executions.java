@@ -26,8 +26,13 @@ public class IO_Executions {
         }
         // Else target is valid
         InDevice targetDevice = (InDevice) computer.getDriver(Config.CONSOLE_KEYBOARD_DEVID);
-        char fromDevice = targetDevice.readCharacter();
-
+        Character fromDevice = targetDevice.readCharacter();
+        if (fromDevice == null) {
+            // Waiting for user to input text
+            // Effectively halt
+            return new ExecutionResult(computer.currentPC(), false);
+        }
+        // Else it's a valid character
         // Put the character into the target register
         targetReg.write(Utility.charToShort(fromDevice));
 
@@ -49,7 +54,7 @@ public class IO_Executions {
             throw new IllegalArgumentException("Attempted to run an OUT instruction on an invalid device id target: " + targetDeviceID);
         }
         // Else target is valid
-        OutDevice targetDevice = (OutDevice) computer.getDriver(Config.CONSOLE_KEYBOARD_DEVID);
+        OutDevice targetDevice = (OutDevice) computer.getDriver(Config.CONSOLE_PRINTER_DEVID);
 
         // Get the character from the register
         char outputCharacter = Utility.shortToChar(regWithChar.read());

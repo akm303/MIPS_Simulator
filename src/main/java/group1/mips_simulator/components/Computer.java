@@ -6,8 +6,10 @@ import group1.mips_simulator.components.deviceParts.DeviceDriver;
 import group1.mips_simulator.components.deviceParts.KeyboardDriver;
 import group1.mips_simulator.components.deviceParts.PrinterDriver;
 import group1.mips_simulator.components.instructionExecution.ExecutionResult;
+import group1.mips_simulator.components.instructionExecution.IO_Executions;
 import group1.mips_simulator.components.instructionExecution.InstructionExecutions;
 import group1.mips_simulator.components.instructionParts.Field;
+import group1.mips_simulator.components.instructionParts.instruction.IO_Instruction;
 import group1.mips_simulator.components.instructionParts.instruction.Instruction;
 import group1.mips_simulator.components.instructionParts.instruction.InstructionFactory;
 import group1.mips_simulator.components.instructionParts.instruction.RXIA_Instruction;
@@ -103,6 +105,7 @@ public class Computer {
      */
     public boolean executeInstruction(Instruction instruction) {
         InstructionExecutions exe = new InstructionExecutions();
+        IO_Executions io_exe = new IO_Executions();
         System.out.println("Running instruction op code: " + instruction.opCode.name);
         ExecutionResult executionResult = switch (instruction.opCode.name.toLowerCase()) {
             // Miscellaneous Instructions
@@ -131,7 +134,8 @@ public class Computer {
             // Shift/Rotate Operations
             // TODO
             // I/O Operations
-            // TODO
+            case "in" -> io_exe.execute_in(this, (IO_Instruction) instruction);
+            case "out" -> io_exe.execute_out(this, (IO_Instruction) instruction);
             // Floating Point Instructions/ Vector Operations
             // TODO
             default ->

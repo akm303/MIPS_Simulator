@@ -1,5 +1,6 @@
 package group1.mips_simulator.components.deviceParts;
 
+import group1.mips_simulator.FrontEnd.SwingConsole;
 import group1.mips_simulator.components.Config;
 
 public class PrinterDriver implements OutDevice, DeviceDriver {
@@ -8,8 +9,8 @@ public class PrinterDriver implements OutDevice, DeviceDriver {
 
     @Override
     public void writeCharacter(char c) {
-        // TODO:
-        throw new IllegalArgumentException("Not implemented yet");
+        System.out.println("Writing character: " + c);
+        SwingConsole.printerGui.addCharacter(c);
     }
 
     @Override
