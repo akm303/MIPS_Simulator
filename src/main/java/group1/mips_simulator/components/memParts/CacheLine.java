@@ -5,20 +5,22 @@ import group1.mips_simulator.components.Config;
 import group1.mips_simulator.components.memParts.Storage;
 
 
-public class CacheLine{
+public class CacheLine extends Storage{
     // one line has 8 words;
     // we need a block offset of 3 (8 words = 2^3 words)
     // tag is    vvv  for
     // octal [88 888 8]
 
-    int blockSize = Config.ENTRIES_PER_BLOCK;
-    public Word[] entries; //8 words per block, each word is an entry
+//    int blockSize = Config.ENTRIES_PER_BLOCK;
+//    public Word[] entries; //8 words per block, each word is an entry
 
     public CacheLine(int memAddr, Memory memory){
-        int startOfBlock = memAddr - (memAddr % blockSize);
-        entries = new Word[blockSize];
+        super(Config.ENTRIES_PER_BLOCK);
 
-        for(int i = 0; i < entries.length; i++){
+        int startOfBlock = memAddr - (memAddr % Config.ENTRIES_PER_BLOCK);
+//        entries = new Word[blockSize];
+
+        for(int i = 0; i < data.length; i++){
             // set entry at block index i to be
             // memory's entry at address i
             setEntry(i, memory.get(startOfBlock + i));
@@ -28,7 +30,7 @@ public class CacheLine{
     public Word getEntry(int addressLocation){
         //todo: write unit tests
         int blockIdx = getIndex(addressLocation);
-        return entries[blockIdx];
+        return data[blockIdx];
     }
 
     public void setEntry(int addressLocation, Word entry){
@@ -38,7 +40,7 @@ public class CacheLine{
         // to the same block of memory
         // otherwise need to do a second write directly to memory, within this function
         int blockIdx = getIndex(addressLocation);
-        entries[blockIdx] = entry;
+        data[blockIdx] = entry;
     }
 
 

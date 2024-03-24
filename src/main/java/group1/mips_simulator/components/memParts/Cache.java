@@ -30,25 +30,29 @@ public class Cache extends Memory{
         memory = _memory;
     }
 
+    public void addLine(short dataAddr){
+        //get block of memory within which data is, and create a cache line to be added to the cache
+        short tag = getTag(dataAddr);
+        cacheQueue.add(tag); //add the new tag to the cache
+        cacheLines.put(tag, new CacheLine(dataAddr, memory));
+    }
+
+    public void removeLine(){
+        // remove the oldest line from cache
+        Short tagToRemove = cacheQueue.poll(); //remove top CacheLine from Cache
+        cacheLines.remove(tagToRemove); //remove that tag from the lines Map
+    }
+
     public CacheLine getLineFromCache(short dataAddr){
         // get the full line of data at that line number
         CacheLine returnLine;
-
         short tag = getTag(dataAddr);
 
         if(cacheLines.containsKey(tag))
             returnLine = cacheLines.get(tag);
         else{
-            if(cacheQueue.size() < cacheSize) { //if space in the cache
-                cacheQueue.add(tag);
-                cacheLines.put(tag, new CacheLine(dataAddr,memory));
-            }
-            else{ //else no more space, must replace a line
-                Short tagToRemove = cacheQueue.poll(); //remove top CacheLine from Cache
-                cacheLines.remove(tagToRemove); //remove that tag from the lines Map
-                cacheQueue.add(tag); //add the new tag to the cache
-                cacheLines.put(tag, new CacheLine(dataAddr, memory));
-            }
+            if(cacheQueue.size() < cacheSize) { addLine(dataAddr); }
+            else{ removeLine(); }
             returnLine = cacheLines.get(tag);
         }
         return returnLine;
@@ -72,7 +76,8 @@ public class Cache extends Memory{
 
     public short getTag(short data){
         // get tag bits of memory location references.
-        return (short)((data & 0xFFF8)>>3);
+        int tagMask = 0x0FF8;
+        return (short)((data & tagMask)>>3);
     }
 
 }
