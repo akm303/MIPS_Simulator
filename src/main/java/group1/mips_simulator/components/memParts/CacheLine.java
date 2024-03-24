@@ -45,8 +45,10 @@ public class CacheLine{
     public int getIndex(int addressLocation){
         //todo: write unit tests
         // also pretty sure its not right, but need to check spec
-        return (addressLocation | 0b111);
+        return (addressLocation & 0b111);
     }
+
+
 
 
 

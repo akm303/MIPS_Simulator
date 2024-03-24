@@ -34,7 +34,7 @@ public class Cache extends Memory{
         // get the full line of data at that line number
         CacheLine returnLine;
 
-        short tag = getLineTag(dataAddr);
+        short tag = getTag(dataAddr);
 
         if(cacheLines.containsKey(tag))
             returnLine = cacheLines.get(tag);
@@ -70,11 +70,9 @@ public class Cache extends Memory{
 //        return new CacheLine(dataAddr,memory);
 //    }
 
-    public short getLineTag(short dataAddress){
-        //todo: get tag bits of memory location references.
-        // return a short integer of it
-        short tag = (short)((dataAddress & 0xFFF8)>>3);
-        return tag;
+    public short getTag(short data){
+        // get tag bits of memory location references.
+        return (short)((data & 0xFFF8)>>3);
     }
 
 }
