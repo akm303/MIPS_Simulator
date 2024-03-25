@@ -25,10 +25,12 @@ public class Memory extends Storage {
     private int size_;
 
     public Memory() {
+        // init memory with standard size from config
         this(Config.MEM_SIZE);
     }
 
     public Memory(int size) {
+        // init memory with custom size
         super(size);
     }
 
@@ -82,7 +84,6 @@ public class Memory extends Storage {
 
 
 
-
     /* write() will write the short data to memory */
     public void write(short address, short valueToWrite) {
         set(address,new Word(valueToWrite));
@@ -94,6 +95,8 @@ public class Memory extends Storage {
     }
 
 
-
+    public int size(){
+        return this.size_;
+    }
 
 }

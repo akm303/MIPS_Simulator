@@ -1,5 +1,6 @@
 package group1.mips_simulator.components.memParts;
 
+import group1.mips_simulator.Utility;
 import  group1.mips_simulator.components.Config;
 
 import java.util.*;
@@ -16,25 +17,24 @@ public class Cache extends Memory{
     Fully associative cache means we can write to any line in cache, and we do so by writing over the oldest line first
     (i.e. FIFO)
      */
-    Memory memory; //reference to memory that cache is linked to
-    int cacheSize = Config.CACHE_LINES;
 
+    //data
+    int cacheSize = Config.CACHE_LINES;
+    Memory memory; //reference to memory that cache is linked to
     //data structures
     Queue<Short> cacheQueue; //going to use list as a queue for now
-    Map<Short,CacheLine> cacheLines; //
+    Map<Short,CacheLine> cacheLines; //<tag:block>
 
-    //    CacheLine[] lines = new CacheLine[cacheSize];
 
     public Cache(Memory _memory){
         //cache has a memory it references
         memory = _memory;
     }
 
-    public void addLine(short dataAddr){
-        //get block of memory within which data is, and create a cache line to be added to the cache
-        short tag = getTag(dataAddr);
+    public void addLine(short tag){
+        //get block of memory where tag is, create a cache block to be added to the cache
         cacheQueue.add(tag); //add the new tag to the cache
-        cacheLines.put(tag, new CacheLine(dataAddr, memory));
+        cacheLines.put(tag, new CacheLine(tag, memory));
     }
 
     public void removeLine(){
@@ -43,7 +43,8 @@ public class Cache extends Memory{
         cacheLines.remove(tagToRemove); //remove that tag from the lines Map
     }
 
-    public CacheLine getLineFromCache(short dataAddr){
+
+    public CacheLine getLine(short dataAddr){
         // get the full line of data at that line number
         CacheLine returnLine;
         short tag = getTag(dataAddr);
@@ -51,33 +52,42 @@ public class Cache extends Memory{
         if(cacheLines.containsKey(tag))
             returnLine = cacheLines.get(tag);
         else{
-            if(cacheQueue.size() < cacheSize) { addLine(dataAddr); }
+            if(cacheQueue.size() < cacheSize) { addLine(tag); }
             else{ removeLine(); }
             returnLine = cacheLines.get(tag);
         }
         return returnLine;
     }
 
-
-//        CacheLine tagLine = new CacheLine(tag,memory); //get cache line with that tag from memory
-//        // if tag is in cache
-//        for(int i = 0; i < cacheQueue.size(); i++){
-//
-//        }
-
-//    }
-
-
-//    public CacheLine getLineFromMemory(short dataAddr, Memory memory){
-//        short tag = getLineTag(dataAddr);
-//        cacheQueue.add(tag);
-//        return new CacheLine(dataAddr,memory);
-//    }
-
-    public short getTag(short data){
-        // get tag bits of memory location references.
-        int tagMask = 0x0FF8;
-        return (short)((data & tagMask)>>3);
+    public String printLine(short tag){
+        StringBuilder sb = new StringBuilder();
+        sb.append(tag);
+        CacheLine l = this.getLine(tag);
+        sb.append(l.blockString());
+        return sb.toString();
     }
+
+
+    // getter - fields
+    public short getTag(short address){
+        // get tag bits from memory location references.
+        int mask = 0x0FF8; //mask for line tag
+        return (short)((address & mask)>>3);
+    }
+
+
+    public String getTag_octalString(short address){
+        short tag = getTag(address);
+        return Utility.shortToOctalString(tag,3);
+    }
+
+    public short getEntry(int address){
+        // get Word indexing bits from memory location references.
+        int mask = 0b111; //mask for byte-indexing
+        return (short)(address & mask);
+    }
+
+
+
 
 }

@@ -109,6 +109,13 @@ public class Utility {
         return sb.toString();
     }
 
+    public static String shortToOctalString(short value,int size){
+        String rstring = binaryStrToOctalStr(shortToBinaryString(value,16));
+        while(rstring.length() < size)
+            rstring = "0" + rstring;
+        return rstring;
+    }
+
     public static String shortToBinaryString_Pretty(short value, int minSize) {
         int bitMask = 0b1111_1111_1111_1111;
         if (minSize == 4) {
@@ -140,5 +147,6 @@ public class Utility {
         }
         return rVector;
     }
+
 
 }
