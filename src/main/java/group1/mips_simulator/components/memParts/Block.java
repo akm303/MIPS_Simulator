@@ -1,9 +1,8 @@
 package group1.mips_simulator.components.memParts;
 
 import group1.mips_simulator.components.Config;
-import group1.mips_simulator.components.Word;
 
-public class CacheBlock extends Memory{
+public class Block extends Memory{
     /**
      *  The unit of memory for each line of cache.
      *
@@ -16,7 +15,7 @@ public class CacheBlock extends Memory{
      */
     private final int tag;
 
-    public CacheBlock(int tag_, Memory memory_){
+    public Block(int tag_, Memory memory_){
         super(Config.ENTRIES_PER_BLOCK); // 8 words per block
         tag = tag_;
         readBlockFromMemory(memory_);

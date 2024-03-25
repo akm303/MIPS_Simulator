@@ -25,7 +25,7 @@ public class Cache{
 
     //data structures
     Queue<Short> cacheQueue; //going to use list as a queue for now
-    Map<Short,CacheBlock> cacheBlocks; //<tag:block>
+    Map<Short, Block> cacheBlocks; //<tag:block>
 
 
     // CONSTRUCTOR
@@ -39,7 +39,7 @@ public class Cache{
     public void addLine(short tag){
         //get block of memory based on tag, create a cache block to be added to the cache
         cacheQueue.add(tag); //add the new tag to the cache
-        cacheBlocks.put(tag, new CacheBlock(tag, memory));
+        cacheBlocks.put(tag, new Block(tag, memory));
     }
 
     public void removeLine(){
@@ -51,15 +51,15 @@ public class Cache{
         Short tagToRemove = cacheQueue.poll();
         if(tagToRemove == null) //redundant, will never remove a block unless there are already 16 lines in cache
             return;
-        CacheBlock blockToRemove = getBlock(tagToRemove);
+        Block blockToRemove = getBlock(tagToRemove);
         blockToRemove.writeBlockToMemory(memory); //write back
         cacheBlocks.remove(tagToRemove);
     }
 
     // BLOCK ACCESS
-    public CacheBlock getBlock(short tag){
+    public Block getBlock(short tag){
         // get the block of data from memory corresponding to that tag, create a new block
-        CacheBlock returnBlock;
+        Block returnBlock;
         if(cacheBlocks.containsKey(tag))
             returnBlock = cacheBlocks.get(tag);
         else{
@@ -74,14 +74,14 @@ public class Cache{
     public Word getWordAtAddress(short address){
         short tag = calculateTag(address);
         short offset = calculateOffset(address);
-        CacheBlock block = getBlock(tag);
+        Block block = getBlock(tag);
         return block.get(offset);
     }
 
     public void setWordAtAddress(short address, Word value){
         short tag = calculateTag(address);
         short offset = calculateOffset(address);
-        CacheBlock block = getBlock(tag);
+        Block block = getBlock(tag);
         block.set(offset,value);
     }
 
