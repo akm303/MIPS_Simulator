@@ -9,6 +9,7 @@ import group1.mips_simulator.components.instructionParts.Field;
 import group1.mips_simulator.components.instructionParts.instruction.Instruction;
 import group1.mips_simulator.components.instructionParts.instruction.InstructionFactory;
 import group1.mips_simulator.components.instructionParts.instruction.RXIA_Instruction;
+import group1.mips_simulator.components.instructionParts.instruction.Reg2RegInstruction;
 import group1.mips_simulator.components.memParts.Memory;
 
 
@@ -105,7 +106,12 @@ public class Computer {
             // Arithmetic and Logical Instructions
             // TODO
             // Register to Register Instructions
-            // TODO
+            case "mlt" -> exe.execute_mlt(this, (Reg2RegInstruction) instruction);
+            case "dvd" -> exe.execute_DVD(this, (Reg2RegInstruction) instruction);
+            case "trr" -> exe.execute_trr(this, (Reg2RegInstruction) instruction);
+            case "and" -> exe.execute_and(this, (Reg2RegInstruction) instruction);
+            case "orr" -> exe.execute_orr(this, (Reg2RegInstruction) instruction);
+            case "not" -> exe.execute_not(this, (Reg2RegInstruction) instruction);
             // Shift/Rotate Operations
             // TODO
             // I/O Operations

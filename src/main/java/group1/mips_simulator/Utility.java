@@ -128,6 +128,18 @@ public class Utility {
     }
 
 
+    public static String binaryNot(String binaryValue) {
+        StringBuilder result = new StringBuilder();
+        for(char c : binaryValue.toCharArray()) {
+            if(c == '0') {
+                result.append('1');
+            } else if (c == '1') {
+                result.append('0');
+            }
+        }
+        return result.toString();
+    }
+
     public static Vector<short[]> octalStringVector_ToShort(Vector<String[]> stringVector) {
         // convert Vector of two octal strings into a Vector of two shorts
         Vector<short[]> rVector = new Vector<>();
@@ -139,6 +151,15 @@ public class Utility {
             rVector.add(line);
         }
         return rVector;
+    }
+
+
+    public static String intTo32BitString(int value) {
+        StringBuilder result = new StringBuilder(Integer.toBinaryString(value));
+        while (result.length() < 32) {
+            result.insert(0, '0');
+        }
+        return result.toString();
     }
 
 }
