@@ -28,6 +28,11 @@ public class Computer {
         memory = new Memory(Config.MEM_SIZE);
     }
 
+    public void reset() {
+        memory.reset();
+        cpu.reset();
+    }
+
     public void loadROM(ROM rom_) {
         rom = rom_;
         cpu.romLoader = new RomLoader();
@@ -58,6 +63,7 @@ public class Computer {
         Instruction nextInstruction = factory.buildInstruction_fromShort(this.cpu.regfile.getIR().read());
 
         try {
+            System.out.println("-----------------------");
             System.out.println("Executing instruction: " + nextInstruction.toString_Binary());
             return this.executeInstruction(nextInstruction);
         } catch (IllegalArgumentException e) {

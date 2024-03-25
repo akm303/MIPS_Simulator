@@ -36,10 +36,15 @@ import group1.mips_simulator.components.instructionParts.InstructionSet;
 public class CPU {
     public RegisterFile regfile;
     public RomLoader romLoader;
-    InstructionSet isa;
 
     public CPU(){
         regfile = new RegisterFile();
+    }
+
+    public void reset() {
+        regfile.reset();
+        // Rom loader has no state to reset
+        // romLoader.reset();
     }
 
 }
