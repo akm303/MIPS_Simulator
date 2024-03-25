@@ -4,9 +4,15 @@ import group1.mips_simulator.components.Config;
 import group1.mips_simulator.components.Word;
 
 public class CacheBlock extends Memory{
-    /*
-    Is the actual unit of memory for the cache
-    Each line has a cache block
+    /**
+     *  The unit of memory for each line of cache.
+     *
+     *  To Access data from cache block,
+     *  pass the offset bits of a data address,
+     *  rather than the data address itself.
+     *
+     *  get/set/read/write access will operate the same as
+     *  any other memory object, just
      */
     private final int tag;
 
@@ -16,6 +22,7 @@ public class CacheBlock extends Memory{
         readBlockFromMemory(memory_);
     }
 
+
     public void readBlockFromMemory(Memory memory_){
         int startOfBlock = tag << 3;
         for(short i = 0; i < data.length; i++){
@@ -23,7 +30,6 @@ public class CacheBlock extends Memory{
             write(i, memory_.read(startOfBlock + i));
         }
     }
-
 
     public void writeBlockToMemory(Memory memory_){
         // write every value of the block to memory
@@ -41,8 +47,6 @@ public class CacheBlock extends Memory{
         }
         return sb.toString();
     }
-
-
 
 }
 
