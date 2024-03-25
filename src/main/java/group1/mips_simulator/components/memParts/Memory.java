@@ -23,16 +23,15 @@ import group1.mips_simulator.components.Word;
 public class Memory extends Storage {
     private int size_;
 
-    public Memory() {
-        // init memory with standard size from config
-        this(Config.MEM_SIZE);
-    }
-
     public Memory(int size) {
         // init memory with custom size
         super(size);
     }
 
+    public Memory() {
+        // init memory with standard size from config
+        this(Config.MEM_SIZE);
+    }
 
     // GETTERS
     /* get() will get the Value from memory */

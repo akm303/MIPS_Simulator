@@ -13,21 +13,23 @@ public class CacheBlock extends Memory{
     public CacheBlock(int tag_, Memory memory_){
         super(Config.ENTRIES_PER_BLOCK); // 8 words per block
         tag = tag_;
+        readBlockFromMemory(memory_);
     }
 
-    public void readBlockFromMemory(Memory memory){
+    public void readBlockFromMemory(Memory memory_){
         int startOfBlock = tag << 3;
         for(short i = 0; i < data.length; i++){
             // set entry at block index i to be memory's entry at address i
-            write(i, memory.read(startOfBlock + i));
+            write(i, memory_.read(startOfBlock + i));
         }
     }
 
-    public void writeBlockToMemory(Memory memory){
+
+    public void writeBlockToMemory(Memory memory_){
         // write every value of the block to memory
         short startOfBlock = (short)(tag << 3);
         for(short i = 0; i < data.length; i++){
-            memory.write((short)(startOfBlock + i),read(i));
+            memory_.write((short)(startOfBlock + i),read(i));
         }
     }
 

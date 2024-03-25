@@ -28,48 +28,38 @@ public class Cache{
     Map<Short,CacheBlock> cacheBlocks; //<tag:block>
 
 
+    // CONSTRUCTOR
     public Cache(Memory memory_){
         //cache has a memory it references
         memory = memory_;
     }
 
 
-
-
-
+    // LINE OPERATIONS
     public void addLine(short tag){
-        //get block of memory where tag is, create a cache block to be added to the cache
+        //get block of memory based on tag, create a cache block to be added to the cache
         cacheQueue.add(tag); //add the new tag to the cache
         cacheBlocks.put(tag, new CacheBlock(tag, memory));
     }
 
     public void removeLine(){
-        // remove the oldest line from cache
-        Short tagToRemove = cacheQueue.poll();              //remove top CacheLine from Cache
-        CacheBlock blockToRemove = getBlock(tagToRemove);   //get block to be removed, initiate write-back
-        blockToRemove.writeBlockToMemory(memory);           //write self back to memory
-        cacheBlocks.remove(tagToRemove);                    //remove that tag from the lines Map
+        /** remove the oldest line from cache
+         1. get the oldest tag from Queue,
+         2. write the corresponding block back to memory
+         3. then delete that block
+         */
+        Short tagToRemove = cacheQueue.poll();
+        if(tagToRemove == null) //redundant, will never remove a block unless there are already 16 lines in cache
+            return;
+        CacheBlock blockToRemove = getBlock(tagToRemove);
+        blockToRemove.writeBlockToMemory(memory); //write back
+        cacheBlocks.remove(tagToRemove);
     }
 
-    public Word getWordAtAddress(short address){
-        short tag = calculateTag(address);
-        short offset = calculateOffset(address);
-        CacheBlock block = getBlock(tag);
-        return block.get(tag);
-    }
-
-    public void setWordAtAddress(short address,Word value){
-        short tag = calculateTag(address);
-        short offset = calculateOffset(address);
-        CacheBlock block = getBlock(tag);
-        block.set(tag,value);
-    }
-
-
+    // BLOCK ACCESS
     public CacheBlock getBlock(short tag){
-        // get the full line of data at that line number
+        // get the block of data from memory corresponding to that tag, create a new block
         CacheBlock returnBlock;
-
         if(cacheBlocks.containsKey(tag))
             returnBlock = cacheBlocks.get(tag);
         else{
@@ -80,9 +70,28 @@ public class Cache{
         return returnBlock;
     }
 
+    // WORD OPERATIONS GET/SET
+    public Word getWordAtAddress(short address){
+        short tag = calculateTag(address);
+        short offset = calculateOffset(address);
+        CacheBlock block = getBlock(tag);
+        return block.get(offset);
+    }
+
+    public void setWordAtAddress(short address, Word value){
+        short tag = calculateTag(address);
+        short offset = calculateOffset(address);
+        CacheBlock block = getBlock(tag);
+        block.set(offset,value);
+    }
+
+    // short OPERATIONS READ/WRITE TODO
 
 
-    // getter - fields
+
+
+
+    // FIELD OPERATIONS TAG/OFFSET
     public short calculateTag(short address){
         // get tag bits from memory location references.
         int mask = 0x0FF8; //mask for line tag
@@ -97,8 +106,7 @@ public class Cache{
 
 
 
-    // String Methods
-
+    // STRING METHODS
     public String tagToOctalString(short address){
         short tag = calculateTag(address);
         return Utility.shortToOctalString(tag,3);
