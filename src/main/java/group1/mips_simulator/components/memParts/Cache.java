@@ -2,10 +2,11 @@ package group1.mips_simulator.components.memParts;
 
 import group1.mips_simulator.Utility;
 import  group1.mips_simulator.components.Config;
+import group1.mips_simulator.components.Word;
 
 import java.util.*;
 
-public class Cache extends Memory{
+public class Cache{
     /*
     16 line, fully associative cache
     Write Through (writes to cache, and immediately writes to memory (shouldnt need to implement separately since
@@ -21,71 +22,99 @@ public class Cache extends Memory{
     //data
     int cacheSize = Config.CACHE_LINES;
     Memory memory; //reference to memory that cache is linked to
+
     //data structures
     Queue<Short> cacheQueue; //going to use list as a queue for now
-    Map<Short,CacheLine> cacheLines; //<tag:block>
+    Map<Short,CacheBlock> cacheBlocks; //<tag:block>
 
 
-    public Cache(Memory _memory){
+    public Cache(Memory memory_){
         //cache has a memory it references
-        memory = _memory;
+        memory = memory_;
     }
+
+
+
+
 
     public void addLine(short tag){
         //get block of memory where tag is, create a cache block to be added to the cache
         cacheQueue.add(tag); //add the new tag to the cache
-        cacheLines.put(tag, new CacheLine(tag, memory));
+        cacheBlocks.put(tag, new CacheBlock(tag, memory));
     }
 
     public void removeLine(){
         // remove the oldest line from cache
-        Short tagToRemove = cacheQueue.poll(); //remove top CacheLine from Cache
-        cacheLines.remove(tagToRemove); //remove that tag from the lines Map
+        Short tagToRemove = cacheQueue.poll();              //remove top CacheLine from Cache
+        CacheBlock blockToRemove = getBlock(tagToRemove);   //get block to be removed, initiate write-back
+        blockToRemove.writeBlockToMemory(memory);           //write self back to memory
+        cacheBlocks.remove(tagToRemove);                    //remove that tag from the lines Map
+    }
+
+    public Word getWordAtAddress(short address){
+        short tag = calculateTag(address);
+        short offset = calculateOffset(address);
+        CacheBlock block = getBlock(tag);
+        return block.get(tag);
+    }
+
+    public void setWordAtAddress(short address,Word value){
+        short tag = calculateTag(address);
+        short offset = calculateOffset(address);
+        CacheBlock block = getBlock(tag);
+        block.set(tag,value);
     }
 
 
-    public CacheLine getLine(short dataAddr){
+    public CacheBlock getBlock(short tag){
         // get the full line of data at that line number
-        CacheLine returnLine;
-        short tag = getTag(dataAddr);
+        CacheBlock returnBlock;
 
-        if(cacheLines.containsKey(tag))
-            returnLine = cacheLines.get(tag);
+        if(cacheBlocks.containsKey(tag))
+            returnBlock = cacheBlocks.get(tag);
         else{
             if(cacheQueue.size() < cacheSize) { addLine(tag); }
             else{ removeLine(); }
-            returnLine = cacheLines.get(tag);
+            returnBlock = cacheBlocks.get(tag);
         }
-        return returnLine;
+        return returnBlock;
     }
 
-    public String printLine(short tag){
-        StringBuilder sb = new StringBuilder();
-        sb.append(tag);
-        CacheLine l = this.getLine(tag);
-        sb.append(l.blockString());
-        return sb.toString();
-    }
 
 
     // getter - fields
-    public short getTag(short address){
+    public short calculateTag(short address){
         // get tag bits from memory location references.
         int mask = 0x0FF8; //mask for line tag
         return (short)((address & mask)>>3);
     }
 
-
-    public String getTag_octalString(short address){
-        short tag = getTag(address);
-        return Utility.shortToOctalString(tag,3);
-    }
-
-    public short getEntry(int address){
+    public short calculateOffset(short address){
         // get Word indexing bits from memory location references.
         int mask = 0b111; //mask for byte-indexing
         return (short)(address & mask);
     }
+
+
+
+    // String Methods
+
+    public String tagToOctalString(short address){
+        short tag = calculateTag(address);
+        return Utility.shortToOctalString(tag,3);
+    }
+    public String lineToString(short tag){
+        //prints an entire line from cache as a string
+        return Utility.shortToOctalString((short)tag,3) + cacheBlocks.get(tag).toString();
+    }
+
+//    public String printLine(short tag){
+//        StringBuilder sb = new StringBuilder();
+//        sb.append(tag);
+//        CacheBlock b = this.getBlock(tag);
+//        sb.append(b.toString());
+//        return sb.toString();
+//    }
 
 
 

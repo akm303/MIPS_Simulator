@@ -11,7 +11,6 @@ Remember, your machine can have up to 2048 words maximum! What considerations mu
 package group1.mips_simulator.components.memParts;
 
 import group1.mips_simulator.components.Config;
-import group1.mips_simulator.components.ROM;
 import group1.mips_simulator.components.Word;
 
 /**
@@ -79,6 +78,7 @@ public class Memory extends Storage {
     }
 
     public void set(Word address, Word valueToWrite) {
+        // set the Word in memory at a Word address
         set(address.get(),valueToWrite);
     }
 
@@ -86,11 +86,13 @@ public class Memory extends Storage {
 
     /* write() will write the short data to memory */
     public void write(short address, short valueToWrite) {
+        // write the short to memory at the short address
         set(address,new Word(valueToWrite));
     }
 
     public void write(Word address, short valueToWrite) {
         //god forbid
+        // write the short to memory at the word address
         set(address.get(),new Word(valueToWrite));
     }
 

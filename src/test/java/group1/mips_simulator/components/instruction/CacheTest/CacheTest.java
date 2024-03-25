@@ -2,12 +2,8 @@ package group1.mips_simulator.components.instruction.CacheTest;
 
 import group1.mips_simulator.Utility;
 import group1.mips_simulator.components.Config;
-import group1.mips_simulator.components.Word;
-import group1.mips_simulator.components.memParts.CacheBlock;
-import group1.mips_simulator.components.memParts.CacheLine;
 import group1.mips_simulator.components.memParts.Cache;
 import group1.mips_simulator.components.memParts.Memory;
-import jdk.jshell.execution.Util;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -93,22 +89,22 @@ public class CacheTest {
         }
 
         // test cache lines, should
-        CacheLine cl1 = new CacheLine(0,mem);
+//        CacheLine cl1 = new CacheLine(0,mem);
         System.out.println(cl1.blockString());
         assertEquals(cl1.blockString()," 000001 000000 000001 000000 000002 000000 000002 000000");
         System.out.println(cl1.block.toString());
 
-        CacheLine cl2 = new CacheLine(1,mem);
+//        CacheLine cl2 = new CacheLine(1,mem);
         System.out.println(cl2.blockString());
         assertEquals(cl2.blockString()," 000001 000002 000003 000004 000005 000006 000007 000010");
         System.out.println(cl2.block.toString());
 
-        CacheLine cl3= new CacheLine(2,mem);
+//        CacheLine cl3= new CacheLine(2,mem);
         System.out.println(cl3.blockString());
         assertEquals(cl3.blockString()," 000011 000012 000014 000015 000016 000017 000020 000030");
         System.out.println(cl3.block.toString());
 
-        CacheLine cl4 = new CacheLine(9,mem);
+//        CacheLine cl4 = new CacheLine(9,mem);
         System.out.println(cl4.blockString());
         assertEquals(cl4.blockString()," 000000 000000 000000 000000 000000 000000 000000 000000");
         System.out.println(cl4.block.toString());
@@ -127,19 +123,19 @@ public class CacheTest {
         }
 
         // test cache lines, should
-        CacheLine cl1 = new CacheLine(0,mem);
-        System.out.println(cl1.lineString());
-        assertEquals(cl1.lineString(),"000 000001 000000 000001 000000 000002 000000 000002 000000");
+//        CacheLine cl1 = new CacheLine(0,mem);
+        System.out.println(cl1.lineString(0));
+        assertEquals(cl1.lineString(0),"000 000001 000000 000001 000000 000002 000000 000002 000000");
 
-        CacheLine cl2 = new CacheLine(1,mem);
-        System.out.println(cl2.lineString());
-        assertEquals(cl2.lineString(),"001 000010 000011 000012 000013 000014 000015 000016 000017");
+//        CacheLine cl2 = new CacheLine(1,mem);
+        System.out.println(cl2.lineString(1));
+        assertEquals(cl2.lineString(1),"001 000010 000011 000012 000013 000014 000015 000016 000017");
 
-        CacheLine cl3= new CacheLine(2,mem);
+//        CacheLine cl3= new CacheLine(2,mem);
         System.out.println(cl3.lineString());
 //        assertEquals(cl3.blockString()," 000011 000012 000014 000015 000016 000017 000020 000030");
 
-        CacheLine cl4 = new CacheLine(9,mem);
+//        CacheLine cl4 = new CacheLine(9,mem);
         System.out.println(cl4.lineString());
 //        assertEquals(cl4.blockString()," 000000 000000 000000 000000 000000 000000 000000 000000");
 
