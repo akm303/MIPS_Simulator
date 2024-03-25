@@ -73,11 +73,12 @@ public class SwingFactory {
         regDisplayGroup.setLayout(new FlowLayout(FlowLayout.TRAILING));
         //regDisplayGroup.setLayout(new GridLayout(1, 3));
 
+        // Label
         JLabel regLabel = new JLabel(regId + ": ");
         regLabel.setSize(4, 1);
         regDisplayGroup.add(regLabel);
 
-        System.out.println(regId);
+        // Text field
         JTextField regContents = textFields.get(regId);
         regContents.setEditable(false); // read only
         regContents.setText("0000");
@@ -94,17 +95,19 @@ public class SwingFactory {
         regDisplayGroup.setLayout(new FlowLayout(FlowLayout.TRAILING));
         //regDisplayGroup.setLayout(new GridLayout(1, 3));
 
+        // Label
         JLabel regLabel = new JLabel(regId + ": ");
         regLabel.setSize(4, 1);
         regDisplayGroup.add(regLabel);
 
-        System.out.println(regId);
+        // Text field
         JTextField regContents = textFields.get(regId);
         regContents.setEditable(false); // read only
         regContents.setText("0000_0000_0000_0000");
         //regContents.setMinimumSize(new Dimension(50, 20));
         regDisplayGroup.add(regContents);
 
+        // Button
         JButton button = buttons.get(regId);
         Dimension buttonSize = new Dimension(20, 20);
         button.setSize(buttonSize);

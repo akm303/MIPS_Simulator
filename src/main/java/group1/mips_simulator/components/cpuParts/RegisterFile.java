@@ -24,8 +24,11 @@ public class RegisterFile {
     //Register[] fpr = new Register[2]; //float point register placeholder <<DO NOT IMPLEMENT TILL PART 4>>
 
     public RegisterFile() {
-        //initialize all reg w/ null
+        reset();
+    }
 
+    public void reset() {
+        //initialize all reg w/ null
         for (int i = 0; i < Config.GPR_COUNT; i++) {
             Register newReg = new Register();
             newReg.write(0);
@@ -39,7 +42,7 @@ public class RegisterFile {
             newReg.setBitWidth(Config.WORD_SIZE);
             ixr[i] = newReg;
         }
-        //for (Register reg : FPR){ 
+        //for (Register reg : FPR){
         //    //todo <<DO NOT IMPLEMENT TILL PART 4>>
         //    reg.write(nullValue);
         //}
@@ -57,7 +60,6 @@ public class RegisterFile {
         mbr.setBitWidth(Config.WORD_SIZE);
         ir.setBitWidth(Config.WORD_SIZE);
         mfr.setBitWidth((short) 4);
-
     }
 
     public Register getGPR(int i) {
