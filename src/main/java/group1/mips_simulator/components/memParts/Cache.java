@@ -35,7 +35,7 @@ public class Cache{
     }
 
     public int size(){
-        return cacheQueue.size();
+        return cacheBlocks.size();
     }
 
     // Memory Method Encapsulation (Get/Set Methods)
@@ -52,6 +52,7 @@ public class Cache{
     public void set(short address,Word value){
         // set value in Cache (and in Memory)
         setWordAtAddress(address,value);
+        memory.set(address,value);
     }
 
     public void write(short address, short value){
@@ -63,6 +64,7 @@ public class Cache{
     public Word getWordAtAddress(short address){
         short tag = calculateTag(address);
         short offset = calculateOffset(address);
+
         Block block = getBlock(tag);
         return block.get(offset);
     }
@@ -70,6 +72,7 @@ public class Cache{
     public void setWordAtAddress(short address, Word value){
         short tag = calculateTag(address);
         short offset = calculateOffset(address);
+
         Block block = getBlock(tag);
         block.set(offset,value);
     }

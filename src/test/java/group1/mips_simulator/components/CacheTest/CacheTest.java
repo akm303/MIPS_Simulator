@@ -193,6 +193,50 @@ public class CacheTest {
 
 
     @Test
+    void getBlock(){
+        // testing getBlock()
+        System.out.println("Testing Cache.getBlock()");
+        setup2();
+
+        short tag;
+        c = new Cache(mem);
+        short[] addresses = new short[]{
+                0,1,2,3,4,5,6,7,
+                8,15,
+                16,17,
+                48,
+                200
+        };
+        for(short i = 0; i < addresses.length; i++){
+            tag =  c.calculateTag(addresses[i]);
+            Block b = c.getBlock(tag);
+            System.out.println(b.toString());
+        }
+    }
+
+
+    @Test
+    void cache_get(){
+        System.out.println("Testing Cache.get() on multiple same values");
+        setup2();
+
+        short tag,a;
+        c = new Cache(mem);
+        short[] addresses = new short[]{
+                0,1,2,3,4,5,6,7,
+                8,15,
+                16,17,
+                48,
+                200
+        };
+        for(short i = 0; i < addresses.length; i++){
+            tag =  c.calculateTag(addresses[i]);
+            c.get(addresses[i]);
+            printCache(c);
+        }
+    }
+
+    @Test
     void cacheSizeIntegrityTest(){
         // testing cache maintains size
         System.out.println("Test that Cache maintains proper size");
@@ -209,11 +253,12 @@ public class CacheTest {
         System.out.println(w.toString_Oct());
         printCache(c);
 
-        w = c.get((short)48); // get out-of-order address, should get a new line
+        w = c.get((short)48); // get out-of-order address, should get a new line with tag 006
         System.out.println(w.toString_Oct());
         printCache(c);
 
         //fill up the rest of cache
+
     }
 
 
@@ -247,7 +292,6 @@ public class CacheTest {
         //for use in testing block accesses
         System.out.println("running setup 2");
 
-        System.out.println(mem.size());
         for(short i = 0; i < mem.size(); i++) {
             mem.write(i, i);
         }
@@ -256,7 +300,7 @@ public class CacheTest {
     void printCache(Cache c){
         // print each line from cache
         for(short i=0; i < c.size(); i++){
-            System.out.println(c.blockToOctalString(i));
+            System.out.println(c.lineToOctalString(i));
         }
         System.out.println();
     }
