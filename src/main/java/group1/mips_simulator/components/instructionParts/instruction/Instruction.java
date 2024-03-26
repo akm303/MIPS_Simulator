@@ -41,7 +41,7 @@ public class Instruction {
         return (short) rvalue;
     }
 
-    public Word toValue() {
+    public Word toWord() {
         //generate a Value of itself
         return new Word(this.toShort());
     }

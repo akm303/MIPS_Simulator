@@ -1,5 +1,7 @@
 package group1.mips_simulator.FrontEnd;
 
+import group1.mips_simulator.Utility;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -8,6 +10,8 @@ import java.awt.event.KeyListener;
 public class ConsoleKeyboardFrame {
     public static int WIDTH = 500;
     public static int HEIGHT = 100;
+
+    public static final char TERMINATOR = '\0';
 
     boolean userDone = false;
 
@@ -75,6 +79,15 @@ public class ConsoleKeyboardFrame {
 
     void userDone() {
         this.userDone = true;
+
+        // Remove any added null terminators
+        String currentText = this.userTextInput.getText();
+        currentText = currentText.replace(("" + '\0'), "");
+
+        // Add the terminator to the end
+        currentText = currentText + TERMINATOR;
+
+        this.userTextInput.setText(currentText);
         this.userTextInput.setBackground(Color.WHITE);
     }
 

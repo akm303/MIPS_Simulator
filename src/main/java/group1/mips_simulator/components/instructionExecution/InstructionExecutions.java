@@ -75,11 +75,13 @@ public class InstructionExecutions {
      */
     public ExecutionResult execute_ldx(Computer computer, RXIA_Instruction i) {
         // Xx <- c(EA)
-        short ea = computer.calculateEA(i);
+        // short ea = computer.calculateEA(i);
+        short ea = i.getAddress().value;
         short contentsEA = computer.memory.read(ea);
-        Register targetReg = computer.cpu.regfile.getIXR(i.getIX().value);
 
+        Register targetReg = computer.cpu.regfile.getIXR(i.getIX().value);
         targetReg.write(contentsEA);
+
         return new ExecutionResult(computer.currentPcPlus1());
     }
 
@@ -91,7 +93,8 @@ public class InstructionExecutions {
      */
     public ExecutionResult execute_stx(Computer computer, RXIA_Instruction i) {
         // Memory(EA) <- c(Xx)
-        short ea = computer.calculateEA(i);
+        // short ea = computer.calculateEA(i);
+        short ea = i.getAddress().value;
 
         Register targetReg = computer.cpu.regfile.getIXR(i.getIX().value);
         short contentsReg = targetReg.read();
@@ -222,13 +225,13 @@ public class InstructionExecutions {
         // R0 <− Immed
         Register r0 = computer.cpu.regfile.getGPR(0);
         r0.write(new Word(immed.value));
-        computer.cpu.regfile.getGPR(0).write(r0.read());
 
         // PC <- c(R3)
         Register r3 = computer.cpu.regfile.getGPR(3);
         computer.cpu.regfile.getPC().write(r3.read());
 
-        return new ExecutionResult(computer.currentPcPlus1());
+        // Return the current PC b/c the previous steps set it properly
+        return new ExecutionResult(computer.currentPC());
     }
 
     /**
@@ -493,7 +496,9 @@ public class InstructionExecutions {
 
         Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
         short ea = computer.calculateEA(i);
-        short newValue = errorHandling.detectOverUnderflow(computer, targetReg.read() + ea);
+        short contentsInMemory = computer.memory.read(ea);
+
+        short newValue = errorHandling.detectOverUnderflow(computer, targetReg.read() + contentsInMemory);
         targetReg.write(newValue);
         return new ExecutionResult(computer.currentPcPlus1());
     }
@@ -509,16 +514,17 @@ public class InstructionExecutions {
 
         Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
         short ea = computer.calculateEA(i);
-        short newValue = errorHandling.detectOverUnderflow(computer, targetReg.read() - ea);
+        short valueInMemory = computer.memory.read(ea);
+
+        short newValue = errorHandling.detectOverUnderflow(computer, targetReg.read() - valueInMemory);
         targetReg.write(newValue);
         return new ExecutionResult(computer.currentPcPlus1());
     }
 
     /**
      * AIR r, immed
-     * 17(octal)
-     * Subtract Memory From Register, r = 0..3
-     * r <− c(r) – c(EA)
+     *
+     * Add immediate to register
      */
     public ExecutionResult execute_air(Computer computer, RXIA_Instruction i) {
         errorHandling.resetCC(computer);
@@ -532,9 +538,8 @@ public class InstructionExecutions {
 
     /**
      * SIR r, immed
-     * 17(octal)
-     * Subtract Memory From Register, r = 0..3
-     * r <− c(r) – c(EA)
+     *
+     * Subtract immediate from register
      */
     public ExecutionResult execute_sir(Computer computer, RXIA_Instruction i) {
         errorHandling.resetCC(computer);
@@ -560,7 +565,7 @@ public class InstructionExecutions {
         }
 
         Register gpr = computer.cpu.regfile.getGPR(i.getRX().value);
-        Register ix = computer.cpu.regfile.getGPR(i.getRY().value);
+        Register ix = computer.cpu.regfile.getIXR(i.getRY().value);
 
         // x(ix) <- c(r)
         ix.write(gpr.get());
@@ -578,7 +583,7 @@ public class InstructionExecutions {
      */
     public ExecutionResult execute_x2r(Computer computer, Reg2RegInstruction i) {
         Register gpr = computer.cpu.regfile.getGPR(i.getRX().value);
-        Register ix = computer.cpu.regfile.getGPR(i.getRY().value);
+        Register ix = computer.cpu.regfile.getIXR(i.getRY().value);
 
         short newValue = (i.getRX().value == 0) ? (0) : (ix.read());
         gpr.write(newValue);

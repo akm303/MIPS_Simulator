@@ -93,6 +93,9 @@ class UtilityTest {
         assertEquals(Utility.shortToChar((short) 0b0000_0000_0011_0001), '1');
         assertEquals(Utility.shortToChar((short) 0b0000_0000_0011_0010), '2');
         assertEquals(Utility.shortToChar((short) 0b0000_0000_0011_0011), '3');
+
+
+        assertEquals(Utility.shortToChar((short) 0b0000_0000_0000_0000), '\0');
     }
 
     @Test

@@ -32,6 +32,9 @@ public class Memory extends Storage {
         super(size);
     }
 
+    public void reset() {
+        super.reset(Config.MEM_SIZE);
+    }
 
     // GETTERS
     /* get() will get the Value from memory */

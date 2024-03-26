@@ -40,4 +40,10 @@ public class CPU {
         regfile = new RegisterFile();
     }
 
+    public void reset() {
+        regfile.reset();
+        // Rom loader has no state to reset
+        // romLoader.reset();
+    }
+
 }

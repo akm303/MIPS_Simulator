@@ -82,6 +82,10 @@ public class OpCode {
             case 34 -> new OpCode("ldfr");
             case 35 -> new OpCode("stfr");
 
+            /* Custom instructions */
+            case 38 -> new OpCode("r2x");
+            case 39 -> new OpCode("x2r");
+
             default -> throw new IllegalArgumentException("Unknown Operation Code: " + Integer.toString(opCodeValue));
         };
     }

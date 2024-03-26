@@ -1,5 +1,6 @@
 package group1.mips_simulator.components.instructionExecution;
 
+import group1.mips_simulator.FrontEnd.ConsoleKeyboardFrame;
 import group1.mips_simulator.Utility;
 import group1.mips_simulator.components.Computer;
 import group1.mips_simulator.components.Config;

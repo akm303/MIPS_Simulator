@@ -48,6 +48,11 @@ public class Computer {
         this.drivers.put(newDriver.DeviceId(), newDriver);
     }
 
+    public void reset() {
+        memory.reset();
+        cpu.reset();
+    }
+
     public void loadROM(ROM rom_) {
         rom = rom_;
         cpu.romLoader = new RomLoader();
@@ -79,6 +84,7 @@ public class Computer {
 
         try {
             System.out.println("-------------------");
+            System.out.println("-----------------------");
             System.out.println("Executing instruction: " + nextInstruction.toString_Binary());
             return this.executeInstruction(nextInstruction);
         } catch (IllegalArgumentException e) {
