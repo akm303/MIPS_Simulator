@@ -37,7 +37,11 @@ public class Cache{
 
     // LINE OPERATIONS
     public void addLine(short tag){
-        //get block of memory based on tag, create a cache block to be added to the cache
+        /** Add a new line to cache
+         1. Add a new tag to end of Queue
+         2. Pass tag and memory reference to a Cache Block to have it generate itself
+         3. Add the new block to the dictionary
+         */
         cacheQueue.add(tag); //add the new tag to the cache
         cacheBlocks.put(tag, new Block(tag, memory));
     }
@@ -46,7 +50,7 @@ public class Cache{
         /** remove the oldest line from cache
          1. get the oldest tag from Queue,
          2. write the corresponding block back to memory
-         3. then delete that block
+         3. then delete that block from the dictionary
          */
         Short tagToRemove = cacheQueue.poll();
         if(tagToRemove == null) //redundant, will never remove a block unless there are already 16 lines in cache
@@ -85,13 +89,20 @@ public class Cache{
         block.set(offset,value);
     }
 
-    // short OPERATIONS READ/WRITE TODO
+    /* short OPERATIONS READ/WRITE */
+    public short readShortAtAddress(short address){
+        // read a short value from address
+        return getWordAtAddress(address).get();
+    }
+
+    public void writeShortToAddress(short address, short value){
+        // write a short value to address
+        setWordAtAddress(address,new Word(value));
+    }
 
 
 
-
-
-    // FIELD OPERATIONS TAG/OFFSET
+    /* FIELD OPERATIONS TAG/OFFSET */
     public short calculateTag(short address){
         // get tag bits from memory location references.
         int mask = 0x0FF8; //mask for line tag
@@ -106,14 +117,18 @@ public class Cache{
 
 
 
-    // STRING METHODS
-    public String tagToOctalString(short address){
-        short tag = calculateTag(address);
+    /* STRING METHODS */
+    public String tagToOctalString(short tag){
         return Utility.shortToOctalString(tag,3);
     }
+
+    public String blockToOctalString(short tag){
+        return cacheBlocks.get(tag).toString();
+    }
+
     public String lineToString(short tag){
         //prints an entire line from cache as a string
-        return Utility.shortToOctalString((short)tag,3) + cacheBlocks.get(tag).toString();
+        return tagToOctalString(tag) + blockToOctalString(tag);
     }
 
 //    public String printLine(short tag){
