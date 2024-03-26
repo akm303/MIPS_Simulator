@@ -93,6 +93,7 @@ public class Cache{
             else{ removeLine(); }
             returnBlock = cacheBlocks.get(tag);
         }
+        returnBlock.readBlockFromMemory(memory); //update block with current memory's values
         return returnBlock;
     }
 
@@ -115,7 +116,7 @@ public class Cache{
          */
         Short tagToRemove = cacheQueue.poll();
         Block blockToRemove = getBlock(tagToRemove);
-        blockToRemove.writeBlockToMemory(memory); //write back
+        blockToRemove.writeBlockToMemory(memory); //update memory with current cache values
         cacheBlocks.remove(tagToRemove);
     }
 
@@ -143,8 +144,11 @@ public class Cache{
     }
 
     public String blockToOctalString(short tag){
-        if(!cacheBlocks.isEmpty())
-            return cacheBlocks.get(tag).toString();
+        if(!cacheBlocks.isEmpty()) {
+            Block block = cacheBlocks.get(tag); //get appropriate block
+            block.readBlockFromMemory(memory);  //update block before print
+            return block.toString();
+        }
         return "No Cache Block";
     }
 

@@ -144,33 +144,57 @@ public class CacheTest {
         }
     }
 
-    @Test
-    void cacheBeforeMemory(){
-        /* todo: Test that Cache Lines properly equal values in memory */
-        c = new Cache(mem);
-        setup();
 
-    }
 
     @Test
     void cacheAfterMemory(){
         /* todo: Test that Cache Lines properly equal values in memory */
-        setup();
+        setup(); //write memory before cache created
         c = new Cache(mem);
+        for(short t = 0; t < 16; t++){
+            c.addLine(t);
+        }
+        for(short i=0; i < 16; i++){
+            System.out.println(c.blockToOctalString(i));
+        }
+    }
 
+    @Test
+    void cacheBeforeMemory(){
+        /* todo: Test that Cache Lines properly equal values in memory */
+        c = new Cache(mem);
+        for(short t = 0; t < 16; t++){
+            c.addLine(t);
+        }
+        setup(); //write memory after cache created
+
+        for(short i=0; i < 16; i++){
+            System.out.println(c.blockToOctalString(i));
+        }
     }
 
 
 
+
     void setup(){
-        short[] val2write = new short[]{
-                1,0,1,0,2,0,2,0,
-                8,9,10,11,12,13,14,15,
-                9,10,12,13,14,15,16,24
+        short[] val2write_1 = new short[]{  // write to mem addresses:             addresses in octal:
+                1,0,1,0,2,0,2,0,            // 0,  1,  2,  3,  4,  5,  6,  7       // 0,  1,  2,  3,  4,  5,  6,  7
+                8,9,10,11,12,13,14,15,      // 8,  9, 10, 11, 12, 13, 14, 15       //10, 11, 12, 13, 14, 15, 16, 17
+                9,10,12,13,14,15,16,24      //16, 17, 18, 19, 20, 21, 22, 23       //20, 21, 22, 23, 24, 25, 26, 27
         };
-        for(short i = 0; i < val2write.length; i++){
-            mem.write(i,val2write[i]);
+        for(short i = 0; i < val2write_1.length; i++){
+            mem.write(i,val2write_1[i]);
         }
+
+        short[] val2write_2 = new short[]{  // write to mem addresses:             addresses in octal:
+                (short)0xFFFF, (short)0x1111,       // 27, 28                       //33, 34
+                0, (short)0xABAB,                   // 29, 30                       //35, 36
+                (short)0xCCDD,(short)0x4321,        // 31, 32                       //37, 40
+                (short)0x0111,(short)0xABCD         // 33, 34                       //41, 42
+        };
+        short base = 27;
+        for(short i = 0; i < val2write_2.length;i++)
+            mem.write((short) (i+base), val2write_2[i]);
     }
 
 }
