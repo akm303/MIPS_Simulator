@@ -121,7 +121,7 @@ public class CacheTest {
         /*
         Create a Cache. Add some values to the cache. See if cache blocks read properly
          */
-        setup();
+        setup_1();
 
         // test cache lines print correctly
         short[] tags = new short[]{0,1,2,9};
@@ -149,7 +149,7 @@ public class CacheTest {
     @Test
     void cacheAfterMemory(){
         /* todo: Test that Cache Lines properly equal values in memory */
-        setup(); //write memory before cache created
+        setup_1(); //write memory before cache created
         c = new Cache(mem);
         for(short t = 0; t < 16; t++){
             c.addLine(t);
@@ -166,7 +166,7 @@ public class CacheTest {
         for(short t = 0; t < 16; t++){
             c.addLine(t);
         }
-        setup(); //write memory after cache created
+        setup_1(); //write memory after cache created
 
         for(short i=0; i < 16; i++){
             System.out.println(c.blockToOctalString(i));
@@ -176,7 +176,9 @@ public class CacheTest {
 
 
 
-    void setup(){
+    void setup_1(){
+        // write specified values to memory
+        // for use in testing macro-cache function
         short[] val2write_1 = new short[]{  // write to mem addresses:             addresses in octal:
                 1,0,1,0,2,0,2,0,            // 0,  1,  2,  3,  4,  5,  6,  7       // 0,  1,  2,  3,  4,  5,  6,  7
                 8,9,10,11,12,13,14,15,      // 8,  9, 10, 11, 12, 13, 14, 15       //10, 11, 12, 13, 14, 15, 16, 17
@@ -195,6 +197,13 @@ public class CacheTest {
         short base = 27;
         for(short i = 0; i < val2write_2.length;i++)
             mem.write((short) (i+base), val2write_2[i]);
+    }
+
+    void setup_2(){
+        //write address to memory at its location
+        //for use in testing word changes
+        for(short i = 0; i < mem.size(); i++)
+            mem.write(i,i);
     }
 
 }
