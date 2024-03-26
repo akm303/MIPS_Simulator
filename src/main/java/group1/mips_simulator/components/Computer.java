@@ -20,8 +20,7 @@ import group1.mips_simulator.components.memParts.Memory;
 public class Computer {
     //computer parts
     public Memory memory;       // computer memory
-    public Cache I_cache;       // instruction cache
-    public Cache D_cache;       // data cache
+    public Cache cache;         // cache
     public CPU cpu;             // central processing unit
     public ROM rom = new ROM(); // read-only-memory
 
