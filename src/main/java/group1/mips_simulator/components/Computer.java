@@ -27,6 +27,7 @@ public class Computer {
     public Computer() {
         cpu = new CPU();
         memory = new Memory(Config.MEM_SIZE);
+        cache = new Cache(memory);
     }
 
     public void loadROM(ROM rom_) {
