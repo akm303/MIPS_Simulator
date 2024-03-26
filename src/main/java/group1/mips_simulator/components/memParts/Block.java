@@ -21,11 +21,10 @@ public class Block extends Memory{
         readBlockFromMemory(memory_);
     }
 
-
     public void readBlockFromMemory(Memory memory_){
+        // write every value in associated block of memory to self
         int startOfBlock = tag << 3;
         for(short i = 0; i < data.length; i++){
-            // set entry at block index i to be memory's entry at address i
             write(i, memory_.read(startOfBlock + i));
         }
     }
@@ -40,6 +39,7 @@ public class Block extends Memory{
 
     @Override
     public String toString() {
+        // generate string of every word in block
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < data.length; i++){
             sb.append(" ").append(get(i).toString_Oct());
