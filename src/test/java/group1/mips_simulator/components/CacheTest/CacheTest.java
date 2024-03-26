@@ -145,26 +145,18 @@ public class CacheTest {
     }
 
     @Test
-    void cacheLines(){
-        /* Test that Cache Lines properly equal values in memory */
+    void cacheBeforeMemory(){
+        /* todo: Test that Cache Lines properly equal values in memory */
+        c = new Cache(mem);
         setup();
 
     }
 
     @Test
-    void Cache(){
+    void cacheAfterMemory(){
+        /* todo: Test that Cache Lines properly equal values in memory */
+        setup();
         c = new Cache(mem);
-        short[] val2write = new short[]{
-                1,0,1,0,2,0,2,0,
-                8,9,10,11,12,13,14,15,
-                9,10,12,13,14,15,16,24
-        };
-
-        for(short i = 0; i < val2write.length; i++){
-            mem.write(i,val2write[i]);
-        }
-
-//        c.getWordAtAddress();
 
     }
 
