@@ -1,4 +1,4 @@
-package group1.mips_simulator.components.instruction.CacheTest;
+package group1.mips_simulator.components.CacheTest;
 
 import group1.mips_simulator.Utility;
 import group1.mips_simulator.components.Config;
