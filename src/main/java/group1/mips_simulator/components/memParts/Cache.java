@@ -126,18 +126,11 @@ public class Cache{
         return cacheBlocks.get(tag).toString();
     }
 
-    public String lineToString(short tag){
+    public String lineToOctalString(short tag){
         //prints an entire line from cache as a string
         return tagToOctalString(tag) + blockToOctalString(tag);
     }
 
-//    public String printLine(short tag){
-//        StringBuilder sb = new StringBuilder();
-//        sb.append(tag);
-//        CacheBlock b = this.getBlock(tag);
-//        sb.append(b.toString());
-//        return sb.toString();
-//    }
 
 
 
