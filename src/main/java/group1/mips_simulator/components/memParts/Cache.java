@@ -34,6 +34,10 @@ public class Cache{
         memory = memory_;
     }
 
+    public int size(){
+        return cacheQueue.size();
+    }
+
     // Memory Method Encapsulation (Get/Set Methods)
     public Word get(short address){
         // get value from Cache

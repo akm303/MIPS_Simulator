@@ -21,7 +21,6 @@ import group1.mips_simulator.components.Word;
  * Memory addresses are either Values or integers
  */
 public class Memory extends Storage {
-    private int size_;
 
     public Memory(int size) {
         // init memory with custom size
@@ -97,7 +96,7 @@ public class Memory extends Storage {
 
 
     public int size(){
-        return this.size_;
+        return this.data.length;
     }
 
 }

@@ -2,6 +2,7 @@ package group1.mips_simulator.components.CacheTest;
 
 import group1.mips_simulator.Utility;
 import group1.mips_simulator.components.Config;
+import group1.mips_simulator.components.Word;
 import group1.mips_simulator.components.memParts.Cache;
 import group1.mips_simulator.components.memParts.Block;
 import group1.mips_simulator.components.memParts.Memory;
@@ -17,6 +18,7 @@ public class CacheTest {
     @Test
     void calculateTag(){
         //test that getTag extracts correct bits from a short
+        System.out.println("Testing: Cache.calculateTag()");
         c = new Cache(mem);
         short[] data = new short[]{
                 0,              //0b0000_0000_0000_0000
@@ -35,17 +37,18 @@ public class CacheTest {
         for(int i = 0; i<data.length; i++){
             // // uncomment to view outputs
             short d = data[i];
-            // System.out.println("Addr:" + Utility.shortToBinaryString(d,16)+", "+d);
+            //System.out.println("Addr:" + Utility.shortToBinaryString(d,16)+", "+d);
             short tag = c.calculateTag(d);
-            // System.out.println(" Tag:" + Utility.shortToBinaryString(tag,16)+", "+tag);
+            //System.out.println(" Tag:" + Utility.shortToBinaryString(tag,16)+", "+tag);
             assertEquals(expected[i],tag);
         }
     }
 
     @Test
     void calculateOffset(){
+        //test that we extract the correct offset bits from a short
+        System.out.println("Testing: Cache.calculateOffset()");
         c = new Cache(mem);
-        //test that getIndex extracts correct bits from a short
         short[] data = new short[]{
                 0,              //0b0000_0000_0000_0000
                 1,              //0b0000_0000_0000_0001
@@ -72,17 +75,29 @@ public class CacheTest {
 
     @Test
     void tagToOctalString(){
-        //test that getTag extracts correct bits from a short
+        //test that calculateTag extracts correct bits from a short
+        System.out.println("Testing: Cache.tagToOctalString(tag)");
         c = new Cache(mem);
-        short[] data = new short[]{0,1,1234,(short)0xFF12,(short)0x7FAB};
-        for(short d : data){
-            // // uncomment to view outputs
-            //System.out.println("Addr:" + Utility.shortToOctalString(d)+", "+d);
-            String tag = c.tagToOctalString(d);
-            //System.out.println(" Tag:"+tag);
-            d = (short)((d & 0x0FF8)>>3);
-            String addrStr = Utility.shortToOctalString(d,3);
-            assertEquals(addrStr,tag);
+        short[] addresses = new short[]{
+                0,              //0b0000_0000_0000_0000
+                1,              //0b0000_0000_0000_0001
+                1234,           //0b0000_0100_1101_0010
+                (short)0xFF12,  //0b1111_1111_0001_0010
+                (short)0x7FAB   //0b0111_1111_1010_1011
+        };
+        String[] expected = new String[]{
+                "000",          //0      0b0000 0000_0000_0 000 -> 000 000 000
+                "000",          //1      0b0000 0000_0000_0 001 -> 000 000 000
+                "232",          //1234   0b0000 0100_1101_0 010 -> 010 011 010
+                "742",          //FF12   0b1111 1111_0001_0 010 -> 111 100 010
+                "765",          //7FAB   0b0111 1111_1010_1 011 -> 111 110 101
+        };
+        for(short i = 0; i < addresses.length; i++){
+            short a = addresses[i];
+            String tagString = c.tagToOctalString(c.calculateTag(a));
+            //System.out.println("Addr:" + Utility.shortToOctalString(a,6)+", "+a);
+            //System.out.println(" Tag Str:"+tagString);
+            assertEquals(expected[i],tagString);
         }
     }
 
@@ -90,6 +105,8 @@ public class CacheTest {
 
     @Test
     void block_toString(){
+        // test that we can print a whole block line correctly
+        System.out.println("Testing: Cache.Block.toString()");
         short[] val2write = new short[]{
                 1,0,1,0,2,0,2,0,
                 1,2,3,4,5,6,7,8,
@@ -118,10 +135,9 @@ public class CacheTest {
 
     @Test
     void lines_toString(){
-        /*
-        Create a Cache. Add some values to the cache. See if cache blocks read properly
-         */
-        setup_1();
+        // Create a Cache, add some values to the cache. Test if cache prints its line correctly
+        System.out.println("Testing: Cache.lineToOctalString()");
+        setup1();
 
         // test cache lines print correctly
         short[] tags = new short[]{0,1,2,9};
@@ -148,37 +164,64 @@ public class CacheTest {
 
     @Test
     void cacheAfterMemory(){
-        /* todo: Test that Cache Lines properly equal values in memory */
-        setup_1(); //write memory before cache created
+        /* Test that Cache Lines properly reads its values from memory */
+        System.out.println("Testing: Cache Created After Memory Written");
+
+        setup1(); //write memory before cache created
         c = new Cache(mem);
         for(short t = 0; t < 16; t++){
             c.addLine(t);
         }
-        for(short i=0; i < 16; i++){
-            System.out.println(c.blockToOctalString(i));
-        }
+        printCache(c);
+        System.out.println();
     }
 
     @Test
     void cacheBeforeMemory(){
-        /* todo: Test that Cache Lines properly equal values in memory */
+        /* Test that Cache Lines properly keeps its values equal to memory */
+        System.out.println("Testing: Cache Created Before Memory Written");
+
         c = new Cache(mem);
         for(short t = 0; t < 16; t++){
             c.addLine(t);
         }
-        setup_1(); //write memory after cache created
+        setup1(); //write memory after cache created
 
-        for(short i=0; i < 16; i++){
-            System.out.println(c.blockToOctalString(i));
-        }
+        printCache(c);
+        System.out.println();
     }
 
 
+    @Test
+    void cacheSizeIntegrityTest(){
+        // testing cache maintains size
+        System.out.println("Test that Cache maintains proper size");
+        setup2();
+
+        c = new Cache(mem);
+        Word w;
+        for(short i = 0; i < 16; i++){
+            c.get(i);
+        } // should only add two lines total (addresses 0 - 15)
+        printCache(c);
+
+        w = c.get((short) 17); // address 16 is on a new line
+        System.out.println(w.toString_Oct());
+        printCache(c);
+
+        w = c.get((short)48); // get out-of-order address, should get a new line
+        System.out.println(w.toString_Oct());
+        printCache(c);
+
+        //fill up the rest of cache
+    }
 
 
-    void setup_1(){
+    void setup1(){
         // write specified values to memory
         // for use in testing macro-cache function
+        System.out.println("running setup 1");
+
         short[] val2write_1 = new short[]{  // write to mem addresses:             addresses in octal:
                 1,0,1,0,2,0,2,0,            // 0,  1,  2,  3,  4,  5,  6,  7       // 0,  1,  2,  3,  4,  5,  6,  7
                 8,9,10,11,12,13,14,15,      // 8,  9, 10, 11, 12, 13, 14, 15       //10, 11, 12, 13, 14, 15, 16, 17
@@ -199,11 +242,23 @@ public class CacheTest {
             mem.write((short) (i+base), val2write_2[i]);
     }
 
-    void setup_2(){
-        //write address to memory at its location
-        //for use in testing word changes
-        for(short i = 0; i < mem.size(); i++)
-            mem.write(i,i);
+    void setup2(){
+        //write address to the memory at its location
+        //for use in testing block accesses
+        System.out.println("running setup 2");
+
+        System.out.println(mem.size());
+        for(short i = 0; i < mem.size(); i++) {
+            mem.write(i, i);
+        }
+    }
+
+    void printCache(Cache c){
+        // print each line from cache
+        for(short i=0; i < c.size(); i++){
+            System.out.println(c.blockToOctalString(i));
+        }
+        System.out.println();
     }
 
 }
