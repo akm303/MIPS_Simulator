@@ -20,8 +20,10 @@ public class Instruction {
     public String toString_Binary() {
         StringBuilder result = new StringBuilder();
         result.append(this.opCode.toString_Binary());
+        result.append(" ");
         for (Field f : fields) {
             result.append(f.toBinString());
+            result.append(" ");
         }
         return result.toString();
     }

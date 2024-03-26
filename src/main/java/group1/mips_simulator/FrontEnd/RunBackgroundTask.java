@@ -21,7 +21,7 @@ public class RunBackgroundTask extends SwingWorker<Void, String> {
             computerMayContinue = this.computer.runCurrentPC();
             publish();
         }
-        SwingConsole.redraw();
+        SwingConsole.redraw(computer);
 
         return null;
     }
@@ -29,12 +29,12 @@ public class RunBackgroundTask extends SwingWorker<Void, String> {
     @Override
     protected void process(List<String> chunks) {
         // Update the UI
-        SwingConsole.redraw();
+        SwingConsole.redraw(computer);
     }
 
     @Override
     protected void done() {
-        SwingConsole.redraw();
+        SwingConsole.redraw(computer);
     }
 
     public void halt() {

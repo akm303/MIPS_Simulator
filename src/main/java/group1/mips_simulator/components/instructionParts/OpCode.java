@@ -155,6 +155,11 @@ public class OpCode {
             case "cnvrt" -> 33; // 42 octal
             case "ldfr" -> 34;  // 42 octal
             case "stfr" -> 35;  // 43 octal
+
+            /* custom instructions */
+            case "r2x" -> 38; // 46 octal
+            case "x2r" -> 39; // 47 octal
+
             default -> throw new IllegalArgumentException("Unknown Operation Code: " + this.name);
         };
     }

@@ -58,4 +58,20 @@ public class ConditionCode extends Register {
             throw new IllegalArgumentException("attempted to set an invalid condition code bit: " + targetBitIndex);
         }
     }
+
+    public void setOverflowBit(boolean value) {
+        this.setBit(OBIT_INDEX, value);
+    }
+
+    public void setUnderflowBit(boolean value) {
+        this.setBit(UBIT_INDEX, value);
+    }
+
+    public void setDivideByZeroBit(boolean value) {
+        this.setBit(DBIT_INDEX, value);
+    }
+
+    public void setEqualityBit(boolean value) {
+        this.setBit(EBIT_INDEX, value);
+    }
 }

@@ -50,24 +50,28 @@ public class SwingConsole {
     }
 
     public static void redraw() {
+        redraw(computer);
+    }
+
+    public static void redraw(Computer computer_) {
         // Update all the GPRs
-        textFields.get("GPR0").setText(computer.cpu.regfile.getGPR(0).toString_Binary());
-        textFields.get("GPR1").setText(computer.cpu.regfile.getGPR(1).toString_Binary());
-        textFields.get("GPR2").setText(computer.cpu.regfile.getGPR(2).toString_Binary());
-        textFields.get("GPR3").setText(computer.cpu.regfile.getGPR(3).toString_Binary());
+        textFields.get("GPR0").setText(computer_.cpu.regfile.getGPR(0).toString_Binary());
+        textFields.get("GPR1").setText(computer_.cpu.regfile.getGPR(1).toString_Binary());
+        textFields.get("GPR2").setText(computer_.cpu.regfile.getGPR(2).toString_Binary());
+        textFields.get("GPR3").setText(computer_.cpu.regfile.getGPR(3).toString_Binary());
 
         // Update all IXRs
-        textFields.get("IXR1").setText(computer.cpu.regfile.getIXR(1).toString_Binary());
-        textFields.get("IXR2").setText(computer.cpu.regfile.getIXR(2).toString_Binary());
-        textFields.get("IXR3").setText(computer.cpu.regfile.getIXR(3).toString_Binary());
+        textFields.get("IXR1").setText(computer_.cpu.regfile.getIXR(1).toString_Binary());
+        textFields.get("IXR2").setText(computer_.cpu.regfile.getIXR(2).toString_Binary());
+        textFields.get("IXR3").setText(computer_.cpu.regfile.getIXR(3).toString_Binary());
 
         // Update other registers
-        textFields.get("PC").setText(computer.cpu.regfile.getPC().toString_Binary());
-        textFields.get("MAR").setText(computer.cpu.regfile.getMAR().toString_Binary());
-        textFields.get("MBR").setText(computer.cpu.regfile.getMBR().toString_Binary());
-        textFields.get("IR").setText(computer.cpu.regfile.getIR().toString_Binary());
-        textFields.get("MFR").setText(computer.cpu.regfile.getMFR().toString_Binary());
-        textFields.get("CC").setText(computer.cpu.regfile.getCC().toString_Binary());
+        textFields.get("PC").setText(computer_.cpu.regfile.getPC().toString_Binary());
+        textFields.get("MAR").setText(computer_.cpu.regfile.getMAR().toString_Binary());
+        textFields.get("MBR").setText(computer_.cpu.regfile.getMBR().toString_Binary());
+        textFields.get("IR").setText(computer_.cpu.regfile.getIR().toString_Binary());
+        textFields.get("MFR").setText(computer_.cpu.regfile.getMFR().toString_Binary());
+        textFields.get("CC").setText(computer_.cpu.regfile.getCC().toString_Binary());
 
         // Update the cache
         //cacheGui.redrawCache(computer.memory.cache);

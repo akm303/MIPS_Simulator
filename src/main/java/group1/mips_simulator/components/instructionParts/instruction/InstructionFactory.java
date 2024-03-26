@@ -5,8 +5,6 @@ import group1.mips_simulator.components.Config;
 import group1.mips_simulator.components.instructionParts.Field;
 import group1.mips_simulator.components.instructionParts.FieldProcessors.FieldProcessor;
 import group1.mips_simulator.components.instructionParts.OpCode;
-import group1.mips_simulator.components.instructionParts.instruction.Instruction;
-import group1.mips_simulator.components.instructionParts.instruction.RXIA_Instruction;
 
 import java.util.Vector;
 
@@ -54,7 +52,7 @@ public class InstructionFactory {
                     // Floating Point Arithmetic, pg 21
                     "fadd", "fsub", "vadd", "vsub", "cnvrt", "ldfr", "stfr" -> new RXIA_Instruction(code, fields);
             // Register to Register instructions, pg 17
-            case "mlt", "dvd", "trr", "and", "orr", "not" -> new Instruction(code, fields);
+            case "mlt", "dvd", "trr", "and", "orr", "not", "r2x", "x2r" -> new Reg2RegInstruction(code, fields);
             // Shift/ Rotate operations, pg 18
             case "src", "rrc" -> new Instruction(code, fields);
             // I/O operations, pg 20

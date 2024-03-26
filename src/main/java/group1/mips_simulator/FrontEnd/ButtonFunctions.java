@@ -57,7 +57,7 @@ public class ButtonFunctions {
         short valueInMemory = computer.memory.read(mar.read());
         System.out.println("MemLoc -> Value : " + mar.read() + "   " + valueInMemory);
         computer.cpu.regfile.getMBR().write(valueInMemory);
-        SwingConsole.redraw();
+        SwingConsole.redraw(computer);
     }
 
     /**
@@ -69,7 +69,7 @@ public class ButtonFunctions {
         loadOnClick(computer);
         Register memAddReg = computer.cpu.regfile.getMAR();
         memAddReg.write((short) (memAddReg.read() + 1));
-        SwingConsole.redraw();
+        SwingConsole.redraw(computer);
     }
 
     /**
@@ -80,7 +80,7 @@ public class ButtonFunctions {
         Register memBuffReg = computer.cpu.regfile.getMBR();
         Register memAddReg = computer.cpu.regfile.getMAR();
         computer.memory.write(memAddReg.read(), memBuffReg.read());
-        SwingConsole.redraw();
+        SwingConsole.redraw(computer);
     }
 
 
@@ -92,7 +92,7 @@ public class ButtonFunctions {
         Register memAddReg = computer.cpu.regfile.getMAR();
         memAddReg.write((short) (memAddReg.read() + 1));
         storeOnClick(computer);
-        SwingConsole.redraw();
+        SwingConsole.redraw(computer);
     }
 
     /**
@@ -115,7 +115,7 @@ public class ButtonFunctions {
      */
     void stepOnClick(Computer computer) {
         computer.runCurrentPC();
-        SwingConsole.redraw();
+        SwingConsole.redraw(computer);
     }
 
     /**
@@ -124,7 +124,7 @@ public class ButtonFunctions {
     void haltOnClick(Computer computer) {
         System.out.println("HALTING!!!!!!!!!!!!!!!!!!!!!!!");
         SwingConsole.runBgTask.halt();
-        SwingConsole.redraw();
+        SwingConsole.redraw(computer);
         System.out.println("Finished HALTING!!!!!!!!!!!!!!!!!!!!!!!");
     }
 

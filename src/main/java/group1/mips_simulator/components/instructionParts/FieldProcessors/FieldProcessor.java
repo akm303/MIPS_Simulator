@@ -47,7 +47,7 @@ public class FieldProcessor {
                     // Floating Point Arithmetic, pg 21
                     "fadd", "fsub", "vadd", "vsub", "cnvrt", "ldfr", "stfr" -> binaryToFields_rxia(binaryFields);
             // Register to Register instructions, pg 17
-            case "mlt", "dvd", "trr", "and", "orr", "not" -> binaryToFields_reg2reg(binaryFields);
+            case "mlt", "dvd", "trr", "and", "orr", "not", "r2x", "x2r" -> binaryToFields_reg2reg(binaryFields);
             // Shift/ Rotate operations, pg 18
             case "src", "rrc" -> binaryToFields_shiftRotate(binaryFields);
             // I/O operations, pg 20
