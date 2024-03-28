@@ -6,10 +6,7 @@ import group1.mips_simulator.components.cpuParts.RomLoader;
 import group1.mips_simulator.components.instructionExecution.ExecutionResult;
 import group1.mips_simulator.components.instructionExecution.InstructionExecutions;
 import group1.mips_simulator.components.instructionParts.Field;
-import group1.mips_simulator.components.instructionParts.instruction.Instruction;
-import group1.mips_simulator.components.instructionParts.instruction.InstructionFactory;
-import group1.mips_simulator.components.instructionParts.instruction.RXIA_Instruction;
-import group1.mips_simulator.components.instructionParts.instruction.Reg2RegInstruction;
+import group1.mips_simulator.components.instructionParts.instruction.*;
 import group1.mips_simulator.components.memParts.Memory;
 
 
@@ -122,7 +119,8 @@ public class Computer {
             case "orr" -> exe.execute_orr(this, (Reg2RegInstruction) instruction);
             case "not" -> exe.execute_not(this, (Reg2RegInstruction) instruction);
             // Shift/Rotate Operations
-            // TODO
+            case "src" -> exe.execute_src(this, (Bitwise_Instruction) instruction);
+            case "rrc" -> exe.execute_rrc(this, (Bitwise_Instruction) instruction);
             // I/O Operations
             // TODO
             // Floating Point Instructions/ Vector Operations

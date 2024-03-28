@@ -162,4 +162,22 @@ public class Utility {
         return result.toString();
     }
 
+    public static String rotateLeftOne(String bitStr) {
+        char leftmostChar = bitStr.toCharArray()[0];
+        StringBuilder result = new StringBuilder();
+        result.append(bitStr.substring(1));
+        result.append(leftmostChar);
+
+        return result.toString();
+    }
+
+    public static String rotateRightOne(String bitStr) {
+        int lastIndex = bitStr.length() - 1;
+        char rightmostChar = bitStr.toCharArray()[lastIndex];
+        StringBuilder result = new StringBuilder();
+        result.append(rightmostChar);
+        result.append(bitStr.substring(0, lastIndex));
+        return result.toString();
+    }
+
 }
