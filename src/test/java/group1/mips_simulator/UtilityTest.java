@@ -61,6 +61,16 @@ class UtilityTest {
     }
 
     @Test
+    void rotateTests() {
+        assertEquals("0010", Utility.rotateLeftOne("0001"));
+        assertEquals("0010", Utility.rotateRightOne("0100"));
+
+
+        assertEquals("0001", Utility.rotateLeftOne("1000"));
+        assertEquals("1000", Utility.rotateRightOne("0001"));
+    }
+
+    @Test
     void instructionToShort() {
 //        Field f1 = new Field(0);
 //        Instruction i1 = new Instruction();

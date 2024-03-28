@@ -7,6 +7,7 @@ import group1.mips_simulator.components.Word;
 import group1.mips_simulator.components.cpuParts.ConditionCode;
 import group1.mips_simulator.components.cpuParts.Register;
 import group1.mips_simulator.components.instructionParts.Field;
+import group1.mips_simulator.components.instructionParts.instruction.Bitwise_Instruction;
 import group1.mips_simulator.components.instructionParts.instruction.Instruction;
 import group1.mips_simulator.components.instructionParts.instruction.RXIA_Instruction;
 import group1.mips_simulator.components.instructionParts.instruction.Reg2RegInstruction;
@@ -543,6 +544,73 @@ public class InstructionExecutions {
         short immediate = i.getA().value; //the Address portion is considered to be the Immediate value
         short newValue = errorHandling.detectOverUnderflow(computer, targetReg.read() - immediate);
         targetReg.write(newValue);
+        return new ExecutionResult(computer.currentPcPlus1());
+    }
+
+    /**
+     * SRC r, count, L/R, A/L
+     * 30(octal)
+     * Shift Register by Count
+     * c(r) is shifted left (L/R =1) or right (L/R = 0) either logically (A/L = 1) or arithmetically (A/L = 0)
+     * XX, XXX are ignored
+     * Count = 0…15
+     * If Count = 0, no shift occurs
+     */
+    public ExecutionResult execute_src(Computer computer, Bitwise_Instruction i) {
+        Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
+
+        boolean shiftLeft = (i.getLeftRight().value == 1);
+        boolean shiftLogically = (i.getArithmeticLogical().value == 1);
+        short count = i.getCount().value;
+
+        short value = targetReg.read();
+        if (shiftLeft) {
+            value = (short) (value << count);
+        } else {
+            if (shiftLogically) {
+                value = (short) (value >>> count); // Signed
+            } else {
+                // arithmetic
+                value = (short) (value >> count); // Unsigned
+            }
+        }
+        targetReg.write(value);
+
+        return new ExecutionResult(computer.currentPcPlus1());
+    }
+
+    /**
+     * RRC r, count, L/R, A/L
+     * 31(octal)
+     * Rotate Register by Count
+     * c(r) is rotated left (L/R = 1) or right (L/R =0) either logically (A/L =1)
+     * XX, XXX is ignored
+     * Count = 0…15
+     * If Count = 0, no rotate occurs
+     */
+    public ExecutionResult execute_rrc(Computer computer, Bitwise_Instruction i) {
+        Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
+
+        boolean shiftLeft = (i.getLeftRight().value == 1);
+        boolean shiftLogically = (i.getArithmeticLogical().value == 1);
+        short count = i.getCount().value;
+
+        String valueAsStr = targetReg.toString_Binary().replace("_", "");
+
+        if (shiftLeft) {
+            for (int j = 0; j < count; j++) {
+                valueAsStr = Utility.rotateLeftOne(valueAsStr);
+            }
+        } else {
+            // shift right
+            for (int j = 0; j < count; j++) {
+                valueAsStr = Utility.rotateRightOne(valueAsStr);
+            }
+        }
+
+        short newValue = Utility.binaryToShort(valueAsStr);
+        targetReg.write(newValue);
+
         return new ExecutionResult(computer.currentPcPlus1());
     }
 }
