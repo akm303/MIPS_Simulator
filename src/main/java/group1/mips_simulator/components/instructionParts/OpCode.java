@@ -86,6 +86,7 @@ public class OpCode {
             case 38 -> new OpCode("r2x");
             case 39 -> new OpCode("x2r");
             case 40 -> new OpCode("aix");
+            case 41 -> new OpCode("xor");
 
             default -> throw new IllegalArgumentException("Unknown Operation Code: " + Integer.toString(opCodeValue));
         };
@@ -165,6 +166,7 @@ public class OpCode {
             case "r2x" -> 38; // 46 octal
             case "x2r" -> 39; // 47 octal
             case "aix" -> 40; // 50 octal
+            case "xor" -> 41; // 51 octal
 
             default -> throw new IllegalArgumentException("Unknown Operation Code: " + this.name);
         };

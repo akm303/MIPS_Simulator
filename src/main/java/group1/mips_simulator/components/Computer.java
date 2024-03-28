@@ -150,6 +150,7 @@ public class Computer {
             // Floating Point Instructions/ Vector Operations
             // TODO
             // Custom instructions
+            case "xor" -> exe.execute_xor(this, (Reg2RegInstruction) instruction);
             case "r2x" -> exe.execute_r2x(this, (Reg2RegInstruction) instruction);
             case "x2r" -> exe.execute_x2r(this, (Reg2RegInstruction) instruction);
             case "aix" -> exe.execute_aix(this, (RXIA_Instruction) instruction);

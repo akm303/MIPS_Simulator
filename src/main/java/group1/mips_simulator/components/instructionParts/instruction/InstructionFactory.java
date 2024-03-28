@@ -54,7 +54,9 @@ public class InstructionFactory {
                     //custom
                     "aix" -> new RXIA_Instruction(code, fields);
             // Register to Register instructions, pg 17
-            case "mlt", "dvd", "trr", "and", "orr", "not", "r2x", "x2r" -> new Reg2RegInstruction(code, fields);
+            case "mlt", "dvd", "trr", "and", "orr", "not",
+                    //custom
+                    "xor", "r2x", "x2r" -> new Reg2RegInstruction(code, fields);
             // Shift/ Rotate operations, pg 18
             case "src", "rrc" -> new Instruction(code, fields);
             // I/O operations, pg 20

@@ -523,7 +523,7 @@ public class InstructionExecutions {
 
     /**
      * AIR r, immed
-     *
+     * <p>
      * Add immediate to register
      */
     public ExecutionResult execute_air(Computer computer, RXIA_Instruction i) {
@@ -538,7 +538,7 @@ public class InstructionExecutions {
 
     /**
      * SIR r, immed
-     *
+     * <p>
      * Subtract immediate from register
      */
     public ExecutionResult execute_sir(Computer computer, RXIA_Instruction i) {
@@ -548,6 +548,23 @@ public class InstructionExecutions {
         short immediate = i.getA().value; //the Address portion is considered to be the Immediate value
         short newValue = errorHandling.detectOverUnderflow(computer, targetReg.read() - immediate);
         targetReg.write(newValue);
+        return new ExecutionResult(computer.currentPcPlus1());
+    }
+
+    /**
+     * XOR XX,YY
+     * Custom Instruction
+     * XOR the bits in the targeted x and y registers. Save the result to the x register.
+     */
+    public ExecutionResult execute_xor(Computer computer, Reg2RegInstruction i) {
+        Register rx = computer.cpu.regfile.getGPR(i.getRX().value);
+        Register ry = computer.cpu.regfile.getGPR(i.getRY().value);
+
+        short rxValue = rx.read();
+        short ryValue = ry.read();
+        short newValue = (short) (rxValue ^ ryValue); // java xor operation
+        rx.write(newValue);
+
         return new ExecutionResult(computer.currentPcPlus1());
     }
 
