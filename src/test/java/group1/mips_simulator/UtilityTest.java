@@ -80,6 +80,7 @@ class UtilityTest {
         assertEquals(0b0000_0000_0011_0001, Utility.charToShort('1'));
         assertEquals(0b0000_0000_0011_0010, Utility.charToShort('2'));
         assertEquals(0b0000_0000_0011_0011, Utility.charToShort('3'));
+        assertEquals(0b0000_0000_0000_1010, Utility.charToShort('\n'));
     }
 
     @Test
@@ -96,6 +97,7 @@ class UtilityTest {
 
 
         assertEquals(Utility.shortToChar((short) 0b0000_0000_0000_0000), '\0');
+        assertEquals(Utility.shortToChar((short) 0b0000_0000_0000_1010), '\n');
     }
 
     @Test

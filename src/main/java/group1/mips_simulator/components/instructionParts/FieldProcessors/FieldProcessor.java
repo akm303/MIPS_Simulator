@@ -26,7 +26,7 @@ public class FieldProcessor {
      * NOTE: The binary fields MUST be of length 10 exactly, and it must be
      * a valid binary number ('0' and '1' characters only)
      *
-     * @param code The OpCode that directs how to process fields
+     * @param code         The OpCode that directs how to process fields
      * @param binaryFields The 10 bits of the binary fields
      * @return The Vector of Fields for the Op Code
      */
@@ -45,9 +45,13 @@ public class FieldProcessor {
                     // Arithmetic and logical instructions, pg 16
                     "amr", "smr", "air", "sir",
                     // Floating Point Arithmetic, pg 21
-                    "fadd", "fsub", "vadd", "vsub", "cnvrt", "ldfr", "stfr" -> binaryToFields_rxia(binaryFields);
+                    "fadd", "fsub", "vadd", "vsub", "cnvrt", "ldfr", "stfr",
+                    // custom
+                    "aix" -> binaryToFields_rxia(binaryFields);
             // Register to Register instructions, pg 17
-            case "mlt", "dvd", "trr", "and", "orr", "not", "r2x", "x2r" -> binaryToFields_reg2reg(binaryFields);
+            case "mlt", "dvd", "trr", "and", "orr", "not",
+                    //custom 
+                    "r2x", "x2r" -> binaryToFields_reg2reg(binaryFields);
             // Shift/ Rotate operations, pg 18
             case "src", "rrc" -> binaryToFields_shiftRotate(binaryFields);
             // I/O operations, pg 20

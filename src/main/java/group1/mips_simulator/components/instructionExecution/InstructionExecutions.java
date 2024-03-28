@@ -590,4 +590,15 @@ public class InstructionExecutions {
 
         return new ExecutionResult(computer.currentPcPlus1());
     }
+
+    public ExecutionResult execute_aix(Computer computer, RXIA_Instruction i) {
+        Register targetReg = computer.cpu.regfile.getIXR(i.getIX().value);
+        short immediate = i.getA().value;
+
+        errorHandling.resetCC(computer);
+        short newValue = errorHandling.detectOverUnderflow(computer, targetReg.read() + immediate);
+        targetReg.write(newValue);
+
+        return new ExecutionResult(computer.currentPcPlus1());
+    }
 }

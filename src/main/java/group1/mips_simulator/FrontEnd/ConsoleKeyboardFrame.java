@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.HashMap;
 
 public class ConsoleKeyboardFrame {
     public static int WIDTH = 500;
@@ -18,6 +19,7 @@ public class ConsoleKeyboardFrame {
     JFrame myFrame;
     JTextField userTextInput;
     JButton userDoneButton;
+
 
     public ConsoleKeyboardFrame(int x, int y) {
         myFrame = makeNewKeyboardFrame();
@@ -69,6 +71,7 @@ public class ConsoleKeyboardFrame {
     void setupDoneButton() {
         this.userDoneButton.addActionListener(e -> {
             userDone();
+            SwingConsole.buttonFields.get("Run").doClick();
         });
     }
 

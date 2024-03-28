@@ -83,7 +83,6 @@ public class Computer {
         Instruction nextInstruction = factory.buildInstruction_fromShort(this.cpu.regfile.getIR().read());
 
         try {
-            System.out.println("-------------------");
             System.out.println("-----------------------");
             System.out.println("Executing instruction: " + nextInstruction.toString_Binary());
             return this.executeInstruction(nextInstruction);
@@ -153,6 +152,7 @@ public class Computer {
             // Custom instructions
             case "r2x" -> exe.execute_r2x(this, (Reg2RegInstruction) instruction);
             case "x2r" -> exe.execute_x2r(this, (Reg2RegInstruction) instruction);
+            case "aix" -> exe.execute_aix(this, (RXIA_Instruction) instruction);
             default ->
                     throw new IllegalArgumentException("Unknown instruction op code name: " + instruction.opCode.name +
                             "\nInstruction: " + instruction);
