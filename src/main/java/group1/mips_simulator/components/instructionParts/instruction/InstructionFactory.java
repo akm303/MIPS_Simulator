@@ -58,7 +58,7 @@ public class InstructionFactory {
                     //custom
                     "xor", "r2x", "x2r" -> new Reg2RegInstruction(code, fields);
             // Shift/ Rotate operations, pg 18
-            case "src", "rrc" -> new Instruction(code, fields);
+            case "src", "rrc" -> new Bitwise_Instruction(code, fields);
             // I/O operations, pg 20
             case "in", "out", "chk" -> new IO_Instruction(code, fields);
             default -> throw new IllegalArgumentException("Unknown OpCode: " + code.name);

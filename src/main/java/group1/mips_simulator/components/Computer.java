@@ -143,7 +143,8 @@ public class Computer {
             case "orr" -> exe.execute_orr(this, (Reg2RegInstruction) instruction);
             case "not" -> exe.execute_not(this, (Reg2RegInstruction) instruction);
             // Shift/Rotate Operations
-            // TODO
+            case "src" -> exe.execute_src(this, (Bitwise_Instruction) instruction);
+            case "rrc" -> exe.execute_rrc(this, (Bitwise_Instruction) instruction);
             // I/O Operations
             case "in" -> io_exe.execute_in(this, (IO_Instruction) instruction);
             case "out" -> io_exe.execute_out(this, (IO_Instruction) instruction);

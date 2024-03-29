@@ -169,4 +169,22 @@ public class Utility {
         return result.toString();
     }
 
+
+    public static String rotateLeftOne(String bitStr) {
+        char leftmostChar = bitStr.toCharArray()[0];
+        String result = bitStr.substring(1) +
+                leftmostChar;
+
+        return result;
+    }
+
+    public static String rotateRightOne(String bitStr) {
+        int lastIndex = bitStr.length() - 1;
+        char rightmostChar = bitStr.toCharArray()[lastIndex];
+        String result = rightmostChar +
+                bitStr.substring(0, lastIndex);
+        return result;
+    }
+
 }
+
