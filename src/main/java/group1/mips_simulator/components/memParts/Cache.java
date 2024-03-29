@@ -25,7 +25,7 @@ public class Cache{
 
     //data structures
     Queue<Short> cacheQueue = new LinkedList<>(); //going to use list as a queue for now
-    Map<Short, Block> cacheBlocks = new HashMap<>(); //<tag:block>
+    Map<Short, Block> cacheBlocks = new LinkedHashMap<>(); //<tag:block>
 
 
     // CONSTRUCTOR
@@ -34,9 +34,11 @@ public class Cache{
         memory = memory_;
     }
 
+
     public int size(){
         return cacheBlocks.size();
     }
+
 
     // Memory Method Encapsulation (Get/Set Methods)
     public Word get(short address){
@@ -60,6 +62,7 @@ public class Cache{
         writeShortToAddress(address,value);
     }
 
+
     /* WORD OPERATIONS GET/SET */
     public Word getWordAtAddress(short address){
         short tag = calculateTag(address);
@@ -74,8 +77,11 @@ public class Cache{
         short offset = calculateOffset(address);
 
         Block block = getBlock(tag);
+        // write-through; writes data to block, and immediately writes to memory as well
         block.set(offset,value);
+        memory.set(address,value);
     }
+
 
     /* short OPERATIONS READ/WRITE */
     public short readShortAtAddress(short address){
@@ -95,16 +101,25 @@ public class Cache{
         Block returnBlock;
         if(cacheBlocks.containsKey(tag))
             returnBlock = cacheBlocks.get(tag);
-        else{
+        else {
             if(cacheBlocks.size() < cacheSize) { addLine(tag); }
-            else{ removeLine(); }
+            else { removeLine(); addLine(tag); }
             returnBlock = cacheBlocks.get(tag);
         }
-        returnBlock.readBlockFromMemory(memory); //update block with current memory's values
+        returnBlock.update(memory); //update block with current memory's values
         return returnBlock;
     }
 
     /* LINE OPERATIONS */
+    public Vector<Short> getLineTags(){
+        //returns list of lines
+        Vector<Short> rvect = new Vector<>(16);
+        for(Map.Entry<Short,Block> entry : cacheBlocks.entrySet()){
+            rvect.add(entry.getKey());
+        }
+        return rvect;
+    }
+
     public void addLine(short tag){
         /** Add a new line to cache
          1. Add a new tag to end of Queue

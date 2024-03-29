@@ -1,6 +1,7 @@
 package group1.mips_simulator.components.memParts;
 
 import group1.mips_simulator.components.Config;
+import group1.mips_simulator.components.Word;
 
 public class Block extends Memory{
     /**
@@ -15,27 +16,33 @@ public class Block extends Memory{
      */
     private final int tag;
 
-    public Block(int tag_, Memory memory_){
+    public Block(int tag_, Memory memory){
         super(Config.ENTRIES_PER_BLOCK); // 8 words per block
         tag = tag_;
-        readBlockFromMemory(memory_);
+        readBlockFromMemory(memory);
     }
 
-    public void readBlockFromMemory(Memory memory_){
+    public void update(Memory memory){
+        readBlockFromMemory(memory);
+    }
+
+    public void readBlockFromMemory(Memory memory){
         // write every value in associated block of memory to self
         int startOfBlock = tag << 3;
         for(short i = 0; i < data.length; i++){
-            write(i, memory_.read(startOfBlock + i));
+            write(i, memory.read(startOfBlock + i));
         }
     }
 
-    public void writeBlockToMemory(Memory memory_){
+    public void writeBlockToMemory(Memory memory){
         // write every value of the block to memory
         short startOfBlock = (short)(tag << 3);
         for(short i = 0; i < data.length; i++){
-            memory_.write((short)(startOfBlock + i),read(i));
+            memory.write((short)(startOfBlock + i),read(i));
         }
     }
+
+
 
     @Override
     public String toString() {
