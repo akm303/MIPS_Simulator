@@ -70,7 +70,7 @@ public class SwingConsole {
         textFields.get("CC").setText(computer.cpu.regfile.getCC().toString_Binary());
 
         // Update the cache
-        //cacheGui.redrawCache(computer.memory.cache);
+        cacheGui.redrawCache(computer.cache); //todo: test this
     }
 
 }
