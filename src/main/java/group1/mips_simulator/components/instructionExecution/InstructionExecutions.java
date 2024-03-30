@@ -244,13 +244,16 @@ public class InstructionExecutions {
      * Else PC <- PC + 1
      */
     public ExecutionResult execute_sob(Computer computer, RXIA_Instruction i) {
-        // r <− c(r) – 1
+        // r <− c(r)
         // Contents of register r, minus 1
-        int r = computer.cpu.regfile.getGPR(i.getR().value).read() - 1;
 
         // If c(r) > 0,  PC <- EA;
-        Register targetReg = computer.cpu.regfile.getGPR(r);
-        if (targetReg.read() > 0) {
+        Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
+        short regValue = targetReg.read();
+        short newValue = (short) (regValue - 1);
+        targetReg.write(newValue);
+
+        if (newValue > 0) {
             short ea = computer.calculateEA(i);
             return new ExecutionResult(ea);
         }
@@ -333,11 +336,11 @@ public class InstructionExecutions {
     /**
      * DVD rx,ry
      * 23(oct)
-     * Multiply Register by Register
-     * rx, rx+1 <- c(rx) / c(ry)
+     * Divide Register by Register
+     * rx, rx+1 <- c(rx)/ c(ry)
      * rx must be 0 or 2
+     * rx contains the quotient; rx+1 contains the remainder
      * ry must be 0 or 2
-     * rx contains the high order bits, rx+1 contains the low order bits of the result
      * If c(ry) = 0, set cc(3) to 1 (set DIVZERO flag)
      */
     public ExecutionResult execute_DVD(Computer computer, Reg2RegInstruction i) {
@@ -366,18 +369,17 @@ public class InstructionExecutions {
             return new ExecutionResult(computer.currentPC(), false);
         }
 
-        // c(rx) * c(ry)
-        int newValue = regX.read() * regY.read();
-        String newValueBinaryStr = Utility.intTo32BitString(newValue);
+        // c(rx) / c(ry)
+        short divValue = (short) (regX.read() / regY.read());
+        short remainder = (short)(regX.read() % regY.read());
 
-        // Top 16 bits go into RegX
-        // Bottom 16 bits go into RegY
-        String top16Bits = newValueBinaryStr.substring(0, 16);
-        String bot16Bits = newValueBinaryStr.substring(16, 32);
+
+        regX.write(divValue);
 
         Register regXPlus1 = computer.cpu.regfile.getGPR(rxIndex + 1);
-        regX.write(Utility.binaryToShort(top16Bits));
-        regXPlus1.write(Utility.binaryToShort(bot16Bits));
+        // Regx gets the quotient
+        regX.write(divValue);
+        regXPlus1.write(remainder);
 
         return new ExecutionResult(computer.currentPcPlus1());
     }

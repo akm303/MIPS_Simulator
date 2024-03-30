@@ -51,7 +51,7 @@ public class FieldProcessor {
             // Register to Register instructions, pg 17
             case "mlt", "dvd", "trr", "and", "orr", "not",
                     //custom 
-                    "r2x", "x2r" -> binaryToFields_reg2reg(binaryFields);
+                    "xor", "r2x", "x2r" -> binaryToFields_reg2reg(binaryFields);
             // Shift/ Rotate operations, pg 18
             case "src", "rrc" -> binaryToFields_shiftRotate(binaryFields);
             // I/O operations, pg 20
