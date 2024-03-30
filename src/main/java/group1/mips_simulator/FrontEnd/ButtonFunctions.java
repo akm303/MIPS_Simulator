@@ -14,6 +14,12 @@ import java.util.HashMap;
 
 public class ButtonFunctions {
 
+    public void setupAllButtons(HashMap<String, JButton> buttonFields, Computer computer) {
+        setupAllRegisterButtons(buttonFields, computer);
+        setupAllFunctionButtons(buttonFields, computer);
+        SetUpIplButtons(buttonFields, computer);
+    }
+
     void onRegButtonClick(Register reg) {
         JTextField binInput = SwingConsole.textFields.get("BinInput");
         String userInputBinStr = binInput.getText().replace(" ", "");
@@ -122,10 +128,9 @@ public class ButtonFunctions {
      * Halt any existing program (if one is running).
      */
     void haltOnClick(Computer computer) {
-        System.out.println("HALTING!!!!!!!!!!!!!!!!!!!!!!!");
         SwingConsole.runBgTask.halt();
         SwingConsole.redraw();
-        System.out.println("Finished HALTING!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println("Finished Halting");
     }
 
     public void setupAllFunctionButtons(HashMap<String, JButton> buttonFields, Computer computer) {
@@ -141,7 +146,11 @@ public class ButtonFunctions {
 
     //////////////////////////////////////////////////////////////////////
 
-    void iplOnClick(Computer computer) {
+    void iplOnClick(HashMap<String, JButton> buttonFields, Computer computer) {
+        computer.reset();
+        setupAllRegisterButtons(buttonFields, computer); // For some reason we need to re-setup the reg buttons after reset
+        SwingConsole.redraw();
+
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "Binary Files", "txt", "bi");
@@ -169,6 +178,6 @@ public class ButtonFunctions {
     }
 
     public void SetUpIplButtons(HashMap<String, JButton> buttonFields, Computer computer) {
-        buttonFields.get("IPL").addActionListener(e -> iplOnClick(computer));
+        buttonFields.get("IPL").addActionListener(e -> iplOnClick(buttonFields, computer));
     }
 }

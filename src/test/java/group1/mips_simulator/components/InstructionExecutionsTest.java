@@ -1,5 +1,6 @@
 package group1.mips_simulator.components;
 
+import group1.mips_simulator.Utility;
 import group1.mips_simulator.components.cpuParts.ConditionCode;
 import group1.mips_simulator.components.cpuParts.RegisterFile;
 import group1.mips_simulator.components.instructionExecution.InstructionExecutions;
@@ -205,4 +206,60 @@ class InstructionExecutionsTest {
         computer.executeInstruction(instruction);
         assertEquals(20, computer.cpu.regfile.getPC().read());
     }
+
+    short shifter(boolean shiftLeft, boolean shiftLogically, short value, short count) {
+        if (shiftLeft) {
+            value = (short) (value << count);
+        } else {
+            if (shiftLogically) {
+                value = (short) (value >>> count); // Signed
+            } else {
+                // arithmetic
+                value = (short) (value >> count); // Unsigned
+            }
+        }
+        return value;
+    }
+
+    @Test
+    void shitTests() {
+        assertEquals(2, shifter(false, true, (short) 8, (short) 2));
+        assertEquals(2, shifter(false, false, (short) 8, (short) 2));
+
+        assertEquals(32, shifter(true, false, (short) 8, (short) 2));
+        assertEquals(32, shifter(true, true, (short) 8, (short) 2));
+
+        assertEquals(-2, shifter(false, true, (short) -8, (short) 2));
+        assertEquals(-2, shifter(false, false, (short) -8, (short) 2));
+
+        //////////////////////////////////////////////////////////////////////////////
+
+        short a = (short) 0b1001_1100_0100_0000; //40_000   1001_1100_0100_0000
+        System.out.println(a);
+
+        short b = (short) 0b0110_0001_1010_1000; //25_000   0110_0001_1010_1000
+        System.out.println(b);
+
+        System.out.println("--------------------------");
+        short aSubb = (short) (a - b);
+        short y = (short)(aSubb >> 31);
+        //System.out.println(a - b);
+        System.out.println(aSubb);
+        System.out.println(Utility.shortToBinaryString_Pretty(aSubb, 16));
+        System.out.println((aSubb ^ y) - y);
+        assertEquals(15000, (aSubb ^ y) - y);
+
+        System.out.println("--------------------------");
+        short bSuba = (short) (b - a);
+        y = (short)(bSuba >> 31);
+        //System.out.println(b - a);
+        System.out.println(bSuba);
+        System.out.println(Utility.shortToBinaryString_Pretty(bSuba, 16));
+        System.out.println((bSuba ^ y) - y);
+        assertEquals(15000, (bSuba ^ y) - y);
+
+        System.out.println("--------------------------");
+
+    }
+
 }

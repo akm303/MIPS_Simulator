@@ -6,11 +6,9 @@ import group1.mips_simulator.components.cpuParts.RomLoader;
 import group1.mips_simulator.components.instructionExecution.ExecutionResult;
 import group1.mips_simulator.components.instructionExecution.InstructionExecutions;
 import group1.mips_simulator.components.instructionParts.Field;
-import group1.mips_simulator.components.instructionParts.instruction.Instruction;
-import group1.mips_simulator.components.instructionParts.instruction.InstructionFactory;
-import group1.mips_simulator.components.instructionParts.instruction.RXIA_Instruction;
-import group1.mips_simulator.components.memParts.Cache;
+import group1.mips_simulator.components.instructionParts.instruction.*;
 import group1.mips_simulator.components.memParts.Memory;
+import group1.mips_simulator.components.memParts.Cache;
 
 
 /**
@@ -28,6 +26,11 @@ public class Computer {
         cpu = new CPU();
         memory = new Memory(Config.MEM_SIZE);
         cache = new Cache(memory);
+    }
+
+    public void reset() {
+        memory.reset();
+        cpu.reset();
     }
 
     public void loadROM(ROM rom_) {
@@ -60,6 +63,7 @@ public class Computer {
         Instruction nextInstruction = factory.buildInstruction_fromShort(this.cpu.regfile.getIR().read());
 
         try {
+            System.out.println("-----------------------");
             System.out.println("Executing instruction: " + nextInstruction.toString_Binary());
             return this.executeInstruction(nextInstruction);
         } catch (IllegalArgumentException e) {
@@ -106,11 +110,20 @@ public class Computer {
             case "sob" -> exe.execute_sob(this, (RXIA_Instruction) instruction);
             case "jge" -> exe.execute_jge(this, (RXIA_Instruction) instruction);
             // Arithmetic and Logical Instructions
-            // TODO
+            case "amr" -> exe.execute_amr(this, (RXIA_Instruction) instruction);
+            case "smr" -> exe.execute_smr(this, (RXIA_Instruction) instruction);
+            case "air" -> exe.execute_air(this, (RXIA_Instruction) instruction);
+            case "sir" -> exe.execute_sir(this, (RXIA_Instruction) instruction);
             // Register to Register Instructions
-            // TODO
+            case "mlt" -> exe.execute_mlt(this, (Reg2RegInstruction) instruction);
+            case "dvd" -> exe.execute_DVD(this, (Reg2RegInstruction) instruction);
+            case "trr" -> exe.execute_trr(this, (Reg2RegInstruction) instruction);
+            case "and" -> exe.execute_and(this, (Reg2RegInstruction) instruction);
+            case "orr" -> exe.execute_orr(this, (Reg2RegInstruction) instruction);
+            case "not" -> exe.execute_not(this, (Reg2RegInstruction) instruction);
             // Shift/Rotate Operations
-            // TODO
+            case "src" -> exe.execute_src(this, (Bitwise_Instruction) instruction);
+            case "rrc" -> exe.execute_rrc(this, (Bitwise_Instruction) instruction);
             // I/O Operations
             // TODO
             // Floating Point Instructions/ Vector Operations

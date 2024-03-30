@@ -22,8 +22,6 @@ public class ROM {
      * @param biFile The file to extract the data from
      */
     public void readFromFile(File biFile) throws IOException {
-        // TODO: Implement this function
-        System.out.println("ROM reading from bi file: " + biFile.getAbsolutePath());
         FileReaderSwing fr = new FileReaderSwing();
         try {
             dataFromFile = fr.readBinaryFile(biFile.getAbsolutePath());

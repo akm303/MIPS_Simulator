@@ -8,5 +8,5 @@ public class Config {
     public static final short WORD_SIZE = 16;
     public static final int ENTRIES_PER_BLOCK = 8;
     public static final int CACHE_LINES = 16;
-
+    public static final int MAX_16_BIT_VALUE = 0b1111_1111_1111_1111;
 }

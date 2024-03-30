@@ -1,18 +1,23 @@
 package group1.mips_simulator.components.instructionExecution;
 
 
+import group1.mips_simulator.Utility;
 import group1.mips_simulator.components.Computer;
 import group1.mips_simulator.components.Word;
 import group1.mips_simulator.components.cpuParts.ConditionCode;
 import group1.mips_simulator.components.cpuParts.Register;
 import group1.mips_simulator.components.instructionParts.Field;
+import group1.mips_simulator.components.instructionParts.instruction.Bitwise_Instruction;
 import group1.mips_simulator.components.instructionParts.instruction.Instruction;
 import group1.mips_simulator.components.instructionParts.instruction.RXIA_Instruction;
+import group1.mips_simulator.components.instructionParts.instruction.Reg2RegInstruction;
 
 /**
  * A class that holds all the functions for actually executing an Instruction object
  */
 public class InstructionExecutions {
+
+    ErrorHandling errorHandling = new ErrorHandling();
 
     /**
      * L0DR r, x, address[,I]
@@ -270,6 +275,174 @@ public class InstructionExecutions {
     }
 
     /**
+     * MLT rx,ry
+     * 22(oct)
+     * Multiply Register by Register
+     * rx, rx+1 <- c(rx) * c(ry)
+     * rx must be 0 or 2
+     * ry must be 0 or 2
+     * rx contains the high order bits, rx+1 contains the low order bits of the result
+     * Set OVERFLOW flag, if overflow
+     */
+    public ExecutionResult execute_mlt(Computer computer, Reg2RegInstruction i) {
+        // Reset the condition code overflow bit
+        computer.cpu.regfile.getCC().setOverflowBit(false);
+
+        // rx must be 0 or 2
+        // ry must be 0 or 2
+        short rxIndex = i.getRX().value;
+        short ryIndex = i.getRY().value;
+        if ((rxIndex != 0) && (rxIndex != 2)) {
+            System.out.println("MLT instruction expected the RX to be 0 or 2, instead got: " + rxIndex);
+            return new ExecutionResult(computer.currentPC(), false);
+        }
+        if ((ryIndex != 0) && (ryIndex != 2)) {
+            System.out.println("MLT instruction expected the RY to be 0 or 2, instead got: " + ryIndex);
+            return new ExecutionResult(computer.currentPC(), false);
+        }
+
+        Register regX = computer.cpu.regfile.getGPR(rxIndex);
+        Register regY = computer.cpu.regfile.getGPR(ryIndex);
+
+        // c(rx) * c(ry)
+        long newValue = (long) regX.read() * (long) regY.read();
+
+        String newValueBinaryStr = Utility.intTo32BitString((int) newValue);
+
+        // Top 16 bits go into RegX
+        // Bottom 16 bits go into RegY
+        String top16Bits = newValueBinaryStr.substring(0, 16);
+        String bot16Bits = newValueBinaryStr.substring(16, 32);
+
+        Register regXPlus1 = computer.cpu.regfile.getGPR(rxIndex + 1);
+        regX.write(Utility.binaryToShort(top16Bits));
+        regXPlus1.write(Utility.binaryToShort(bot16Bits));
+
+        // Set OVERFLOW flag, if overflow
+        if (!top16Bits.equals("0000000000000000")) {
+            // If the largest 16 bits are NOT all 0 then overflow
+            computer.cpu.regfile.getCC().setOverflowBit(true);
+        }
+
+        return new ExecutionResult(computer.currentPcPlus1());
+    }
+
+    /**
+     * DVD rx,ry
+     * 23(oct)
+     * Multiply Register by Register
+     * rx, rx+1 <- c(rx) / c(ry)
+     * rx must be 0 or 2
+     * ry must be 0 or 2
+     * rx contains the high order bits, rx+1 contains the low order bits of the result
+     * If c(ry) = 0, set cc(3) to 1 (set DIVZERO flag)
+     */
+    public ExecutionResult execute_DVD(Computer computer, Reg2RegInstruction i) {
+        // Reset the div by 0 bit
+        computer.cpu.regfile.getCC().setDivideByZeroBit(false);
+
+        // rx must be 0 or 2
+        // ry must be 0 or 2
+        short rxIndex = i.getRX().value;
+        short ryIndex = i.getRY().value;
+        if ((rxIndex != 0) && (rxIndex != 2)) {
+            System.out.println("DVD instruction expected the RX to be 0 or 2, instead got: " + rxIndex);
+            return new ExecutionResult(computer.currentPC(), false);
+        }
+        if ((ryIndex != 0) && (ryIndex != 2)) {
+            System.out.println("DVD instruction expected the RY to be 0 or 2, instead got: " + ryIndex);
+            return new ExecutionResult(computer.currentPC(), false);
+        }
+
+        Register regX = computer.cpu.regfile.getGPR(rxIndex);
+        Register regY = computer.cpu.regfile.getGPR(ryIndex);
+
+        if (regY.read() == 0) {
+            System.out.println("DVD instruction Divide by zero detected. Halting");
+            computer.cpu.regfile.getCC().setDivideByZeroBit(true);
+            return new ExecutionResult(computer.currentPC(), false);
+        }
+
+        // c(rx) * c(ry)
+        int newValue = regX.read() * regY.read();
+        String newValueBinaryStr = Utility.intTo32BitString(newValue);
+
+        // Top 16 bits go into RegX
+        // Bottom 16 bits go into RegY
+        String top16Bits = newValueBinaryStr.substring(0, 16);
+        String bot16Bits = newValueBinaryStr.substring(16, 32);
+
+        Register regXPlus1 = computer.cpu.regfile.getGPR(rxIndex + 1);
+        regX.write(Utility.binaryToShort(top16Bits));
+        regXPlus1.write(Utility.binaryToShort(bot16Bits));
+
+        return new ExecutionResult(computer.currentPcPlus1());
+    }
+
+    /**
+     * TRR rx, ry
+     * 24(oct)
+     * Test the Equality of Register and Register
+     * If c(rx) = c(ry), set cc(4) <− 1; else, cc(4) <− 0
+     */
+    public ExecutionResult execute_trr(Computer computer, Reg2RegInstruction i) {
+        Register regX = computer.cpu.regfile.getGPR(i.getRX().value);
+        Register regY = computer.cpu.regfile.getGPR(i.getRY().value);
+
+        boolean isEqual = (regX.read() == regY.read());
+        computer.cpu.regfile.getCC().setEqualityBit(isEqual);
+        return new ExecutionResult(computer.currentPcPlus1());
+    }
+
+    /**
+     * AND rx, ry
+     * 25(oct)
+     * Logical And of Register and Register
+     * c(rx) <− c(rx) AND c(ry)
+     */
+    public ExecutionResult execute_and(Computer computer, Reg2RegInstruction i) {
+        Register regX = computer.cpu.regfile.getGPR(i.getRX().value);
+        Register regY = computer.cpu.regfile.getGPR(i.getRY().value);
+
+        short newValue = (short) (regX.read() & regY.read());
+        regX.write(newValue);
+        return new ExecutionResult(computer.currentPcPlus1());
+    }
+
+    /**
+     * OR rx, ry
+     * 26(oct)
+     * Logical Or of Register and Register
+     * c(rx) <− c(rx) OR c(ry)
+     */
+    public ExecutionResult execute_orr(Computer computer, Reg2RegInstruction i) {
+        Register regX = computer.cpu.regfile.getGPR(i.getRX().value);
+        Register regY = computer.cpu.regfile.getGPR(i.getRY().value);
+
+        short newValue = (short) (regX.read() | regY.read());
+        regX.write(newValue);
+        return new ExecutionResult(computer.currentPcPlus1());
+    }
+
+
+    /**
+     * NOT rx
+     * 27(oct)
+     * Logical Not of Register and Register
+     * c(rx) <− NOT c(rx)
+     */
+    public ExecutionResult execute_not(Computer computer, Reg2RegInstruction i) {
+        Register regX = computer.cpu.regfile.getGPR(i.getRX().value);
+
+        // Convert short to string
+        // Then apply bitwise NOT on that string
+        // Then convert that back into short
+        String newValueString = Utility.binaryNot(Utility.shortToBinaryString(regX.read(), 16));
+        regX.write(Utility.binaryToShort(newValueString));
+        return new ExecutionResult(computer.currentPcPlus1());
+    }
+
+    /**
      * HLT
      * 0(octal)
      * Stops the machine.
@@ -308,5 +481,136 @@ public class InstructionExecutions {
         // that's for this particular trap code.
         short targetAddress = (short) (tableAddress + code.value);
         return new ExecutionResult(targetAddress);
+    }
+
+    /**
+     * AMR r, x, address[,I]
+     * 16(octal)
+     * Add Memory To Register, r = 0..3
+     * r<− c(r) + c(EA)
+     */
+    public ExecutionResult execute_amr(Computer computer, RXIA_Instruction i) {
+        errorHandling.resetCC(computer);
+
+        Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
+        short ea = computer.calculateEA(i);
+        short newValue = errorHandling.detectOverUnderflow(computer, targetReg.read() + ea);
+        targetReg.write(newValue);
+        return new ExecutionResult(computer.currentPcPlus1());
+    }
+
+    /**
+     * SMR r, x, address[,I]
+     * 17(octal)
+     * Subtract Memory From Register, r = 0..3
+     * r <− c(r) – c(EA)
+     */
+    public ExecutionResult execute_smr(Computer computer, RXIA_Instruction i) {
+        errorHandling.resetCC(computer);
+
+        Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
+        short ea = computer.calculateEA(i);
+        short newValue = errorHandling.detectOverUnderflow(computer, targetReg.read() - ea);
+        targetReg.write(newValue);
+        return new ExecutionResult(computer.currentPcPlus1());
+    }
+
+    /**
+     * AIR r, immed
+     * 17(octal)
+     * Subtract Memory From Register, r = 0..3
+     * r <− c(r) – c(EA)
+     */
+    public ExecutionResult execute_air(Computer computer, RXIA_Instruction i) {
+        errorHandling.resetCC(computer);
+
+        Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
+        short immediate = i.getA().value; //the Address portion is considered to be the Immediate value
+        short newValue = errorHandling.detectOverUnderflow(computer, targetReg.read() + immediate);
+        targetReg.write(newValue);
+        return new ExecutionResult(computer.currentPcPlus1());
+    }
+
+    /**
+     * SIR r, immed
+     * 17(octal)
+     * Subtract Memory From Register, r = 0..3
+     * r <− c(r) – c(EA)
+     */
+    public ExecutionResult execute_sir(Computer computer, RXIA_Instruction i) {
+        errorHandling.resetCC(computer);
+
+        Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
+        short immediate = i.getA().value; //the Address portion is considered to be the Immediate value
+        short newValue = errorHandling.detectOverUnderflow(computer, targetReg.read() - immediate);
+        targetReg.write(newValue);
+        return new ExecutionResult(computer.currentPcPlus1());
+    }
+
+    /**
+     * SRC r, count, L/R, A/L
+     * 30(octal)
+     * Shift Register by Count
+     * c(r) is shifted left (L/R =1) or right (L/R = 0) either logically (A/L = 1) or arithmetically (A/L = 0)
+     * XX, XXX are ignored
+     * Count = 0…15
+     * If Count = 0, no shift occurs
+     */
+    public ExecutionResult execute_src(Computer computer, Bitwise_Instruction i) {
+        Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
+
+        boolean shiftLeft = (i.getLeftRight().value == 1);
+        boolean shiftLogically = (i.getArithmeticLogical().value == 1);
+        short count = i.getCount().value;
+
+        short value = targetReg.read();
+        if (shiftLeft) {
+            value = (short) (value << count);
+        } else {
+            if (shiftLogically) {
+                value = (short) (value >>> count); // Signed
+            } else {
+                // arithmetic
+                value = (short) (value >> count); // Unsigned
+            }
+        }
+        targetReg.write(value);
+
+        return new ExecutionResult(computer.currentPcPlus1());
+    }
+
+    /**
+     * RRC r, count, L/R, A/L
+     * 31(octal)
+     * Rotate Register by Count
+     * c(r) is rotated left (L/R = 1) or right (L/R =0) either logically (A/L =1)
+     * XX, XXX is ignored
+     * Count = 0…15
+     * If Count = 0, no rotate occurs
+     */
+    public ExecutionResult execute_rrc(Computer computer, Bitwise_Instruction i) {
+        Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
+
+        boolean shiftLeft = (i.getLeftRight().value == 1);
+        boolean shiftLogically = (i.getArithmeticLogical().value == 1);
+        short count = i.getCount().value;
+
+        String valueAsStr = targetReg.toString_Binary().replace("_", "");
+
+        if (shiftLeft) {
+            for (int j = 0; j < count; j++) {
+                valueAsStr = Utility.rotateLeftOne(valueAsStr);
+            }
+        } else {
+            // shift right
+            for (int j = 0; j < count; j++) {
+                valueAsStr = Utility.rotateRightOne(valueAsStr);
+            }
+        }
+
+        short newValue = Utility.binaryToShort(valueAsStr);
+        targetReg.write(newValue);
+
+        return new ExecutionResult(computer.currentPcPlus1());
     }
 }
