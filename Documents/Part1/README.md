@@ -16,7 +16,7 @@ java -jar MIPS_Simulator.jar
 NOTE: This command may take up to ~10 seconds for the application window to launch.
 Please be patient.
 
-![image info](./pictures/ProjectView_Default.png)
+![image info](pictures/ProjectView_Default.png)
 
 ## Input Fields
 
