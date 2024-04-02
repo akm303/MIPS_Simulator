@@ -39,21 +39,35 @@ The Simulator opens as separate, draggable windows:
   2. Navigate to this project's directory
   3. Choose the `.bi` file to load 
   4. Select the front panel's `Octal Input`
-  5. enter `2000` (This is where our programs starts)
-  6. Click Run 
+  5. enter the octal key provided in [instructions](INSTRUCTIONS.md) (This is where our programs starts)
+  6. Click Run, then follow the on-screen instructions 
 
   For further details and instructions for specific programs, please see: 
   <br>[Instructions.md](INSTRUCTIONS.md)
 
-## Console Keyboard
-Our console keyboard allows users to enter values per program requests.
-<br>*Note:* Without a running program, keyboard will not do anything. Program's also 
+## UI
+### Console Keyboard
+Simulates a console keyboard that allows users to enter values per program requests.
 
-## Console Printer
+### Console Printer
+Simulates a display which will output a program's prompts and values as a program runs. 
 
-## Cache Display
+### Cache Display
+Provides a view into the simulator's cache, displaying each cache line's tags and block
+
+### *Important Note:* 
+Our keyboard will malfunction when entering unexpected inputs.
+- Please make sure a program that requests inputs is running **before** entering a value via Keyboard.
+- Make sure your input **matches the type requested** by prompt (i.e. numbers are integers, words are strings, etc.).
+- Our program works best when following the order of events outlined on the [instructions](INSTRUCTIONS.md) page.
+  + Clicking `Done` before running a program will input a previously entered value without waiting for a user input
+  + Clicking `Done` without typing anything will enter a null value, which will not be visible to the user
+    <br> <i>Deviation from instruction order will likely result in unexpected events and outputs.</i>
 
 
+
+
+## otes regarding the UI
 
 ---
 # Project Part 1

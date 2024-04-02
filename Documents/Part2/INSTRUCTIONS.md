@@ -1,6 +1,6 @@
 # INSTRUCTIONS
 
-To run a program:
+To run any program:
 ---
     1. Select the IPL Button on the Front Panel
     2. Navigate to this project's directory
@@ -9,3 +9,9 @@ To run a program:
     5. enter `2000` (This is where our programs starts)
     6. Click Run 
 
+Further instructions on specific programs below:
+
+`Program_1.bi`
+---
+    Octal Key: 2000 
+    1. 
