@@ -32,20 +32,14 @@ The Simulator opens as separate, draggable windows:
 ![image info](pictures/ProjectView_Default.png)
 
 ---
-# Project Part 2 
 
-## How to Load a Program
-  1. Select the IPL Button on the Front Panel
-  2. Navigate to this project's directory
-  3. Choose the `.bi` file to load 
-  4. Select the front panel's `Octal Input`
-  5. enter the octal key provided in [instructions](INSTRUCTIONS.md) (This is where our programs starts)
-  6. Click Run, then follow the on-screen instructions 
+# Project Part 2
 
-  For further details and instructions for specific programs, please see: 
-  <br>[Instructions.md](INSTRUCTIONS.md)
+### For Instructions on how to Load and Run a Program, please see [instructions](INSTRUCTIONS.md)
 
-## UI
+---
+
+## New UI Components:
 ### Console Keyboard
 Simulates a console keyboard that allows users to enter values per program requests.
 
@@ -53,9 +47,10 @@ Simulates a console keyboard that allows users to enter values per program reque
 Simulates a display which will output a program's prompts and values as a program runs. 
 
 ### Cache Display
-Provides a view into the simulator's cache, displaying each cache line's tags and block
+Provides a view into the simulator's cache, displaying each cache line's tag and block.
+The block view provides an internal look at the data stored at that location in memory (in octal).
 
-### *Important Note:* 
+### *Important UI Note:* 
 Our keyboard will malfunction when entering unexpected inputs.
 - Please make sure a program that requests inputs is running **before** entering a value via Keyboard.
 - Make sure your input **matches the type requested** by prompt (i.e. numbers are integers, words are strings, etc.).
@@ -65,9 +60,6 @@ Our keyboard will malfunction when entering unexpected inputs.
     <br> <i>Deviation from instruction order will likely result in unexpected events and outputs.</i>
 
 
-
-
-## otes regarding the UI
 
 ---
 # Project Part 1
