@@ -74,4 +74,14 @@ public class ConditionCode extends Register {
     public void setEqualityBit(boolean value) {
         this.setBit(EBIT_INDEX, value);
     }
+
+    @Override
+    public String toString_Binary() {
+        StringBuilder result = new StringBuilder();
+        result.append((this.getOBit()) ? ("1") : ("0"));
+        result.append((this.getUit()) ? ("1") : ("0"));
+        result.append((this.getEBit()) ? ("1") : ("0"));
+        result.append((this.getDBit()) ? ("1") : ("0"));
+        return result.toString();
+    }
 }

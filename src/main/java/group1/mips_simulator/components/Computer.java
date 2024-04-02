@@ -1,15 +1,19 @@
 package group1.mips_simulator.components;
 
-
 import group1.mips_simulator.components.cpuParts.CPU;
 import group1.mips_simulator.components.cpuParts.RomLoader;
+import group1.mips_simulator.components.deviceParts.DeviceDriver;
+import group1.mips_simulator.components.deviceParts.KeyboardDriver;
+import group1.mips_simulator.components.deviceParts.PrinterDriver;
 import group1.mips_simulator.components.instructionExecution.ExecutionResult;
+import group1.mips_simulator.components.instructionExecution.IO_Executions;
 import group1.mips_simulator.components.instructionExecution.InstructionExecutions;
 import group1.mips_simulator.components.instructionParts.Field;
 import group1.mips_simulator.components.instructionParts.instruction.*;
 import group1.mips_simulator.components.memParts.Memory;
 import group1.mips_simulator.components.memParts.Cache;
 
+import java.util.HashMap;
 
 /**
  * A Mips Computer is a class to represent the classical computer architecture
@@ -22,10 +26,29 @@ public class Computer {
     public CPU cpu;             // central processing unit
     public ROM rom = new ROM(); // read-only-memory
 
+    protected HashMap<Integer, DeviceDriver> drivers = new HashMap<>();
+
     public Computer() {
         cpu = new CPU();
         memory = new Memory(Config.MEM_SIZE);
         cache = new Cache(memory);
+
+        this.installDriver(new KeyboardDriver());
+        this.installDriver(new PrinterDriver());
+    }
+
+    public DeviceDriver getDriver(int targetDriverId) {
+        if (drivers.containsKey(targetDriverId)) {
+            return drivers.get(targetDriverId);
+        }
+        return null;
+    }
+
+    protected void installDriver(DeviceDriver newDriver) {
+        if (drivers.containsKey(newDriver.DeviceId())) {
+            System.out.println("Warning: Driver with id already set. Replacing Driver ID: " + newDriver.DeviceId());
+        }
+        this.drivers.put(newDriver.DeviceId(), newDriver);
     }
 
     public void reset() {
@@ -88,6 +111,7 @@ public class Computer {
      */
     public boolean executeInstruction(Instruction instruction) {
         InstructionExecutions exe = new InstructionExecutions();
+        IO_Executions io_exe = new IO_Executions();
         System.out.println("Running instruction op code: " + instruction.opCode.name);
         ExecutionResult executionResult = switch (instruction.opCode.name.toLowerCase()) {
             // Miscellaneous Instructions
@@ -125,9 +149,15 @@ public class Computer {
             case "src" -> exe.execute_src(this, (Bitwise_Instruction) instruction);
             case "rrc" -> exe.execute_rrc(this, (Bitwise_Instruction) instruction);
             // I/O Operations
-            // TODO
+            case "in" -> io_exe.execute_in(this, (IO_Instruction) instruction);
+            case "out" -> io_exe.execute_out(this, (IO_Instruction) instruction);
             // Floating Point Instructions/ Vector Operations
             // TODO
+            // Custom instructions
+            case "xor" -> exe.execute_xor(this, (Reg2RegInstruction) instruction);
+            case "r2x" -> exe.execute_r2x(this, (Reg2RegInstruction) instruction);
+            case "x2r" -> exe.execute_x2r(this, (Reg2RegInstruction) instruction);
+            case "aix" -> exe.execute_aix(this, (RXIA_Instruction) instruction);
             default ->
                     throw new IllegalArgumentException("Unknown instruction op code name: " + instruction.opCode.name +
                             "\nInstruction: " + instruction);
@@ -149,6 +179,8 @@ public class Computer {
         return (short) (this.currentPC() + 1);
     }
 
+    //region Effective Address
+
     /**
      * The Effective Address (EA) is a memory location that considers
      * a bunch of various modifications including:
@@ -164,7 +196,6 @@ public class Computer {
     public short calculateEA(RXIA_Instruction instruction) {
         return this.calculateEA(instruction.getIX(), instruction.getAddress(), instruction.getI());
     }
-
 
     /**
      * The Effective Address (EA) is a memory location that considers
@@ -251,4 +282,6 @@ public class Computer {
             }
         }
     }
+
+    //endregion
 }

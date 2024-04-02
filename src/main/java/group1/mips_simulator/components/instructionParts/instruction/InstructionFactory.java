@@ -5,8 +5,6 @@ import group1.mips_simulator.components.Config;
 import group1.mips_simulator.components.instructionParts.Field;
 import group1.mips_simulator.components.instructionParts.FieldProcessors.FieldProcessor;
 import group1.mips_simulator.components.instructionParts.OpCode;
-import group1.mips_simulator.components.instructionParts.instruction.Instruction;
-import group1.mips_simulator.components.instructionParts.instruction.RXIA_Instruction;
 
 import java.util.Vector;
 
@@ -52,13 +50,17 @@ public class InstructionFactory {
                     // Arithmetic and logical instructions, pg 16
                     "amr", "smr", "air", "sir",
                     // Floating Point Arithmetic, pg 21
-                    "fadd", "fsub", "vadd", "vsub", "cnvrt", "ldfr", "stfr" -> new RXIA_Instruction(code, fields);
+                    "fadd", "fsub", "vadd", "vsub", "cnvrt", "ldfr", "stfr",
+                    //custom
+                    "aix" -> new RXIA_Instruction(code, fields);
             // Register to Register instructions, pg 17
-            case "mlt", "dvd", "trr", "and", "orr", "not" -> new Reg2RegInstruction(code, fields);
+            case "mlt", "dvd", "trr", "and", "orr", "not",
+                    //custom
+                    "xor", "r2x", "x2r" -> new Reg2RegInstruction(code, fields);
             // Shift/ Rotate operations, pg 18
             case "src", "rrc" -> new Bitwise_Instruction(code, fields);
             // I/O operations, pg 20
-            case "in", "out", "chk" -> new Instruction(code, fields);
+            case "in", "out", "chk" -> new IO_Instruction(code, fields);
             default -> throw new IllegalArgumentException("Unknown OpCode: " + code.name);
         };
     }

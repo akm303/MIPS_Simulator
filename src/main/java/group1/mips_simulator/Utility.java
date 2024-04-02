@@ -109,9 +109,9 @@ public class Utility {
         return sb.toString();
     }
 
-    public static String shortToOctalString(short value,int size){
-        String rstring = binaryStrToOctalStr(shortToBinaryString(value,16));
-        while(rstring.length() < size)
+    public static String shortToOctalString(short value, int size) {
+        String rstring = binaryStrToOctalStr(shortToBinaryString(value, 16));
+        while (rstring.length() < size)
             rstring = "0" + rstring;
         return rstring;
     }
@@ -134,11 +134,10 @@ public class Utility {
         return sb.toString().trim().replace(' ', '_');
     }
 
-
     public static String binaryNot(String binaryValue) {
         StringBuilder result = new StringBuilder();
-        for(char c : binaryValue.toCharArray()) {
-            if(c == '0') {
+        for (char c : binaryValue.toCharArray()) {
+            if (c == '0') {
                 result.append('1');
             } else if (c == '1') {
                 result.append('0');
@@ -160,6 +159,14 @@ public class Utility {
         return rVector;
     }
 
+    public static short charToShort(char c) {
+        return (short) c;
+    }
+
+    public static char shortToChar(short c) {
+        return (char) c;
+    }
+
     public static String intTo32BitString(int value) {
         StringBuilder result = new StringBuilder(Integer.toBinaryString(value));
         while (result.length() < 32) {
@@ -168,22 +175,22 @@ public class Utility {
         return result.toString();
     }
 
+
     public static String rotateLeftOne(String bitStr) {
         char leftmostChar = bitStr.toCharArray()[0];
-        StringBuilder result = new StringBuilder();
-        result.append(bitStr.substring(1));
-        result.append(leftmostChar);
+        String result = bitStr.substring(1) +
+                leftmostChar;
 
-        return result.toString();
+        return result;
     }
 
     public static String rotateRightOne(String bitStr) {
         int lastIndex = bitStr.length() - 1;
         char rightmostChar = bitStr.toCharArray()[lastIndex];
-        StringBuilder result = new StringBuilder();
-        result.append(rightmostChar);
-        result.append(bitStr.substring(0, lastIndex));
-        return result.toString();
+        String result = rightmostChar +
+                bitStr.substring(0, lastIndex);
+        return result;
     }
 
 }
+

@@ -2,6 +2,8 @@ package group1.mips_simulator;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.HashSet;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class UtilityTest {
@@ -77,4 +79,83 @@ class UtilityTest {
 //        assertEquals(Utility.instructionToShort( ));
     }
 
+    @Test
+    void charToShort() {
+        assertEquals(0b0000_0000_0110_0001, Utility.charToShort('a'));
+        assertEquals(0b0000_0000_0110_0010, Utility.charToShort('b'));
+        assertEquals(0b0000_0000_0110_0011, Utility.charToShort('c'));
+        assertEquals(0b0000_0000_0110_0100, Utility.charToShort('d'));
+
+        assertEquals(0b0000_0000_0011_0000, Utility.charToShort('0'));
+        assertEquals(0b0000_0000_0011_0001, Utility.charToShort('1'));
+        assertEquals(0b0000_0000_0011_0010, Utility.charToShort('2'));
+        assertEquals(0b0000_0000_0011_0011, Utility.charToShort('3'));
+        assertEquals(0b0000_0000_0000_1010, Utility.charToShort('\n'));
+    }
+
+    @Test
+    void shortToChar() {
+        assertEquals(Utility.shortToChar((short) 0b0000_0000_0110_0001), 'a');
+        assertEquals(Utility.shortToChar((short) 0b0000_0000_0110_0010), 'b');
+        assertEquals(Utility.shortToChar((short) 0b0000_0000_0110_0011), 'c');
+        assertEquals(Utility.shortToChar((short) 0b0000_0000_0110_0100), 'd');
+
+        assertEquals(Utility.shortToChar((short) 0b0000_0000_0011_0000), '0');
+        assertEquals(Utility.shortToChar((short) 0b0000_0000_0011_0001), '1');
+        assertEquals(Utility.shortToChar((short) 0b0000_0000_0011_0010), '2');
+        assertEquals(Utility.shortToChar((short) 0b0000_0000_0011_0011), '3');
+
+
+        assertEquals(Utility.shortToChar((short) 0b0000_0000_0000_0000), '\0');
+        assertEquals(Utility.shortToChar((short) 0b0000_0000_0000_1010), '\n');
+    }
+
+    @Test
+    void shortToCharAndBack() {
+        HashSet<Character> chars = new HashSet<Character>() {{
+            add('a');
+            add('b');
+            add('c');
+            add('d');
+            add('e');
+            add('f');
+            add('g');
+            add('h');
+            add('i');
+            add('j');
+            add('k');
+            add('l');
+            add('m');
+            add('n');
+            add('o');
+            add('p');
+            add('q');
+            add('r');
+            add('s');
+            add('t');
+            add('u');
+            add('v');
+            add('w');
+            add('x');
+            add('y');
+            add('z');
+            add('0');
+            add('1');
+            add('2');
+            add('3');
+            add('4');
+            add('5');
+            add('6');
+            add('7');
+            add('8');
+            add('9');
+            add('-');
+            add('.');
+        }};
+        for(Character c : chars) {
+            assertEquals(Utility.shortToChar(Utility.charToShort(c)), c);
+        }
+
+
+    }
 }

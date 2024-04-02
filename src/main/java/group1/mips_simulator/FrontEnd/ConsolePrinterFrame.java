@@ -10,6 +10,7 @@ public class ConsolePrinterFrame {
 
     JFrame myFrame;
     public JLabel printerLabel;
+    protected StringBuilder currentText = new StringBuilder();
 
     public ConsolePrinterFrame(int x, int y) {
         myFrame = makeNewPrinterFrame();
@@ -17,9 +18,8 @@ public class ConsolePrinterFrame {
     }
 
     JFrame makeNewPrinterFrame() {
-        JFrame printerFrame = new JFrame("Console Keyboard");
+        JFrame printerFrame = new JFrame("Console Printer");
         printerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        printerFrame.setLayout(new FlowLayout());
         printerFrame.setSize(WIDTH, HEIGHT);
 
 
@@ -31,17 +31,25 @@ public class ConsolePrinterFrame {
         printerLabel.setMinimumSize(size);
 
         printerFrame.add(printerLabel);
-        printerLabel.setText("<html></html>");
+        printerLabel.setText("<html>...</html>");
+        printerLabel.setVisible(true);
 
         printerFrame.setVisible(true);
         return printerFrame;
     }
 
     public void addCharacter(char c) {
+        System.out.println("Printer frame adding char: " + c);
         if(c == '\n') {
-            printerLabel.setText(printerLabel.getText() + "<br>");
-            return;
+            currentText.append("<br>");
+        }else {
+            currentText.append(c);
         }
-        printerLabel.setText(printerLabel.getText() + c);
+        redraw();
+    }
+
+    private void redraw() {
+        System.out.println("Printer frame redrawing with text: " + currentText.toString());
+        printerLabel.setText("<html>" + currentText.toString() + "</html>");
     }
 }

@@ -82,6 +82,12 @@ public class OpCode {
             case 34 -> new OpCode("ldfr");
             case 35 -> new OpCode("stfr");
 
+            /* Custom instructions */
+            case 38 -> new OpCode("r2x");
+            case 39 -> new OpCode("x2r");
+            case 40 -> new OpCode("aix");
+            case 41 -> new OpCode("xor");
+
             default -> throw new IllegalArgumentException("Unknown Operation Code: " + Integer.toString(opCodeValue));
         };
     }
@@ -155,6 +161,13 @@ public class OpCode {
             case "cnvrt" -> 33; // 42 octal
             case "ldfr" -> 34;  // 42 octal
             case "stfr" -> 35;  // 43 octal
+
+            /* custom instructions */
+            case "r2x" -> 38; // 46 octal
+            case "x2r" -> 39; // 47 octal
+            case "aix" -> 40; // 50 octal
+            case "xor" -> 41; // 51 octal
+
             default -> throw new IllegalArgumentException("Unknown Operation Code: " + this.name);
         };
     }

@@ -1,5 +1,6 @@
 package group1.mips_simulator.components.instructionParts.instruction;
 
+import group1.mips_simulator.Utility;
 import group1.mips_simulator.components.Word;
 import group1.mips_simulator.components.instructionParts.Field;
 import group1.mips_simulator.components.instructionParts.OpCode;
@@ -20,23 +21,19 @@ public class Instruction {
     public String toString_Binary() {
         StringBuilder result = new StringBuilder();
         result.append(this.opCode.toString_Binary());
+        result.append(" ");
         for (Field f : fields) {
             result.append(f.toBinString());
+            result.append(" ");
         }
-        return result.toString();
+        return result.toString().trim();
     }
 
 
     public short toShort() {
         // generates an int from string of self,
         // returns a short casting of this value
-        int rvalue = 0;
-        char[] instructions = toString_Binary().toCharArray();
-        for (int i = 0; i < instructions.length; i++) {
-            if (instructions[instructions.length - i - 1] == '1')
-                rvalue |= 1 << i;
-        }
-        return (short) rvalue;
+        return Utility.binaryToShort(toString_Binary());
     }
 
     public Word toWord() {

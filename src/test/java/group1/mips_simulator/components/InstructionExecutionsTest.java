@@ -182,9 +182,9 @@ class InstructionExecutionsTest {
         computer.cpu.regfile.getIXR(1).write(55);
 
         // Run code under test to demonstrate change
-        assertEquals(0, computer.memory.read(55 + 20));
+        assertEquals(0, computer.memory.read(20));
         computer.executeInstruction(instruction);
-        assertEquals(55, computer.memory.read(55 + 20));
+        assertEquals(55, computer.memory.read(20));
     }
 
     @Test

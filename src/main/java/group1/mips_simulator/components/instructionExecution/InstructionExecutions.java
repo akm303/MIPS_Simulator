@@ -76,11 +76,13 @@ public class InstructionExecutions {
      */
     public ExecutionResult execute_ldx(Computer computer, RXIA_Instruction i) {
         // Xx <- c(EA)
-        short ea = computer.calculateEA(i);
+        // short ea = computer.calculateEA(i);
+        short ea = i.getAddress().value;
         short contentsEA = computer.cache.read(ea);
-        Register targetReg = computer.cpu.regfile.getIXR(i.getIX().value);
 
+        Register targetReg = computer.cpu.regfile.getIXR(i.getIX().value);
         targetReg.write(contentsEA);
+
         return new ExecutionResult(computer.currentPcPlus1());
     }
 
@@ -92,7 +94,8 @@ public class InstructionExecutions {
      */
     public ExecutionResult execute_stx(Computer computer, RXIA_Instruction i) {
         // Memory(EA) <- c(Xx)
-        short ea = computer.calculateEA(i);
+        // short ea = computer.calculateEA(i);
+        short ea = i.getAddress().value;
 
         Register targetReg = computer.cpu.regfile.getIXR(i.getIX().value);
         short contentsReg = targetReg.read();
@@ -223,13 +226,13 @@ public class InstructionExecutions {
         // R0 <− Immed
         Register r0 = computer.cpu.regfile.getGPR(0);
         r0.write(new Word(immed.value));
-        computer.cpu.regfile.getGPR(0).write(r0.read());
 
         // PC <- c(R3)
         Register r3 = computer.cpu.regfile.getGPR(3);
         computer.cpu.regfile.getPC().write(r3.read());
 
-        return new ExecutionResult(computer.currentPcPlus1());
+        // Return the current PC b/c the previous steps set it properly
+        return new ExecutionResult(computer.currentPC());
     }
 
     /**
@@ -241,13 +244,16 @@ public class InstructionExecutions {
      * Else PC <- PC + 1
      */
     public ExecutionResult execute_sob(Computer computer, RXIA_Instruction i) {
-        // r <− c(r) – 1
+        // r <− c(r)
         // Contents of register r, minus 1
-        int r = computer.cpu.regfile.getGPR(i.getR().value).read() - 1;
 
         // If c(r) > 0,  PC <- EA;
-        Register targetReg = computer.cpu.regfile.getGPR(r);
-        if (targetReg.read() > 0) {
+        Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
+        short regValue = targetReg.read();
+        short newValue = (short) (regValue - 1);
+        targetReg.write(newValue);
+
+        if (newValue > 0) {
             short ea = computer.calculateEA(i);
             return new ExecutionResult(ea);
         }
@@ -330,11 +336,11 @@ public class InstructionExecutions {
     /**
      * DVD rx,ry
      * 23(oct)
-     * Multiply Register by Register
-     * rx, rx+1 <- c(rx) / c(ry)
+     * Divide Register by Register
+     * rx, rx+1 <- c(rx)/ c(ry)
      * rx must be 0 or 2
+     * rx contains the quotient; rx+1 contains the remainder
      * ry must be 0 or 2
-     * rx contains the high order bits, rx+1 contains the low order bits of the result
      * If c(ry) = 0, set cc(3) to 1 (set DIVZERO flag)
      */
     public ExecutionResult execute_DVD(Computer computer, Reg2RegInstruction i) {
@@ -363,18 +369,17 @@ public class InstructionExecutions {
             return new ExecutionResult(computer.currentPC(), false);
         }
 
-        // c(rx) * c(ry)
-        int newValue = regX.read() * regY.read();
-        String newValueBinaryStr = Utility.intTo32BitString(newValue);
+        // c(rx) / c(ry)
+        short divValue = (short) (regX.read() / regY.read());
+        short remainder = (short)(regX.read() % regY.read());
 
-        // Top 16 bits go into RegX
-        // Bottom 16 bits go into RegY
-        String top16Bits = newValueBinaryStr.substring(0, 16);
-        String bot16Bits = newValueBinaryStr.substring(16, 32);
+
+        regX.write(divValue);
 
         Register regXPlus1 = computer.cpu.regfile.getGPR(rxIndex + 1);
-        regX.write(Utility.binaryToShort(top16Bits));
-        regXPlus1.write(Utility.binaryToShort(bot16Bits));
+        // Regx gets the quotient
+        regX.write(divValue);
+        regXPlus1.write(remainder);
 
         return new ExecutionResult(computer.currentPcPlus1());
     }
@@ -494,7 +499,9 @@ public class InstructionExecutions {
 
         Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
         short ea = computer.calculateEA(i);
-        short newValue = errorHandling.detectOverUnderflow(computer, targetReg.read() + ea);
+        short contentsInMemory = computer.memory.read(ea);
+
+        short newValue = errorHandling.detectOverUnderflow(computer, targetReg.read() + contentsInMemory);
         targetReg.write(newValue);
         return new ExecutionResult(computer.currentPcPlus1());
     }
@@ -510,16 +517,17 @@ public class InstructionExecutions {
 
         Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
         short ea = computer.calculateEA(i);
-        short newValue = errorHandling.detectOverUnderflow(computer, targetReg.read() - ea);
+        short valueInMemory = computer.memory.read(ea);
+
+        short newValue = errorHandling.detectOverUnderflow(computer, targetReg.read() - valueInMemory);
         targetReg.write(newValue);
         return new ExecutionResult(computer.currentPcPlus1());
     }
 
     /**
      * AIR r, immed
-     * 17(octal)
-     * Subtract Memory From Register, r = 0..3
-     * r <− c(r) – c(EA)
+     * <p>
+     * Add immediate to register
      */
     public ExecutionResult execute_air(Computer computer, RXIA_Instruction i) {
         errorHandling.resetCC(computer);
@@ -533,9 +541,8 @@ public class InstructionExecutions {
 
     /**
      * SIR r, immed
-     * 17(octal)
-     * Subtract Memory From Register, r = 0..3
-     * r <− c(r) – c(EA)
+     * <p>
+     * Subtract immediate from register
      */
     public ExecutionResult execute_sir(Computer computer, RXIA_Instruction i) {
         errorHandling.resetCC(computer);
@@ -548,33 +555,68 @@ public class InstructionExecutions {
     }
 
     /**
-     * SRC r, count, L/R, A/L
-     * 30(octal)
-     * Shift Register by Count
-     * c(r) is shifted left (L/R =1) or right (L/R = 0) either logically (A/L = 1) or arithmetically (A/L = 0)
-     * XX, XXX are ignored
-     * Count = 0…15
-     * If Count = 0, no shift occurs
+     * XOR XX,YY
+     * Custom Instruction
+     * XOR the bits in the targeted x and y registers. Save the result to the x register.
      */
-    public ExecutionResult execute_src(Computer computer, Bitwise_Instruction i) {
-        Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
+    public ExecutionResult execute_xor(Computer computer, Reg2RegInstruction i) {
+        Register rx = computer.cpu.regfile.getGPR(i.getRX().value);
+        Register ry = computer.cpu.regfile.getGPR(i.getRY().value);
 
-        boolean shiftLeft = (i.getLeftRight().value == 1);
-        boolean shiftLogically = (i.getArithmeticLogical().value == 1);
-        short count = i.getCount().value;
+        short rxValue = rx.read();
+        short ryValue = ry.read();
+        short newValue = (short) (rxValue ^ ryValue); // java xor operation
+        rx.write(newValue);
+        return new ExecutionResult(computer.currentPcPlus1());
+    }
 
-        short value = targetReg.read();
-        if (shiftLeft) {
-            value = (short) (value << count);
-        } else {
-            if (shiftLogically) {
-                value = (short) (value >>> count); // Signed
-            } else {
-                // arithmetic
-                value = (short) (value >> count); // Unsigned
-            }
+    /**
+     * R2X RR, IX
+     * Custom instruction
+     * General Purpose Register to Index Register.
+     * Take the data in the targeted GPR and copy it into the targeted IX.
+     * If the IX register is 0, then this is effectively a no-op
+     * x(ix) <- c(r)
+     */
+    public ExecutionResult execute_r2x(Computer computer, Reg2RegInstruction i) {
+        if (i.getRX().value == 0) {
+            return new ExecutionResult(computer.currentPcPlus1());
         }
-        targetReg.write(value);
+
+        Register gpr = computer.cpu.regfile.getGPR(i.getRX().value);
+        Register ix = computer.cpu.regfile.getIXR(i.getRY().value);
+
+        // x(ix) <- c(r)
+        ix.write(gpr.get());
+
+        return new ExecutionResult(computer.currentPcPlus1());
+    }
+
+    /**
+     * X2R RR, IX
+     * Custom instruction
+     * Index Register to General Purpose Register
+     * Take the data in the targeted IX register and copy it into the targeted GPR.
+     * If the IX register is 0, then the value loaded into the GPR will be 0.
+     * c(r) <- x(ix)
+     */
+    public ExecutionResult execute_x2r(Computer computer, Reg2RegInstruction i) {
+        Register gpr = computer.cpu.regfile.getGPR(i.getRX().value);
+        Register ix = computer.cpu.regfile.getIXR(i.getRY().value);
+
+        short newValue = (i.getRX().value == 0) ? (0) : (ix.read());
+        gpr.write(newValue);
+
+        return new ExecutionResult(computer.currentPcPlus1());
+    }
+
+    public ExecutionResult execute_aix(Computer computer, RXIA_Instruction i) {
+        Register targetReg = computer.cpu.regfile.getIXR(i.getIX().value);
+        short immediate = i.getA().value;
+
+        errorHandling.resetCC(computer);
+        short newValue = errorHandling.detectOverUnderflow(computer, targetReg.read() + immediate);
+        targetReg.write(newValue);
 
         return new ExecutionResult(computer.currentPcPlus1());
     }
@@ -613,4 +655,37 @@ public class InstructionExecutions {
 
         return new ExecutionResult(computer.currentPcPlus1());
     }
+
+    /**
+     * SRC r, count, L/R, A/L
+     * 30(octal)
+     * Shift Register by Count
+     * c(r) is shifted left (L/R =1) or right (L/R = 0) either logically (A/L = 1) or arithmetically (A/L = 0)
+     * XX, XXX are ignored
+     * Count = 0…15
+     * If Count = 0, no shift occurs
+     */
+    public ExecutionResult execute_src(Computer computer, Bitwise_Instruction i) {
+        Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
+
+        boolean shiftLeft = (i.getLeftRight().value == 1);
+        boolean shiftLogically = (i.getArithmeticLogical().value == 1);
+        short count = i.getCount().value;
+
+        short value = targetReg.read();
+        if (shiftLeft) {
+            value = (short) (value << count);
+        } else {
+            if (shiftLogically) {
+                value = (short) (value >>> count); // Signed
+            } else {
+                // arithmetic
+                value = (short) (value >> count); // Unsigned
+            }
+        }
+        targetReg.write(value);
+
+        return new ExecutionResult(computer.currentPcPlus1());
+    }
+
 }

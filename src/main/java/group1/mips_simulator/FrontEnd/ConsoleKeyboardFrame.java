@@ -1,19 +1,25 @@
 package group1.mips_simulator.FrontEnd;
 
+import group1.mips_simulator.Utility;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.HashMap;
 
 public class ConsoleKeyboardFrame {
     public static int WIDTH = 500;
     public static int HEIGHT = 100;
+
+    public static final char TERMINATOR = '\0';
 
     boolean userDone = false;
 
     JFrame myFrame;
     JTextField userTextInput;
     JButton userDoneButton;
+
 
     public ConsoleKeyboardFrame(int x, int y) {
         myFrame = makeNewKeyboardFrame();
@@ -65,6 +71,7 @@ public class ConsoleKeyboardFrame {
     void setupDoneButton() {
         this.userDoneButton.addActionListener(e -> {
             userDone();
+            SwingConsole.buttonFields.get("Run").doClick();
         });
     }
 
@@ -75,7 +82,25 @@ public class ConsoleKeyboardFrame {
 
     void userDone() {
         this.userDone = true;
+
+        // Remove any added null terminators
+        String currentText = this.userTextInput.getText();
+        currentText = currentText.replace(("" + '\0'), "");
+
+        // Add the terminator to the end
+        currentText = currentText + TERMINATOR;
+
+        this.userTextInput.setText(currentText);
         this.userTextInput.setBackground(Color.WHITE);
     }
 
+    public Character getNextChar() {
+        if (!userDone || this.userTextInput.getText().isEmpty()) {
+            return null;
+        }
+        String currentText = this.userTextInput.getText();
+        Character result = currentText.charAt(0); // Grab the 0th character
+        this.userTextInput.setText(currentText.substring(1)); // strip it from the remaining string
+        return result;
+    }
 }
