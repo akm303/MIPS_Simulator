@@ -2,6 +2,8 @@
 
 This project is part 2 of a MIPS Simulator.
 
+---
+
 ## Running the Simulator
 
 To run the simulator:
@@ -35,18 +37,20 @@ The Simulator opens as separate, draggable windows:
 
 # Project Part 2
 
-### For Instructions on how to Load and Run a Program, please see [instructions](INSTRUCTIONS.md)
+> For Instructions on how to Load and Run a Program, 
+> please see the [instructions](INSTRUCTIONS.md) document
+> located in the `Documents` directory
 
 ---
 
 ## New UI Components:
-### Console Keyboard
+## Console Keyboard
 Simulates a console keyboard that allows users to enter values per program requests.
 
-### Console Printer
+## Console Printer
 Simulates a display which will output a program's prompts and values as a program runs. 
 
-### Cache Display
+## Cache Display
 Provides a view into the simulator's cache, displaying each cache line's tag and block.
 The block view provides an internal look at the data stored at that location in memory (in octal).
 
