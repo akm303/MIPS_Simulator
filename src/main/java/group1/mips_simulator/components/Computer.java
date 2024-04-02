@@ -55,7 +55,7 @@ public class Computer {
         short pcAddress = this.cpu.regfile.getPC().read();
 
         // Load mem address into IR
-        short memoryContents = this.memory.read(pcAddress);
+        short memoryContents = this.cache.read(pcAddress);
         this.cpu.regfile.getIR().write(memoryContents);
 
         // Convert IR into Instruction object
@@ -242,12 +242,12 @@ public class Computer {
                 //pointer where the address field has the location of the EA
                 //in memory
                 // both indirect addressing and indexing
-                return memory.read(address.value);
+                return cache.read(address.value);
             } else {
                 // c(c(IX) + c(Address Field))
                 short ixContents = this.cpu.regfile.getIXR(ix.value).read();
                 short addressField = address.value;
-                return memory.read((short) (ixContents + addressField));
+                return cache.read((short) (ixContents + addressField));
             }
         }
     }

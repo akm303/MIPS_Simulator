@@ -29,7 +29,7 @@ public class InstructionExecutions {
     public ExecutionResult execute_ldr(Computer computer, RXIA_Instruction i) {
         // r <- c(EA)
         short ea = computer.calculateEA(i);
-        short contentsEA = computer.memory.read(ea);
+        short contentsEA = computer.cache.read(ea);
 
         Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
         targetReg.write(contentsEA);
@@ -49,7 +49,7 @@ public class InstructionExecutions {
         Register targetReg = computer.cpu.regfile.getGPR(i.getR().value);
         short contentsReg = targetReg.read();
 
-        computer.memory.write(ea, contentsReg);
+        computer.cache.write(ea, contentsReg);
         return new ExecutionResult(computer.currentPcPlus1());
     }
 
@@ -77,7 +77,7 @@ public class InstructionExecutions {
     public ExecutionResult execute_ldx(Computer computer, RXIA_Instruction i) {
         // Xx <- c(EA)
         short ea = computer.calculateEA(i);
-        short contentsEA = computer.memory.read(ea);
+        short contentsEA = computer.cache.read(ea);
         Register targetReg = computer.cpu.regfile.getIXR(i.getIX().value);
 
         targetReg.write(contentsEA);
@@ -97,7 +97,7 @@ public class InstructionExecutions {
         Register targetReg = computer.cpu.regfile.getIXR(i.getIX().value);
         short contentsReg = targetReg.read();
 
-        computer.memory.write(ea, contentsReg);
+        computer.cache.write(ea, contentsReg);
         return new ExecutionResult(computer.currentPcPlus1());
     }
 
@@ -467,10 +467,10 @@ public class InstructionExecutions {
     public ExecutionResult execute_trap(Computer computer, Instruction i) {
         // Stores the PC+1 in mem location 2
         short pcPlus1 = computer.currentPcPlus1();
-        computer.memory.write((short) 2, pcPlus1);
+        computer.cache.write((short) 2, pcPlus1);
 
         // Traps to mem address 0
-        short tableAddress = computer.memory.read((short) 0);
+        short tableAddress = computer.memory.read((short) 0); //did not replace with cache
 
         // Trap code = index into table
         Field blank = i.fields.get(0);
