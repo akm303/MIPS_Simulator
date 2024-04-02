@@ -179,5 +179,12 @@ public class Cache{
         return tagToOctalString(tag) + blockToOctalString(tag);
     }
 
-
+    public String getCacheString() {
+        // print each line from cache
+        StringBuilder sb = new StringBuilder();
+        for(short key : getLineTags()){
+            sb.append(lineToOctalString(key)).append('\n');
+        }
+        return sb.toString();
+    }
 }
