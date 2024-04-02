@@ -61,8 +61,8 @@ public class Word {
     }
 
     public String toString_Oct() {
-        // TODO:
-        return "TODO:ToString_Oct";
+        // TODO: incomplete implementation
+        return Utility.shortToOctalString(this.value_,6);
     }
 
     public String toString_Decimal() {

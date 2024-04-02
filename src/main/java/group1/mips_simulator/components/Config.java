@@ -9,7 +9,6 @@ public class Config {
     public static final int GPR_COUNT = 4; // 4 general purpose registers
     public static final int IXR_COUNT = 3; // 3 index registers
     public static final short WORD_SIZE = 16;
-
     //region Device IDs
 
     public static final int CONSOLE_KEYBOARD_DEVID = 0;
@@ -24,5 +23,9 @@ public class Config {
     }};
     //endregion
 
+
+    public static final int ENTRIES_PER_BLOCK = 8;
+    public static final int CACHE_LINES = 16;
+    public static final int MAX_16_BIT_VALUE = 0b1111_1111_1111_1111;
 
 }

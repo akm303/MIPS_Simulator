@@ -42,11 +42,12 @@ public class SwingConsole {
 
 
         f.setVisible(true);
-        redraw();
 
         keyboardController = new ConsoleKeyboardFrame(f.getX() + WIDTH, f.getY());
         printerGui = new ConsolePrinterFrame(f.getX() + WIDTH, f.getY() + 100);
         cacheGui = new CacheFrame(f.getX() + WIDTH, f.getY() + 100 + ConsolePrinterFrame.HEIGHT);
+
+        redraw();
     }
 
     public static void redraw() {
@@ -74,7 +75,7 @@ public class SwingConsole {
         textFields.get("CC").setText(computer_.cpu.regfile.getCC().toString_Binary());
 
         // Update the cache
-        //cacheGui.redrawCache(computer.memory.cache);
+        cacheGui.redrawCache(computer.cache);
     }
 
 }

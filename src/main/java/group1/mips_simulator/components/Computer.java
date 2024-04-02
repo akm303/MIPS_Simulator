@@ -11,6 +11,7 @@ import group1.mips_simulator.components.instructionExecution.InstructionExecutio
 import group1.mips_simulator.components.instructionParts.Field;
 import group1.mips_simulator.components.instructionParts.instruction.*;
 import group1.mips_simulator.components.memParts.Memory;
+import group1.mips_simulator.components.memParts.Cache;
 
 import java.util.HashMap;
 
@@ -19,16 +20,18 @@ import java.util.HashMap;
  * being discussed in class.
  */
 public class Computer {
-
-    public Memory memory;
-    public CPU cpu;
-    public ROM rom = new ROM();
+    //computer parts
+    public Memory memory;       // computer memory
+    public Cache cache;         // cache
+    public CPU cpu;             // central processing unit
+    public ROM rom = new ROM(); // read-only-memory
 
     protected HashMap<Integer, DeviceDriver> drivers = new HashMap<>();
 
     public Computer() {
         cpu = new CPU();
         memory = new Memory(Config.MEM_SIZE);
+        cache = new Cache(memory);
 
         this.installDriver(new KeyboardDriver());
         this.installDriver(new PrinterDriver());
@@ -75,7 +78,7 @@ public class Computer {
         short pcAddress = this.cpu.regfile.getPC().read();
 
         // Load mem address into IR
-        short memoryContents = this.memory.read(pcAddress);
+        short memoryContents = this.cache.read(pcAddress);
         this.cpu.regfile.getIR().write(memoryContents);
 
         // Convert IR into Instruction object
@@ -270,12 +273,12 @@ public class Computer {
                 //pointer where the address field has the location of the EA
                 //in memory
                 // both indirect addressing and indexing
-                return memory.read(address.value);
+                return cache.read(address.value);
             } else {
                 // c(c(IX) + c(Address Field))
                 short ixContents = this.cpu.regfile.getIXR(ix.value).read();
                 short addressField = address.value;
-                return memory.read((short) (ixContents + addressField));
+                return cache.read((short) (ixContents + addressField));
             }
         }
     }
