@@ -25,9 +25,16 @@ UI elements can be found in `src/main/java/group1/mips_simulator/FrontEnd/*.java
 In addition to our Project Part 1, we have implemented all non-vector instructions, 
 a Console Keyboard, Console Display, and Cache Display.
 
+
 ## Instructions
 
-
+Along with our instructions from Part 1, our Project Part 2 now includes every instruction's implementation except 
+Vector instructions.
+That includes the following:
+- All load/store instructions
+- All conditional and branch instructions
+- All arithmetic and logical instructions
+- All input/output instructions
 
 
 
@@ -54,6 +61,15 @@ retrieved or written
 associated with the `address`' location in `memory`
 9. Otherwise, it pops the oldest `line` from the cache `queue`, and then creates the new `line`, applying step 8.
 10. After adjusting the cache, it then does a guaranteed-hit cache access by applying steps 4 through 6.
+
+Once the `cpu` has calculated an `effective address` and passed that `word` to our `cpu`, we extract the least 
+significant 3 bits of that word to be our word `offset`, and then the next least significant 9 bits as a line `tag`.
+
+*Note:* Technically, our tag could be all the remaining non-offset bits, but in order to match the screenshot in
+the project description (which only displays three octals for a tag) we extract the next 9 bits. This should have 
+no effect on our simulator's operation, since it has a maximum memory of only 2048 words, meaning our addresses will all 
+calculate to values that fit within 11 bits (2048 = 2^11), so including every non-offset bit would mean all our tags 
+will have the same first 5 bits of all 0s (b0000). Overall, we're saving about 10 Bytes of space in a full cache.
 
 
 
