@@ -1,5 +1,11 @@
-# MIPS Simulator
+# MIPS_Simulator
 
+### authors:
+- Arthur Bacon
+- Ari Majumdar
+
+### Dev Notes:
+Jar built using Jar -> From module with dependencies -> Extract to Jar File
 This project is part 2 of a MIPS Simulator.
 
 ---
