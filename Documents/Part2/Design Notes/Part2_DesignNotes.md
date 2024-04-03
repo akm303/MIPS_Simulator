@@ -11,11 +11,15 @@ The main workflow for the simulator is as follows:
 - Set the PC to the location of the first instruction
 - Run the program
 
+> For more details on new features, see `README.md` in the project root <br>
+> For more details on how to run programs, see `INSTRUCTIONS.md` in the project root
+
 ## Model
 
 For design notes from Part 1 elements, see [Part 1 Design Notes](Part1_DesignNotes.md).
 
 The majority of the code that represents the MIPS computer can be found
 in `src/main/java/group1/mips_simulator/components/*.java`.
+UI elements can be found in `src/main/java/group1/mips_simulator/FrontEnd/*.java`.
 
 In addition to our Part 1 requirements, we have implemented a Console Keyboard, Console Display, and Cache Display.

@@ -5,11 +5,14 @@
 - Ari Majumdar
 
 ### Dev Notes:
-Jar built using Jar -> From module with dependencies -> Extract to Jar File
+Jar built using Jar 
+-> From module with dependencies 
+-> Extract to Jar File
+
+---
 This project is part 2 of a MIPS Simulator.
 
 ---
-
 ## Running the Simulator
 
 To run the simulator:
@@ -69,6 +72,8 @@ Our keyboard will malfunction when entering unexpected inputs.
   + Clicking `Done` without typing anything will enter a null value, which will not be visible to the user
     <br> <i>Deviation from instruction order will likely result in unexpected events and outputs.</i>
 
+## Instructions
+All instructions except ___ are implemented as defined in the specification.
 
 
 ---
