@@ -33,7 +33,7 @@ To run a program:
         The Program will return the closest of the previous 20 numbers
 This is the normal assembly Program 1, as per submission requirements.
 
-`Program1_short.bi`
+`short_Program1.bi`
 ---
     Key: 2000
 
