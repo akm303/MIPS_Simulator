@@ -29,9 +29,9 @@ NOTE: This command may take up to ~10 seconds for the application window to laun
 Please be patient.
 
 
-The Simulator opens as separate, draggable windows:
+The Simulator opens as separated, draggable windows:
 
-![image info](pictures/ProjectView_Default.png)
+![image info](Screenshots/ProjectView_Default.png)
 
 ---
 
@@ -43,7 +43,7 @@ The Simulator opens as separate, draggable windows:
 
 ---
 
-## New UI Components:
+# New UI Components:
 ## Console Keyboard
 Simulates a console keyboard that allows users to enter values per program requests.
 
