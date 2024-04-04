@@ -2,8 +2,9 @@
 
 The project source code can be found at the location `src/main/java/group1/mips_simulator/*.java`.
 
-This project is designed with the Model-View-Controller design pattern. The majority of the code is dedicated to the
-model, which represents how the MIPS computer operates, holds data, executes instructions, etc.
+This project is designed with the Model-View-Controller design pattern. 
+The majority of the code is dedicated to the model, which represents how
+the MIPS computer operates, holds data, executes instructions, etc.
 
 The main workflow for the simulator is as follows:
 
@@ -75,7 +76,16 @@ will have the same first 5 bits of all 0s (b0000). Overall, we're saving about 1
 
 ## Console Keyboard and Display
 
-The console keyboard is simply a string buffer that automatically runs the same function as Run whenever a
-user clicks "Done".
-The display is where our assembly programs print out string prompts or display output values and text to the user.
+The console keyboard is simply a string buffer that holds the user inputed characters for the program to ingest via 
+the `IN` operation. Each character is converted to an ascii code and that value is loaded into the target register as 
+part of the `IN` operation execution. The Keyboard also features a "Done" button which will insert a null terminator 
+character into the string buffer to signal that the user has finished inputting characters. The null terminator 
+character is the ascii code `0000_0000_0000_0000` and our program uses it as a signal to stop reading characters 
+from the console keyboard. Additionally, the "Done" button will automatically continue running the program. 
+In other words, the "Done" button is similar to the "Run" button.
 
+The display is where our assembly programs print out string prompts or display output values and text to the user.
+Similar to the keyboard but in reverse, the printer is simply a character buffer that holds the entire output from 
+the program.
+The `OUT` operation takes the value of a target register, uses that value as an ascii character and adds it to the 
+console printer's output.

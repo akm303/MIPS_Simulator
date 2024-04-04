@@ -9,8 +9,10 @@ To reset our simulator:
 To run a program:
 ---
     1. Select the IPL Button on the Front Panel
-    2. Navigate to this project's directory
-    3. Choose a `.bi` file to load from our project's `Programs` folder
+    2. Navigate to this project's directory 
+        (Typically either `~/Downloads/_Submission_Part2` or `~/Documents/_Submission_Part2` 
+        depending on where you download this ziped project to)
+    3. Choose a `.bi` file to load from our project's `./Programs` folder
     4. Enter the Key (provided below) into the `Octal Input` field
         + Each key is provided in this instruction document
         + The key is the starting address for that program
@@ -18,7 +20,7 @@ To run a program:
     6. Click Run, then follow the on-screen instructions
 
 > To see an example run, please see `Program1_ExampleRun.mov` <br> 
-> located in `"<path to project>/Documents/Example Runs/"`.
+> located in `"./Documents/Example Runs/"`.
 > Further instructions for specific programs below:
 
 
@@ -44,4 +46,7 @@ This is the normal assembly Program 1, as per submission requirements.
         The Program will return the closest of the previous 3 numbers
 This is a short version of assembly Program 1, and requires fewer inputs than the original.
 
-
+Please note, due to Java's handling of all its integers as signed, we actually recommend entering numbers
+in the range 0 to 32767, rather than up to 65536. Numbers larger than 2^15 are converted to signed negative,
+and your selected check number may be closer to one of these negative conversions. If this is the case, our
+printer print a 00000.
