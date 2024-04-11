@@ -1,0 +1,226 @@
+ LOC 6
+ data 33   ;6 Ptr to start of "Please enter a sentence "
+ data 60   ;7 Ptr to start of "Please enter a target word "
+ data 100  ;8 Const Ptr to start of user input paragraph
+ data 87   ;9 Const ptr to start of user target word
+ data 0    ;10
+
+ data 0    ;11 Word count
+ data 0    ;12 Sentence count
+ data 100  ;13 variable ptr to start of user input paragraph
+ data 32   ;14 Const " " space character
+ data 46   ;15 const "." period character
+
+ data 0    ;16 Variable current paragraph character
+ data 48   ;17 const bit mask for number-to-ascii
+ data 0    ;18  Swap space
+ data 0    ;19  Storage space for return address
+ data 10   ;20  newline character \n
+
+ data 1024 ;21 const Pointer to print string function
+ data 1040 ;22 const pointer to read paragraph function
+ data 1055 ;23 const pointer to Find_Match function
+ data 1100 ;24 const pointer to Print_Found function
+ data 0    ;25
+
+ data 0    ;26
+ data 0    ;27
+ data 0    ;28
+ data 0    ;29
+ data 0    ;30
+
+ data 0    ;31
+ data 0    ;32
+
+ LOC 33
+ Data 80     ; "Please enter a sentence "
+ Data 108
+ Data 101
+ Data 97
+ Data 115
+ Data 101
+ Data 32
+ Data 101    ; 40
+ Data 110
+ Data 116
+ Data 101
+ Data 114
+ Data 32
+ Data 97
+ Data 32
+ Data 115
+ Data 101
+ Data 110    ; 50
+ Data 116
+ Data 101
+ Data 110
+ Data 99
+ Data 101
+ Data 46
+ Data 32
+ data 0    ;end of string  Mem = 58
+
+ LOC 60
+ data 10     ;  \n
+ Data 80    ; String "Please enter target word "
+ Data 108
+ Data 101
+ Data 97
+ Data 115
+ Data 101
+ Data 32
+ Data 101
+ Data 110
+ Data 116     ; 70
+ Data 101
+ Data 114
+ Data 32
+ Data 116
+ Data 97
+ Data 114
+ Data 103
+ Data 101
+ Data 116
+ Data 32     ; 80
+ Data 119
+ Data 111
+ Data 114
+ data 100
+ Data 32
+ data 0    ;end of string  Mem = 86
+
+ LOC 87    ; Start of user input target word [87, 98] 11 characters long
+
+ LOC 99
+ data 0    ; end of string
+ LOC 100   ; Stat of use input paragraph [100, 1023]
+
+
+
+
+
+ LOC 1024     ; Octal 2000 ; Print String function. Set x(1) to pointer of first character
+ STR 3,0,19   ; 1024 Save return address to well known swap space
+ LDR 1,1,0    ; 1025 r(1) <- c(x(1) + 0)   Read first character into register 1
+ LDR 2,1,0    ; 1026 r(1) <- c(x(1) + 0)   Read first character into register 2
+ OUT 1,1      ; 1027 print character in r(1)
+ X2R 1,1      ; 1028 r(1) <- x(1)   Load the character ptr into r(1)
+ AIR 1,1      ; 1029 r(1) <- r(1) + 1  increment the character ptr by 1
+ R2X 1,1      ; 1030 Put the value in r1 into x(1)
+ SETCCE 2     ; 1031 Check if the character in r(2) == 0 (the character we just printed)
+ JNE 0,21,1   ; 1032 If the character printed was NOT 0, loop back
+ LDR 3,0,19   ; 1033 Return from subroutine
+ RFS 0        ; 1034
+
+
+
+ LOC 1040     ; Read from keyboard function. Set x(3) to pointer of where in mem to save string
+ STR 3,0,19   ; 1040 Save return address to well known swap space
+ LDX 1,22     ; 1041 x(1) <- c(22)   load x1 with ptr to this function
+
+ IN 1,0       ; 1042  read ascii character from keyboard into reg 1
+ STR 1,3,0    ; 1043  Save character into memory at x(3)
+ AIX 3,1      ; 1044  x(3) += 1  increment x3 by 1
+ SETCCE 1     ; 1045  if character (in r1) is null (0000), break
+ JZ 1,8       ; 1046     PC = x(1) + 8 = 1040 + 8 = 1048
+ JMA 1,2      ; 1047  Else: Loop back and read the next character. PC = x(1) + 2 = 1040 + 2 = 1042
+
+ LDR 3,0,19   ; 1048 Return from subroutine, total value is stored in r2
+ RFS 0        ; 1049
+
+
+
+
+
+ LOC 1055     ; Find word in paragraph function
+ LDX 1,13     ;1055 x(1) <- c(13)   load x1 with ptr to start of user input paragraph
+ LDX 2,9      ;1056 x(2) <- c(9)    load x2 with ptr to start of target word
+ LDX 3,23     ;1057 x(3) <- c(23)   load x3 with ptr to start of this function
+ AIX 3,4      ;1058 x(3) <- x(3) + 4   1055+4 = 1059
+
+ LDR 0,2,0    ;1059 r(0) <- c(x(2))  Load r0 with the target_word character
+ LDR 1,1,0    ;1060 r(1) <- c(x(1))  Load r1 with the paragraph character
+ SETCCE 0     ;1061 check if r(0) is null terminator
+ JNE 3,6      ;1062 If the character is NOT 0000 then jump to 1059+6 = 1065
+ LDX 3,24     ;1063 x(3) <- c(24)      load ptr to Print_Found function
+ JMA 3,0      ;1064 Unconditional jump to Print_Found function
+
+ SMR 0,1,0    ;1065 Compare character at x(1) to char in r(0)  (IE compare paragraph char to target_word char)
+ AIX 1,1      ;1066    Increment x(1) by 1
+ AIX 2,1      ;1067    Increment x(2) by 1
+ SETCCE 0     ;1068 If they are the same character, then r(0) will hold value 0
+ JZ 3,0       ;1069 jump to x(3) = <Start of this function> = 1059
+
+ STR 1,0,16   ;1070 c(16) <- r(1)          Save current paragraph character into c(16)
+ SMR 1,0,14   ;1071 r(1) <- r(1) - c(14)   compare current char to " " space character
+ SETCCE 1     ;1072
+ JNE 3,18     ;1073 If current char != " ", then jump to 1077(=1059+18). Else...
+ LDR 2,0,11   ;1074 r(2) <- c(11)      load word count into r2
+ AIR 2,1      ;1075 r(2) <- r(2) + 1   increment word count by 1
+ STR 2,0,11   ;1076 c(11) <- r(2)      Store word count back to memory
+
+ LDR 1,0,16   ;1077 r(1) <- c(16)          load r(1) with current character (again)
+ SMR 1,0,15   ;1078 r(1) <- r(1) - c(15)   compare current char to "." period character
+ SETCCE 1     ;1079
+ JNE 3,28     ;1080 If current char != "." then jump to 1087(=1059+28)
+ LDR 2,0,11   ;1081 r(2) <- c(11)          load word count into r2
+ SMR 2,0,11   ;1082 r(2) <- r(2) - c(11)   set r(2) to 0
+ STR 2,0,11   ;1083 c(11) <- r(2)          set word count to 0
+ LDR 2,0,12   ;1084 r(2) <- c(12)          load sentence count into r2
+ AIR 2,1      ;1085 r(2) <- r(2) + 1       increment sentence count by 1
+ STR 2,0,12   ;1086 c(12) <- r(2)
+
+ LOC 1087
+ LDR 2,0,13    ;1087 r(2) <- c(13)     load r2 with ptr to current paragraph character
+ AIR 2,1       ;1088 r(2) <- r(2) + 1  Add 1 to r2
+ STR 2,0,13    ;1089 c(13) <- r(2)     Store r2 back to memory
+ LDX 1,13      ;1090 x(1) <- c(13)     load x1 with ptr to start of user input paragraph
+ LDX 2,9       ;1091 x(2) <- c(9)      load x2 with ptr to start of target word
+ JMA 3,0       ;1092 Unconditional jump to top of function again (but with incremented paragraph character target)
+
+
+
+
+ LOC 1100     ; Print_Found function
+ LDR 3,0,20   ; load newline character into r3
+ OUT 3,1      ; print newline character
+
+ LDX 1,9      ;1100 const ptr to target word
+ JSR 0,21,1   ;1101 Print target word
+
+ LDR 3,0,20   ; load newline character into r3
+ OUT 3,1      ; print newline character
+
+ LDR 0,0,17   ;1102 r(0) <- c(17)        load r0 with bitmask for number to ascii conversion
+ LDR 1,0,12   ;1103r(1) <- c(12)         load r1 with sentence count
+ ORR 1,0      ;1104 r(1) <- r(1) & r(0)  convert r1 to ascii character
+ OUT 1,1      ;1105 print character in r(1)
+ OUT 3,1      ; print newline character
+
+ LDR 1,0,11   ;1106 r(1) <- c(11)        load reg 1 with word count
+ ORR 1,0      ;1107 r(1) <- r(1) & r(0)  convert r1 to ascii character
+ OUT 1,1      ;1108 print character in r(1)
+ hlt
+
+
+
+
+
+
+ LOC 1536     ; Octal 3000 main function
+ LDX 1,6      ; x(1) <- c(6)   load x1 with ptr to string "Please enter a sentence "
+ JSR 0,21,1   ; Print string function
+ LDX 3,8      ; 1042 x(3) <- c(8)  load x3 with ptr to start of user input space
+ JSR 0,22,1   ; Read in paragraph
+ LDX 1,8      ; x(1) <- c(8)   load x1 with ptr to string  <user inputted sentence>
+ JSR 0,21,1   ; Print paragraph back to them
+
+ LDX 1,7      ; x(1) <- c(7)   load x1 with ptr to string "Please enter target word "
+ JSR 0,21,1   ; Print string function
+ LDX 3,9      ; 1042 x(3) <- c(9)  load x3 with ptr to start of user target word
+ JSR 0,22,1   ; Read in paragraph
+ LDX 1,9      ; x(1) <- c(9)   load x1 with ptr to string  <user inputted sentence>
+ JSR 0,21,1   ; Print user target word back to them
+
+ JSR 0,23,1   ; Find target word in paragraph function
+ hlt
