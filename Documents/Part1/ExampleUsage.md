@@ -14,14 +14,14 @@ java -jar MIPS_Simulator.jar
 NOTE: This command may take up to ~10 seconds for the application window to launch.
 Please be patient.
 
-![image info](./pictures/ProjectView_Default.png)
+![image info](pictures/ProjectView_Default.png)
 
 ### Load the .bi file
 
 Click on the IPL button in the bottom right. This will open a file selector dialogue window.
 Select the example file found in the location: `src/main/java/group1/mips_simulator/simulator/programs/LoadStore.bi`
 
-![image info](./pictures/LoadBi.png)
+![image info](pictures/LoadBi.png)
 
 ### Confirm the file loaded properly
 
@@ -43,7 +43,7 @@ Press Load
 ```
 
 Then notice the value in `MBR` memory buffer register should be: the value `0000_0000_0000_0011`
-![image info](./pictures/MAR7.png)
+![image info](pictures/MAR7.png)
 
 ### Run the first instruction
 
@@ -63,7 +63,7 @@ MAR: 0000_0000_1110
 MBR: 0001_0000_1000_0111
 ```
 
-![image info](./pictures/MAR16.png)
+![image info](pictures/MAR16.png)
 
 The MBR (memory buffer register) shows the first real instruction of the `LoadStore.bi` file!
 
@@ -85,7 +85,7 @@ IX2 = 0000_0000_0000_0011
 PC = PC + 1 = 0000_0000_1111
 ```
 
-![image info](./pictures/Step16.png)
+![image info](pictures/Step16.png)
 
 ## Run all the instructions
 
@@ -98,4 +98,4 @@ Presss Run Button
 
 Here is the final screen:
 
-![image info](./pictures/Finish.png)
+![image info](pictures/Finish.png)
