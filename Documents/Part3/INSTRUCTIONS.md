@@ -23,6 +23,18 @@ To run a program:
 > located in `"./Documents/Example Runs/"`.
 > Further instructions for specific programs below:
 
+`Program2.bi`
+---
+    Key: 3000 
+
+    1. Select `Program2.bi` from within the project `Programs` directory
+    2. User will be asked to input sentences. 
+        - Please enter all sentences at once 
+        - you can copy and paste a paragraph into the console keyboard
+    3. User will be asked to enter a word.
+        - The Program will return either the sentence number and word number for the first match, 
+          or will tell user there were no matches.
+This is assembly Program 2, as per submission requirements.
 
 `Program1.bi`
 ---

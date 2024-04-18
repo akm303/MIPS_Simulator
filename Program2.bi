@@ -249,7 +249,7 @@
 002363	000012	 data 10                 ;1267 \n
 002364	000000	 data 000000             ;1268 end of string
 002365	002734	 LOC 1500     ; Print not found function
-002734	010133	 LDX 1,27     ; x(1) <- c(27)  load x1 with ptr to stirng "Word not found"
+002734	010133	 LDX 1,27     ; x(1) <- c(27)  load x1 with ptr to string "Word not found"
 002735	024065	 JSR 0,21,1   ; print string function
 002736	000000	 hlt
 002737	003000	 LOC 1536     ; Octal 3000 main function
